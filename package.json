@@ -1,0 +1,33 @@
+{
+  "name": "next",
+  "version": "1.0.0",
+  "description": "react based worksheets",
+  "main": "index.tsx",
+  "author": "Edward A. Roualdes",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.10.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.54",
+    "@types/node": "^14.0.5",
+    "@types/react": "^16.9.35",
+    "cross-fetch": "^3.0.4",
+    "formik": "^2.1.4",
+    "formik-material-ui": "^2.0.0-beta.1",
+    "katex": "^0.11.1",
+    "mongodb": "^3.5.8",
+    "next": "^9.4.4",
+    "next-connect": "^0.6.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-katex": "^2.0.2",
+    "typescript": "^3.9.3",
+    "yup": "^0.29.1"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  }
+}
