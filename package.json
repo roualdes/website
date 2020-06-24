@@ -1,5 +1,7 @@
 {
-  "name": "web",
+  "name": "website",
+  "author": "Edward A. Roualdes",
+  "license": "BSD-3",
   "version": "0.0.1",
   "private": true,
   "scripts": {

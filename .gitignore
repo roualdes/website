@@ -109,3 +109,5 @@ Dockerfile
 grades
 public/teaching
 session-store.db
+testbank
+routes/db.json
