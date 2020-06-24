@@ -103,8 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
+# other stuff to not push
 .DS_Store
-
 Dockerfile
-
-next-env.d.ts
+grades
+public/teaching

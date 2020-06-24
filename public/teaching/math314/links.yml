@@ -1,0 +1,240 @@
+---
+  meta:
+    # Zoom:
+    #   html: "https://csuchico.zoom.us/j/446741497"
+    # Piazza:
+    #   html: "https://piazza.com/csuchico/spring2020/math314/home"
+    syllabus:
+      html: "meta/syllabus.html"
+    syllabusChanges:
+      html: "meta/announcement.html"
+    YouTubeChannel:
+      html: "https://www.youtube.com/channel/UC5w9owmMinvepfmrEVLM5Mg/"
+    ask:
+      html: "https://forms.gle/LJvvUBcxefL3V8oZ6"
+    queue:
+      html: "https://forms.gle/gdRQVr4Tv6pLA9G78"
+    lecture_notes:
+      html: "https://roualdes.us/lecturenotes"
+    DataFest:
+      html: "http://chicodatafest.netlify.com"
+    BinomialExample:
+      html: "https://freakonomics.com/2008/08/19/are-the-fbis-probabilities-about-dna-matches-crazy/"
+    how_to_git:
+      html: "meta/howtogit.html"
+    regex:
+      pdf: "meta/regex.pdf"
+    CSUDSI:
+      html: "http://datascience.csuchico.edu/"
+    Datasets:
+      html: "https://github.com/roualdes/data"
+  lectures:
+    YouTubeChannel:
+      html: "https://www.youtube.com/channel/UC5w9owmMinvepfmrEVLM5Mg/"
+    Zoom:
+      html: "https://csuchico.zoom.us/j/446741497"
+    droughts:
+      YouTube: "https://youtu.be/l_56SI8oB74"
+    plotPDF_finite:
+      YouTube: "https://youtu.be/OEglgL8pndY"
+    plotPDF_countable:
+      YouTube: "https://youtu.be/-otsx7QXWDA"
+    plotPDF_continuous:
+      YouTube: "https://youtu.be/-z5zn__1MMM"
+    clt_informal:
+      YouTube: "https://youtu.be/6kbNmb8ce8w"
+    clt_formal:
+      YouTube: "https://youtu.be/NCmv7V7Lo2Y"
+    percentiles:
+      YouTube: "https://youtu.be/QG0sgbIStaI"
+    optim:
+      YouTube: "https://youtu.be/Qvye1wDa0kk"
+    likelihood_singlevar:
+      YouTube: "https://youtu.be/OwmA6ulBqx8"
+    lecture_notes:
+      html: "https://roualdes.us/lecturenotes"
+    learnR:
+      R: "lectures/learnR.R"
+    samplingDeckCards:
+      R: "lectures/samplingdeckcards.R"
+    BinomialExample:
+      html: "https://freakonomics.com/2008/08/19/are-the-fbis-probabilities-about-dna-matches-crazy/"
+  #   ExpectedValue_variance:
+  #     html: "lectures/expected_values_variance.html"
+  #     ipynb: "lectures/expected_values_variance.ipynb"
+  #   LikelihoodMethod:
+  #     html: "lectures/likelihood_method.html"
+  #     ipynb: "lectures/likelihood_method.ipynb"
+  #   Confidence:
+  #     html: "lectures/confidence.html"
+  #     ipynb: "lectures/confidence.ipynb"
+  #   BootstrapFirstFunction:
+  #     html: "lectures/bootstrap_first_function.html"
+  #     ipynb: "lectures/bootstrap_first_function.ipynb"
+  #   TwoSampleMeans:
+  #     html: "lectures/two_sample_means.html"
+  #     ipynb: "lectures/two_sample_means.ipynb"
+  #   SimpleLinearRegression:
+  #     html: "lectures/simple_linear_regression.html"
+  #     ipynb: "lectures/simple_linear_regression.ipynb"
+  homework:
+    hw01_GetSetUp:
+      html: "homework/getsetup.html"
+    hw02_InstallGit:
+      html: "homework/github.html"
+    hw03_first_try:
+      html: "homework/first_try.html"
+    hw04_rmarkdown:
+      html: "homework/rmarkdown.html"
+    hw05_sumdice:
+      html: "homework/sumdice.html"
+    hw06_independence:
+      html: "homework/independent.html"
+    hw07_std:
+      html: "homework/std.html"
+    hw08_likelihood:
+      html: "homework/likelihood.html"
+    hw09_CLT:
+      html: "homework/clt.html"
+      playlist: "https://www.youtube.com/playlist?list=PL1WWUAN0UXaQ2SPBOo5s2amTdgq6PkXcY"
+    hw10_bootstrap_likelihood:
+      html: "homework/bootstrap_likelihood.html"
+      playlist: "https://www.youtube.com/playlist?list=PL1WWUAN0UXaTjh0U3oL5YKFJl3oman-tS"
+    hw11_means_by_group:
+      html: "homework/kmeans.html"
+      playlist: "https://www.youtube.com/playlist?list=PL1WWUAN0UXaR9MhN9kVeA7IiQO9qLLYxT"
+    hw12_simple_linear_regression:
+      html: "homework/simple_linear_regression.html"
+      playlist: "https://www.youtube.com/playlist?list=PL1WWUAN0UXaQMq_fuAJXIz1TD25b0tnf0"
+    hw13_multiple_linear_regression01:
+      html: "homework/mlr01.html"
+      playlist: "https://www.youtube.com/playlist?list=PL1WWUAN0UXaQrcWZ6n6-_4JiWrykh6B7W"
+    hw14_multiple_linear_regression02:
+      html: "homework/mlr02.html"
+      playlist: "https://youtu.be/8ORkVr5CwNs"
+  #   hw09_binomial_take2:
+  #     html: "homework/binomial_take2.html"
+  #   hw10_bernoulli_likelihood:
+  #     html: "homework/bernoulli_likelihood.html"
+  #   hw11_exponential_likelihood:
+  #     html: "homework/exponential_likelihood.html"
+  #   hw12_normal_likelihood:
+  #     html: "homework/normal_likelihood.html"
+  #   hw13_sampling_dist_likelihood:
+  #     html: "homework/samp_dist_practice.html"
+  #   hw14_two_sample_mean:
+  #     html: "homework/two_sample_mean.html"
+    # hw04_estimate_probability_sequence:
+    #   pdf: "homework/estimate_probability_sequence.pdf"
+    # hw05_estimate_probability_unordered_sequence:
+    #   pdf: "homework/estimate_probability_unordered_sequence.pdf"
+    # hw06_poisson_likelihood:
+    #   pdf: "homework/poisson_likelihood.pdf"
+    # hw07_estimate_two_pair:
+    #   pdf: "homework/estimate_two_pair.pdf"
+    # hw08_computer_likelihood:
+    #   pdf: "homework/computer_likelihood.pdf"
+    # hw09_normal_likelihood:
+    #   pdf: "homework/normal_likelihood.pdf"
+    # hw10_gamma_quantiles:
+    #   pdf: "homework/gamma_quantiles.pdf"
+    # hw11_one_mean:
+    #   pdf: "homework/one_mean.pdf"
+    # hw12_simple_linear_regression:
+    #   pdf: "homework/simple_linear_regression.pdf"
+    # hw13_means_2_levels:
+    #   pdf: "homework/means_by_2_levels.pdf"
+    # hw14_means_k_levels:
+    #   pdf: "homework/means_by_k_levels.pdf"
+    # hw15_mlr_ints:
+    #   pdf: "homework/mlr_ints.pdf"
+    # hw16_mlr_mult_num_x:
+    #   pdf: "homework/mlr_mult_num_x.pdf"
+    #   answers: "homework/mlr_mult_num_x_answers.pdf"
+  labs:
+    lab01:
+      html: "labs/lab01.html"
+    lab02:
+      html: "labs/lab02.html"
+    lab03:
+      html: "labs/lab03.html"
+    lab04:
+      html: "labs/lab04.html"
+    lab05:
+      html: "labs/lab05.html"
+    lab06:
+      html: "labs/lab06.html"
+    lab07:
+      html: "labs/lab07.html"
+    lab08:
+      html: "labs/lab08.html"
+    lab09:
+      html: "labs/lab09.html"
+    lab10:
+      html: "labs/lab10.html"
+    # lab08_two_means:
+    #   html: "labs/two_means.html"
+    # lab09_mean_models:
+    #   html: "labs/mean_models.html"
+    # lab10_mean_models_take2:
+    #   html: "labs/mean_models_take2.html"
+    # lab11_simple_linear_regression:
+    #   html: "labs/simple_linear_regression.html"
+    # lab12_adjustedR2:
+    #   html: "labs/adjustedR2.html"
+    # lab13_mlr_ints:
+    #   html: "labs/mlr_ints.html"
+    # lab14_mlr_slps:
+    #   html: "labs/mlr_slps.html"
+    # lab15_mlr_ints:
+    #   html: "labs/mlr_slps_ints.html"
+    # lab03_expected_value:
+    #   R: "labs/lab03.R"
+    # lab04_likelihood:
+    #   pdf: "labs/lab04.pdf"
+    # lab05_moar_expected_value:
+    #   R: "labs/lab05.R"
+    # lab06_moar_likelihood:
+    #   pdf: "labs/lab06.pdf"
+    # lab07_sampling_distributions:
+    #   R: "labs/lab07.R"
+    # lab08_comparing_distributions:
+    #   R: "labs/lab08.R"
+    # lab09_one_mean:
+    #   R: "labs/lab09.R"
+    # lab10_one_mean:
+    #   R: "labs/lab10.R"
+    # lab11_simple_linear_regression:
+    #   R: "labs/lab11.R"
+    # lab12_exam02_study_guide_A:
+    #   R: "labs/lab12.R"
+    # lab13_exam02_study_guide_B:
+    #   R: "labs/lab13.R"
+    # lab14_means_by_levels_report:
+    #   R: "labs/lab14.R"
+    # lab15_means_mlr_slps:
+    #   R: "labs/lab15.R"
+    # lab16_means_mlr_ints_slps:
+    #   R: "labs/lab16.R"
+    # lab17_final_practice01:
+    #   R: "labs/lab17.R"
+    # lab18_final_practice02:
+    #   R: "labs/lab18.R"
+    # lab19_final_practice03:
+    #   R: "labs/lab19.R"
+  quizzes:
+    # quiz01:
+    #   html: "quizzes/vectorization.html"
+    # quiz03:
+    #   html: "quizzes/sampling_dist.html"
+    # quiz04:
+    #   html: "quizzes/sampling_dist_take2.html"
+  exams:
+    exam01_practice:
+      pdf: "exams/exam01_practice.pdf"
+    exam02_practice:
+      pdf: "exams/exam02_practice.pdf"
+    exam02:
+      html: "exams/exam_02.html"
+    exam03/final:
+      html: "exams/exam_03.html"

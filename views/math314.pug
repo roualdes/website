@@ -1,0 +1,32 @@
+extends layout
+
+mixin topic(name)
+    li
+        a(data-toggle="collapse", href="#"+ name, aria-expanded="false", aria-controls= name)= name
+        div(class="collapse", id= name)
+            ul(class="list-unstyled")
+                block
+
+
+block css
+  script(defer).
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
+block content
+    div(class="alert alert-warning" role="alert")
+      strong Under construction
+
+    h4 MATH 314
+    ul
+        +topic("meta")
+            li
+                p syllabus goes here
+            li
+                p another
+        +topic("homework")
+            li
+                p moar
+            li
+                p wordz

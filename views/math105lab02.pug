@@ -1,0 +1,156 @@
+extends lab
+include ./mixins/url.pug
+include ./mixins/title.pug
+include ./mixins/userinfo.pug
+
+block content
+    +title("MATH 105 Lab 02 Show me the data")
+    div(class="alert alert-warning" role="alert")
+        strong Due date 2020-06-24 @ 23:59
+        button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") &times;
+
+    div(class="alert alert-warning" role="alert")
+        strong Leaving this page might lose your work.
+        button(type="button" class="close" data-dismiss="alert" aria-label="Close")
+            span(aria-hidden="true") &times;
+
+    form(action="/math105labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value=csrfToken)
+        +userinfo()
+
+        p.
+            This lab is designed to give you an understanding
+            of data visualizations. We will be creating graphs in
+            StatCrunch as well as looking at graphs available on
+            the internet.
+
+        p.
+            Before we start, make sure that you have
+            joined the Math 105 StatCrunch group. Check
+            out the video below to view to join the Math 105 group if you haven’t already.
+            #[+url("https://media.csuchico.edu/media/Join+Math+105+Group+StatCrunch/0_5uk42vjl")]
+
+        h4 Part 1. Covid-19 Data
+        p.
+            The dataset gives daily counts of COVID 19 cases,
+            number of new cases each day, and the number of
+            deaths from COVID 19 for US States and
+            territories. Since late January 2020, the New York
+            Times has tracked cases of coronavirus in real
+            time. The Times COVID 19 database is the product
+            of dozens of journalists working across several
+            times zones to monitor news conferences, analyze
+            data releases, and see clarification from public
+            officials on how they categorize cases. The
+            dataset is updated on a regular basis. The first
+            case of COVID-19 was diagnosed in Washington State
+            on January 21, 2020. From there, it spread over
+            several weeks to every U.S. state and
+            territory. Many factors influence how fast a virus
+            spreads. In this activity, you will investigate
+            the rate and timing of increases in the number of
+            recorded cases in your state. You can compare
+            patterns in the spread of COVID-19 in your state
+            with patterns in other states.
+
+        p.
+            Let’s begin by plotting data to see how quickly the number
+            of recorded cases of COVID-19 grew in California.
+
+        p.
+            #[+url("https://media.csuchico.edu/media/Scatterplot+California+COVID/0_hzj0qwrg")]
+
+        div(class="form-group")
+            label(for="answer01")
+                | Write a few sentences describing the graph for California. Consider
+                | using descriptive words such as gradual, abrupt, linear, exponential,
+                | steeply climbing, decreasing, etc.
+            textarea(name="answer01" class="form-control" id="answer01" rows="2")
+
+        p.
+            The expression “flattening the curve” refers to the shape
+            of the growth curve for COVID-19 cases. When the curve is
+            curving up steeply, it means more and more new cases are
+            recorded each day; the number of cases is growing at an
+            exponential rate. If approximately the same number of
+            cases are added each day, the growth is linear.
+
+        div(class="form-group")
+            label(for="answer02")
+                | Which statement best describes the current pattern
+                | of change in daily recorded cases in your state? The
+                | number of cases is
+            select(class="form-control" id="answer02" name="answer02")
+                option(selected) choose one
+                option Definitely not flattening yet
+                option Possibly flattening-too soon to tell
+                option Definitely flattening
+                option Definitely decreasing
+                option No changing much
+
+        p.
+            Now, let’s add a state to the graph to compare to California.
+            #[+url("https://media.csuchico.edu/media/Scatterplot+2+states/0_nn6mr80v")]
+
+        div(class="form-group")
+            label(for="answer03")
+                | What state did you compare to California? Summarize the graph in two sentences.
+            textarea(name="answer03" class="form-control" id="answer03" rows="2")
+
+        div(class="form-group")
+            label(for="answer04")
+                | What do you think makes it hard to compare
+                | California to a state like Alabama when looking at
+                | the variable number of cases?
+            textarea(name="answer04" class="form-control" id="answer04" rows="2")
+
+        p.
+            Because California has such a large population, it makes
+            it difficult to compare it to states with smaller
+            populations. Let’s create a variable that adjusts for
+            population size. We will call this variable per_capita and
+            it will be created by taking the variable cases and
+            dividing by the population size.
+
+        p.
+            #[+url("https://media.csuchico.edu/media/scatterplot+per_capita/0_xutvy395")]
+
+        div(class="form-group")
+            label(for="answer05")
+                | Now write a few sentences that describe the graph
+                | you created when using the per_capita variable
+                | rather than the number of cases variable.
+            textarea(name="answer05" class="form-control" id="answer05" rows="2")
+
+        p.
+             Let’s create a graph that looks at all the states.
+
+        p.
+             #[+url("https://media.csuchico.edu/media/All+States/0_cfco2qlv")]
+
+        h4 Part 2: What’s Going On in This Graph?
+
+        p.
+            Go to the following website
+            #[+url("https://www.nytimes.com/interactive/2018/05/03/learning/08WGOITGraphLN.html")]
+
+        div(class="form-group")
+            label(for="answer06")
+                | What do you notice? Write two sentences that
+                | summarize what you see in this graph.
+            textarea(name="answer06" class="form-control" id="answer06" rows="2")
+
+        div(class="form-group")
+            label(for="answer07")
+                | What do you wonder about this graph? Are there
+                | any questions that come up when looking at the
+                | graph?
+            textarea(name="answer07" class="form-control" id="answer07" rows="2")
+
+        div(class="form-group")
+            label(for="answer08")
+                | Create a catchy title for the graph.
+            textarea(name="answer08" class="form-control" id="answer08" rows="2")
+
+        button(class="btn btn-md btn-primary" type="submit") submit
