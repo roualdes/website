@@ -108,3 +108,4 @@ dist
 Dockerfile
 grades
 public/teaching
+session-store.db

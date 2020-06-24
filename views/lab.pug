@@ -20,9 +20,6 @@ html
     script.
         (function() {
             'use strict';
-            var dateControl = document.querySelector('input[type="datetime-local"]');
-            var d = Date();
-            dateControl.value = d.toISOString();
             window.addEventListener('load', function() {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             var forms = document.getElementsByClassName('needs-validation');
