@@ -10,10 +10,8 @@ var express = require('express'),
     passwordless = require('passwordless'),
     flash = require('connect-flash'),
     LokiTokenStore = require('passwordless-lokijsstore'),
-    LokiStore = require('connect-loki')(session);
-
-
-
+    LokiStore = require('connect-loki')(session),
+    db = require("./db").dbStartup;
 
 var sess = {
     store: new LokiStore(),
@@ -38,10 +36,16 @@ app.use(helmet.referrerPolicy({policy: 'origin'})); // => same-origin; when chro
 //     sha256s: [process.env.HPKP_SHA01,
 //               process.env.HPKP_SHA02]}));
 app.disable('x-powered-by');
-if (process.env.PRODUCTION) {
+if (process.env.DEVELOPMENT !== "true") {
     app.set('trust proxy', 1);
     sess.cookie.secure = true;
 }
+
+// connect database
+db.connect(err => {
+    if (err) throw err;
+});
+
 app.use(session(sess))
 app.use(flash());
 app.use(passwordless.sessionSupport());
@@ -98,7 +102,7 @@ app.use(function(req, res, next) {
 // error handlers
 // development error handler
 // will print stacktrace
-if (process.env.DEVELOPMENT) {
+if (process.env.DEVELOPMENT === "true") {
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
@@ -119,9 +123,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-// {
-//   "rules": {
-//     ".read": "auth != null",
-//     ".write": "auth.token.email.matches(/edward.roualdes@gmail.com$/) && auth.token.email_verified == true"
-//   }
-// }
