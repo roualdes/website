@@ -1,0 +1,6 @@
+mixin multiplechoice(id, question)
+    div(class="form-group")
+        label(for= id)
+            p= question
+        select(class="form-control" id= id name= id)
+            block

@@ -1,0 +1,22 @@
+extends lab
+include ./mixins/url.pug
+include ./mixins/title.pug
+include ./mixins/userinfo.pug
+include ./mixins/warning.pug
+
+block content
+    +title("MATH 105 Lab 02 Show me the data")
+    +warning("Due date 2020-06-24 @ 23:59")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math105labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        p.
+            $$ \mathbb{E}[X] = \int_{-\infty}^{\infty} (2 \pi \sigma^2)^{-1/2} \exp{\left\{ \frac{-1}{2\sigma^2} (x - \mu)^2 \right\}}$$
+
+        button(class="btn btn-md btn-primary" type="submit") submit
