@@ -75,7 +75,7 @@ var routes = require('./routes/index'),
     Bayes = require('./routes/BayesDNA'),
     grades = require('./routes/grades'),
     gradesLogin = require('./routes/gradesLogin'),
-    math105labs = require('./routes/math105labs'),
+    math105 = require('./routes/math105'),
     math314 = require('./routes/math314'),
     logout = require('./routes/logout');
 
@@ -89,7 +89,7 @@ app.use('/BayesDNA', Bayes);
 app.use('/grades', grades);
 app.use('/gradesLogin', gradesLogin);
 app.use('/logout', logout);
-app.use('/math105labs', math105labs);
+app.use('/math105', math105);
 app.use('/math314', math314);
 
 // catch 404 and forward to error handler
