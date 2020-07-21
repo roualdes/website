@@ -68,7 +68,7 @@ app.set('view engine', 'pug');
 // routes
 var routes = require('./routes/index'),
     projects = require('./routes/projects'),
-    lectureNotes = require('./routes/lectureNotes'),
+    notes = require('./routes/notes'),
     livecode = require('./routes/livecode'),
     livecodeLogin = require('./routes/livecodeLogin'),
     teaching = require('./routes/teaching'),
@@ -82,7 +82,7 @@ var routes = require('./routes/index'),
 
 app.use('/', routes);
 app.use('/projects', projects);
-app.use('/lecturenotes', lectureNotes);
+app.use('/notes', notes);
 app.use('/livecode', livecode);
 app.use('/livecodeLogin', livecodeLogin);
 app.use('/teaching', teaching);

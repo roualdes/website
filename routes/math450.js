@@ -46,7 +46,7 @@ router.post('/labs/submit',
 
                         // enter in database
                         let doc = await dbConnection.db
-                            .collection("labs")
+                            .collection("math450")
                             .updateOne({email: data.email, section: data.section, lab: data.lab},
                                        {$set: data},
                                        {upsert: true});
