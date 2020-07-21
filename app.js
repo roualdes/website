@@ -5,7 +5,7 @@ var express = require('express'),
     path = require('path'),
     helmet = require('helmet'),
     bodyParser = require('body-parser'),
-    compression = require('compression'),
+    // compression = require('compression'),
     favicon = require('serve-favicon'),
     passwordless = require('passwordless'),
     flash = require('connect-flash'),
@@ -24,7 +24,7 @@ var sess = {
 }
 
 app = express();
-app.use(compression())
+// app.use(compression())
 app.use(helmet());              // TODO CSP
 app.use(helmet.expectCt({       // check out secrityheaders.io
   enforce: true,
@@ -77,6 +77,7 @@ var routes = require('./routes/index'),
     gradesLogin = require('./routes/gradesLogin'),
     math105 = require('./routes/math105'),
     math314 = require('./routes/math314'),
+    math450 = require('./routes/math450'),
     logout = require('./routes/logout');
 
 app.use('/', routes);
@@ -90,6 +91,7 @@ app.use('/grades', grades);
 app.use('/gradesLogin', gradesLogin);
 app.use('/logout', logout);
 app.use('/math105', math105);
+app.use('/math450', math450);
 app.use('/math314', math314);
 
 // catch 404 and forward to error handler

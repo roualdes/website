@@ -10,7 +10,7 @@ block content
     +warning("Due date 2020-06-24 @ 23:59")
     +warning("Leaving or refreshing this page might lose your work.")
 
-    form(action="/math105labs/submit" method="post" class="needs-validation" novalidate)
+    form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
         input(type="hidden" name="_csrf" value= csrfToken)
         input(type="hidden" name="lab" value= labId)
         // Due date is in UTC

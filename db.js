@@ -17,7 +17,7 @@ const dbStartup = {
                 useUnifiedTopology: true,
             });
             if (!client.isConnected()) client.connect();
-            dbStartup.db = client.db("math105");
+            dbStartup.db = client.db(dbname);
         } else {
             dbStartup.db = "mongodb";
         }

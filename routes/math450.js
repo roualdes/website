@@ -8,16 +8,16 @@ var urlencodedParser = bodyParser.urlencoded({extended: false}),
     router = express.Router();
 
 router.get('/', function(req, res) {
-    res.render('math105', {title: 'MATH105'});
+    res.render('math450', {title: 'MATH450'});
 })
 
 router.get('/labs/:labId',
            csrfProtection,
            function(req, res, next) {
                const lab = req.params.labId.padStart(2, '0');
-               res.render('math105/labs/lab' + lab,
+               res.render('math450/labs/lab' + lab,
                           {labId: lab,
-                           title: "MATH 105 Lab" + lab,
+                           title: "MATH 450 Lab" + lab,
                            csrfToken: req.csrfToken()});
 });
 
@@ -47,9 +47,7 @@ router.post('/labs/submit',
                         // enter in database
                         let doc = await dbConnection.db
                             .collection("labs")
-                            .updateOne({email: data.email,
-                                        section: data.section,
-                                        lab: data.lab},
+                            .updateOne({email: data.email, section: data.section, lab: data.lab},
                                        {$set: data},
                                        {upsert: true});
                         res.status(201).send("Lab submit successfully.  Congrats!");
