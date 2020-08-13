@@ -3,13 +3,14 @@ include ./mixins/url.pug
 include ./mixins/title.pug
 include ./mixins/userinfo.pug
 include ./mixins/warning.pug
+include ./mixins/shortanswer.pug
+include ./mixins/multiplechoice.pug
 
 block content
     +title("MATH 105 Lab 05 Normal Distribution continued")
-    +warning("Due date 2020-06-24 @ 23:59")
     +warning("Leaving or refreshing this page might lose your work.")
 
-    form(action="/math105labs/submit" method="post" class="needs-validation" novalidate)
+    form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
         input(type="hidden" name="_csrf" value= csrfToken)
         input(type="hidden" name="lab" value= labId)
         // Due date is in UTC
@@ -30,50 +31,31 @@ block content
 
             Birth weights of babies in the US can be modeled by a normal distribution with mean of 3325 grams and standard deviation of 575 grams. 
 
-        a: img(src="/normal_lab1.png" alt="Normal Distribution 1")
+        a: img(src="/normal_lab1.PNG" alt="Normal Distribution 1")
 
-        div(class="form-group")
-            label(for="answer01")
-                | Identify the mistake in the StatCrunch normal calculator.
-            textarea(name="answer01" class="form-control" id="answer01" rows="3")
+        +shortanswer("answer01", "Identify the mistake in the StatCrunch normal calculator.", "2") 
 
-        div(class="form-group")
-            label(for="answer02")
-                | What is the correct answer?
-            textarea(name="answer02" class="form-control" id="answer02" rows="1")    
+        +shortanswer("answer02", "What is the correct answer?", "1")  
 
         p.
 
             Compute how much a baby would need to weigh to be in the 20th percentile.
 
-        a: img(src="/normal_lab2.png" alt="Normal Distribution 2")
+        a: img(src="/normal_lab2.PNG" alt="Normal Distribution 2")
 
-        div(class="form-group")
-            label(for="answer03")
-                | Identify the mistake in the StatCrunch normal calculator.
-            textarea(name="answer03" class="form-control" id="answer03" rows="3")
+        +shortanswer("answer03", "Identify the mistake in the StatCrunch normal calculator.", "2") 
 
-        div(class="form-group")
-            label(for="answer04")
-                | What is the correct answer?
-            textarea(name="answer04" class="form-control" id="answer04" rows="1")    
-
+        +shortanswer("answer04", "What is the correct answer?", "1")      
 
         p.
 
             Compute how much a baby would need to weigh to be in the #[strong top] 10th percentile.
 
-        a: img(src="/normal_lab3.png" alt="Normal Distribution 3")
+        a: img(src="/normal_lab3.PNG" alt="Normal Distribution 3")
 
-        div(class="form-group")
-            label(for="answer05")
-                | Identify the mistake in the StatCrunch normal calculator.
-            textarea(name="answer05" class="form-control" id="answer05" rows="3")
+        +shortanswer("answer05", "Identify the mistake in the StatCrunch normal calculator.", "2") 
 
-        div(class="form-group")
-            label(for="answer06")
-                | What is the correct answer?
-            textarea(name="answer06" class="form-control" id="answer06" rows="1")    
+        +shortanswer("answer06", "What is the correct answer?", "1")   
 
         h4 Part 2 Wristwatch Lifetimes
 
@@ -81,15 +63,9 @@ block content
 
             The mean lifetime of a certain type of wristwatch is 21.6 months, with a standard deviation of 6.3 months. Suppose the lifetimes of these watches follow a normal model.
 
-        div(class="form-group")
-            label(for="answer07")
-                | What is the top 20th percentile of watch lifetimes?
-            textarea(name="answer07" class="form-control" id="answer07" rows="3")
+        +shortanswer("answer07", "What is the top 20th percentile of watch lifetimes?", "1") 
 
-        div(class="form-group")
-            label(for="answer08")
-                | Suppose the manufacturer of these watches wants to give refunds for watches that do not last at least a certain | amount of time. However, he can only afford to give refunds to 3% of his customers. How long should the         | manufacturer guarantee the watch for?
-            textarea(name="answer08" class="form-control" id="answer08" rows="1")  
+        +shortanswer("answer08", "Suppose the manufacturer of these watches wants to give refunds for watches that do not last at least a certain amount of time. However, he can only afford to give refunds to 3% of his customers. How long should the  manufacturer guarantee the watch for?", "1")   
 
         h4 Part 3 Hoping to get in to a university
 
@@ -97,11 +73,7 @@ block content
 
             Entry to a certain University is determined by a national test. The scores on this tes are normally distributed with a mean of 500 and a standard deviation of 100. Tom wants to be admitted to this univerisity and he knows that he must score better than at least 70% of the students who took the test. 
 
-        div(class="form-group")
-            label(for="answer09")
-                | What score does he need to be admitted to the University?
-            textarea(name="answer09" class="form-control" id="answer09" rows="1")  
-
+        +shortanswer("answer09", "What score does he need to be admitted to the University?", "1")
 
         h4 Part 4 Job training
 
@@ -109,21 +81,16 @@ block content
 
             The time it takes a randomly selected job applicant to perform a certain task has a distribution that can be approximated by a normal distribution with a mean of 120 seconds and a standard deviation of 20 seconds. The #[strong fastest 10%] are to be given advanced training.
 
-        div(class="form-group")
-            label(for="answer10")
-                | What task times qualify individuals for such training?
-            textarea(name="answer10" class="form-control" id="answer10" rows="1")  
-
-
+        +shortanswer("answer10", "What task times qualify individuals for such training?", "1")
+        
         h4 Part 5 EPA
 
         p.
 
             Environmental Protection Agency (EPA) fuel economy estimates gas efficiency for automobile models. The results of the tested models gave a  mean of 24.8 mpg and a standard deviation of 6.2 mpg for highway driving.  Assume that the distribution is normal.  
 
-        div(class="form-group")
-            label(for="answer11")
-                | Between what two values would the middle 95% of the autos lie with respect to mpg?
-            textarea(name="answer11" class="form-control" id="answer11" rows="1")  
+        +shortanswer("answer11", "Between what two values would the middle 95% of the autos lie with respect to mpg?", "1")
+
+        p.
 
         button(class="btn btn-md btn-primary" type="submit") submit

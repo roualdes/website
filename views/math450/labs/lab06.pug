@@ -1,0 +1,76 @@
+extends lab
+include ./mixins/url.pug
+include ./mixins/title.pug
+include ./mixins/userinfo.pug
+include ./mixins/warning.pug
+include ./mixins/shortanswer.pug
+include ./mixins/multiplechoice.pug
+
+block content
+    +title("MATH 450 Chapter 3-Part 4")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Probability-The Nuts and Bolts of Bayesian Inference-Continued
+
+        p.
+
+            #[strong Conditional Densities]:
+
+        p.
+
+            The concepts we have already learned for conditional probabilities can be generalized for conditional distributions.  Conditional distributions will be the probabilities of some events determined by some random variables conditional on events determined by other random variables.  For example, the height and girth of a tree can be considered a pair of random variables.  While it is easy to measure the girth of a tree, the height of a tree is harder to measure.  Thus, it might be of interest to know the probabilities of a tree being a certain height based on the value of the girth.  In the discrete case, the conditional pdf can be treated the same way as a conditional probability.
+
+        p. 
+
+            #[strong Discrete Conditional Distributions]
+
+        p.
+
+            Let #[i X] and #[i Y] be discrete random variables.  The #[i conditional probability density function of Y given x] ( that is, the probability that #[i Y] takes on the value #[i y] given that #[i X] is equal #[i x])is as follows $$P(X=x|Y=y)=\frac{P(X=x  and Y=y)}{P(Y=y)}$$ $$=\frac{f_{X,Y}(x,y)}{f_{Y}(y)}$$
+
+        p.
+
+            This #[i conditional] distribution can be expresses by a p.d.f. \(g(x|y)\), which is defined by $$f_{X|y}(x)=\frac{f_{X,Y}(x,y)}{f_{Y}(y)}$$
+
+        p.
+
+            #[strong Example]
+
+        p.
+
+            Let #[i X] and #[i Y] be continuous random variables with p.d.f. $$f_{X,Y}(x,y)=\frac{1}{8}(6-x-y)$$
+
+        p.
+
+            where \(0< x <2\) and \(2< y < 4\).
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Conditional+Distribution+Example/0_zbapj3ir")]
+
+        p. 
+
+            Find \(f_{X}(x)\) and \(f_{Y}(y)\)
+
+        p.
+
+        +shortanswer("answer01", "Find the probability that y is between 2 and 3 given that x equals 1", "1")
+
+        p.
+
+            #[strong You try it]
+
+        p.
+
+            Suppose that the joint pdf of two random variables #[i X] and #[i Y] is as follows: $$f_{X,Y}(x,y)=\frac{3}{16}(4-2x-y)$$ for \(x > 0\) and \(y > 0\) and \(2x+y < 4\).
+
+        +shortanswer("answer02", "Find the probability that y greater than 2 given that x equals 0.5", "1")
+
+        button(class="btn btn-md btn-primary" type="submit") submit

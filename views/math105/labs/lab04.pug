@@ -1,14 +1,13 @@
-extends ../../lab
-include ../../mixins/url.pug
-include ../../mixins/title.pug
-include ../../mixins/userinfo.pug
-include ../../mixins/warning.pug
-include ../../mixins/shortanswer.pug
-include ../../mixins/multiplechoice.pug
+extends lab
+include ./mixins/url.pug
+include ./mixins/title.pug
+include ./mixins/userinfo.pug
+include ./mixins/warning.pug
+include ./mixins/shortanswer.pug
+include ./mixins/multiplechoice.pug
 
 block content
     +title("MATH 105 Lab 04 Normal Distribution Introduction")
-    +warning("Due date 2020-06-24 @ 23:59")
     +warning("Leaving or refreshing this page might lose your work.")
 
     form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
@@ -22,7 +21,7 @@ block content
             This Lab is designed to give you an introduction to modeling a variable with the normal distribution. If the distribution of a variable is symmetric and bell-shaped then we can use the normal model to calculate probabilities related to the variable of interest.
 
         h4 Part 1. Blood Pressure
-
+        
         p.
 
             The Blood Pressure data set in the Math 105 group presents Systolic and Diastolic blood pressure readings for a random sample of 398 individuals from central Virginia.
@@ -39,7 +38,7 @@ block content
             option The distribution must be symmetric and bell-shaped.
             option The distribution must be uniform.
 
-        p.
+        p. 
 
             Take a few minutes to examine the distribution of the two variables in this data set (Systolic BP and Diastolic BP).
 
@@ -50,7 +49,7 @@ block content
 
         +shortanswer("answer03", "Explain your reasoning for the variable that you picked.", "2")
 
-        p.
+        p. 
 
             Report the mean and stndard deviation of diastolic blood pressure.
 
@@ -62,9 +61,13 @@ block content
 
         +shortanswer("answer07", "Calculate the number of standard deviations away from the mean your blood pressure is.", "1")
 
-        +shortanswer("answer08", "Now calculate a z-score by taking the difference between your values and the mean and then dividing by the standard deviation.", "1")
+        +shortanswer("answer08", "Now calculate a z-score by taking the difference between your blood pressure and the mean and then dividing by the standard deviation.", "1")
 
-        +shortanswer("answer09", "Interpret the z-score for your blood pressure. Write a sentence in context of the problem.", "1")
+        p.
+
+            If your blood pressure value is less than the mean then your z-score should be negative and if it is greater than the mean then your z-score should be positive.
+        
+        +shortanswer("answer09", "Interpret the z-score for your blood pressure. Write a sentence in context of the problem.", "1")        
 
         h4 Part 2 Flashlight batteries
 
@@ -72,41 +75,43 @@ block content
 
             Consider the variable birthweight of a baby. We will be looking at a data set that has information about births recorded in North Carolina. This data has been of interest to medical researchers who are studying the relation between habits and practices of expected mothers and the birth of children. The data consists of a random sample of 1000 cases.
 
-        p.
+        p. 
 
             When used in a particular flashlight, the lifetime of a certain brand of battery is normally distributed with mean of 6 hours and a standard deviation of 0.8 hours. Using StatCrunch, simulate sampling 1000 batteries that follow this distribution.
 
         p.
-
+            
             #[+url("https://media.csuchico.edu/media/simulate+battery+lifetimes/0_v46wf9j4")]
 
         p.
 
             Now make a histogram of the simulated data. For convenience, check the box that says #[i values above the bar]. Use the histogram to answer the following questions.
+            
+        +shortanswer("answer10", "What is the probability that a battery will last longer than 8 hours?", "1") 
 
-        +shortanswer("answer10", "What is the probability that a battery will last longer than 8 hours?", "1")
-
-        +shortanswer("answer11", "What is the probability that a battery will last less than 4.5 hours?", "1")
-
-        +shortanswer("answer12", "What is the probability that a battery will last between 5 and 7.5 hours?", "1")
-
+        +shortanswer("answer11", "What is the probability that a battery will last less than 4.5 hours?", "1") 
+        
+        +shortanswer("answer12", "What is the probability that a battery will last between 5 and 7.5 hours?", "1") 
+            
         p.
 
             Although simulation is a valid way to solve normal distribution problems, we can also use the StatCrunch normal distribution app to solve the same problems as above. Rather than using a histogram to determine the probabilities that we determined above, we can use the actual normal distribution model and the app will compute the area under the curve. It is important to determine the correct side of the curve. You should read the problem carefully and look for key words such as #[strong less than or greater than].
 
+        p.
+
             #[+url("https://media.csuchico.edu/media/simulate+battery+lifetimes/0_v46wf9j4")]
 
-        +shortanswer("answer13", "What is the probability that a battery will last longer than 8 hours?", "1")
+        +shortanswer("answer13", "What is the probability that a battery will last longer than 8 hours?", "1") 
 
-        +shortanswer("answer14", "What is the probability that a battery will last less than 4.5 hours?", "1")
+        +shortanswer("answer14", "What is the probability that a battery will last less than 4.5 hours?", "1") 
+        
+        +shortanswer("answer15", "What is the probability that a battery will last between 5 and 7.5 hours?", "1") 
 
-        +shortanswer("answer15", "What is the probability that a battery will last between 5 and 7.5 hours?", "1")
-
-        +shortanswer("answer16", "Compare your answers with the answers you got simulating data from the normal distribution.", "2")
+        +shortanswer("answer16", "Compare your answers with the answers you got simulating data from the normal distribution.", "2") 
 
         p.
 
-            Your answers using the simulated data should have been similar to the answers that you got using the normal model. Hence, we can think of the normal model as a way to model a variable when we don't have data. Additionally, we can think of finding the area under the curve using the normal model as the same thing as using the histogram if we were to have data for a variable.
+            Your answers using the simulated data should have been similar to the answers that you got using the normal model. Hence, we can think of the normal model as a way to model a variable when we don't have data. Additionally, we can think of finding the area under the curve using the normal model as the same thing as using the histogram if we were to have data for a variable. 
 
         p.
 

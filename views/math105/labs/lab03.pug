@@ -1,14 +1,13 @@
-extends ../../lab
-include ../../mixins/url.pug
-include ../../mixins/title.pug
-include ../../mixins/userinfo.pug
-include ../../mixins/warning.pug
-include ../../mixins/shortanswer.pug
-include ../../mixins/multiplechoice.pug
+extends lab
+include ./mixins/url.pug
+include ./mixins/title.pug
+include ./mixins/userinfo.pug
+include ./mixins/warning.pug
+include ./mixins/shortanswer.pug
+include ./mixins/multiplechoice.pug
 
 block content
     +title("MATH 105 Lab 03 Measures of Center and Variation")
-    +warning("Due date 2020-06-24 @ 23:59")
     +warning("Leaving or refreshing this page might lose your work.")
 
     form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
@@ -36,10 +35,10 @@ block content
 
         h4 Guess the babies weight
 
-        a: img(src="/math105/baby_weight.PNG" alt="Baby")
+        a: img(src="/baby_weight.PNG" alt="Baby")
 
         p.
-            Consider the variable birthweight of a baby. We will be looking at a data set that has information about births recorded in North Carolina. This data has been of interest to medical researchers who are studying the relation between habits and practices of expected mothers and the birth of children. The data consists of a random sample of 1000 cases.
+            Consider the variable birthweight of a baby. We will be looking at a data set that has information about births recorded in North Carolina. These data have been of interest to medical researchers who are studying the relation between habits and practices of expected mothers and the birth of children. The data consists of a random sample of 1000 cases.
 
         p.
             The variable of interest for our activity will be #[i weight] which is the birthweight of the baby in pounds.
@@ -70,13 +69,13 @@ block content
 
         +shortanswer("answer04", "Explain why you think the extra information might help you make a better informed prediction about the baby's weight.", "2")
 
-        +shortanswer("answer05", "Give a range of values where you think the baby's weight might fall. For instance, a lower bound (minimum |weight) and an upper bound (maximum weight).", "1")
+        +shortanswer("answer05", "Give a range of values where you think the baby's weight might fall. For instance, a lower bound (minimum weight) and an upper bound (maximum weight).", "1")
 
         p.
             OK, let's go ahead and open up the data in StatCrunch. The data file is called #[strong ncbirths] and is in the Math 105 group. One last time, here is how we join and open up data in MyStatCrunch. You can skip the video if you are already a pro at this.
 
         p.
-            #[+url("https://media.csuchico.edu/media/NCBirthsOpen/0_pa4jfgeo")]
+            #[+url("https://media.csuchico.edu/media/Open+NCbirths+data/0_6y088ty0")]
 
         p.
             The variables included in the data set are father's age (fage), mother's age (mage), maturity status of mother (mature), length of pregnancy in weeks (weeks), whether the birth was classified as premature (premie), number of hospital visits during pregnancy (visits), weight gained by mother (gained), birthweight of baby (weight), status of mother as a smoker or nonsmoker (habit), whether mother is married (marital).

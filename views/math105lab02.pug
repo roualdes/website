@@ -3,13 +3,14 @@ include ./mixins/url.pug
 include ./mixins/title.pug
 include ./mixins/userinfo.pug
 include ./mixins/warning.pug
+include ./mixins/shortanswer.pug
+include ./mixins/multiplechoice.pug
 
 block content
     +title("MATH 105 Lab 02 Show me the data")
-    +warning("Due date 2020-06-24 @ 23:59")
     +warning("Leaving or refreshing this page might lose your work.")
 
-    form(action="/math105labs/submit" method="post" class="needs-validation" novalidate)
+    form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
         input(type="hidden" name="_csrf" value= csrfToken)
         input(type="hidden" name="lab" value= labId)
         // Due date is in UTC
@@ -58,12 +59,7 @@ block content
         p.
             #[+url("https://media.csuchico.edu/media/Scatterplot+California+COVID/0_hzj0qwrg")]
 
-        div(class="form-group")
-            label(for="answer01")
-                | Write a few sentences describing the graph for California. Consider
-                | using descriptive words such as gradual, abrupt, linear, exponential,
-                | steeply climbing, decreasing, etc.
-            textarea(name="answer01" class="form-control" id="answer01" rows="2")
+        +shortanswer("answer01", "Write a few sentences describing the graph for California. Consider using descriptive words such as gradual, abrupt, linear, exponential, steeply climbing, decreasing, etc.", "4")
 
         p.
             The expression “flattening the curve” refers to the shape
@@ -73,34 +69,21 @@ block content
             exponential rate. If approximately the same number of
             cases are added each day, the growth is linear.
 
-        div(class="form-group")
-            label(for="answer02")
-                | Which statement best describes the current pattern
-                | of change in daily recorded cases in your state? The
-                | number of cases is
-            select(class="form-control" id="answer02" name="answer02")
-                option(selected) choose one
-                option Definitely not flattening yet
-                option Possibly flattening-too soon to tell
-                option Definitely flattening
-                option Definitely decreasing
-                option No changing much
+        +multiplechoice("answer02", "Which statement best describes the current pattern of change in daily recorded cases in your state? The number of cases is")
+            option(selected) choose one
+            option Definitely not flattening yet
+            option Possibly flattening-too soon to tell
+            option Definitely flattening
+            option Definitely decreasing
+            option No changing much
 
         p.
             Now, let’s add a state to the graph to compare to California.
             #[+url("https://media.csuchico.edu/media/Scatterplot+2+states/0_nn6mr80v")]
 
-        div(class="form-group")
-            label(for="answer03")
-                | What state did you compare to California? Summarize the graph in two sentences.
-            textarea(name="answer03" class="form-control" id="answer03" rows="2")
+        +shortanswer("answer03", "Write a few sentences describing the graph you created above. Make sure that you compare California to the state that you picked.", "4")
 
-        div(class="form-group")
-            label(for="answer04")
-                | What do you think makes it hard to compare
-                | California to a state like Alabama when looking at
-                | the variable number of cases?
-            textarea(name="answer04" class="form-control" id="answer04" rows="2")
+        +shortanswer("answer04", "What do you think makes it hard to compare California to other states when looking at the variable number of cases?", "2")
 
         p.
             Because California has such a large population, it makes
@@ -113,12 +96,7 @@ block content
         p.
             #[+url("https://media.csuchico.edu/media/scatterplot+per_capita/0_xutvy395")]
 
-        div(class="form-group")
-            label(for="answer05")
-                | Now write a few sentences that describe the graph
-                | you created when using the per_capita variable
-                | rather than the number of cases variable.
-            textarea(name="answer05" class="form-control" id="answer05" rows="2")
+        +shortanswer("answer05", "Now write a few sentences that describe the graph you created when using the per_capita variable rather than the number of cases variable.", "4")
 
         p.
              Let’s create a graph that looks at all the states.
@@ -132,22 +110,20 @@ block content
             Go to the following website
             #[+url("https://www.nytimes.com/interactive/2018/05/03/learning/08WGOITGraphLN.html")]
 
-        div(class="form-group")
-            label(for="answer06")
-                | What do you notice? Write two sentences that
-                | summarize what you see in this graph.
-            textarea(name="answer06" class="form-control" id="answer06" rows="2")
+        +shortanswer("answer06", "What do you notice? Write two sentences that summarize what you see in this graph.", "4")
 
-        div(class="form-group")
-            label(for="answer07")
-                | What do you wonder about this graph? Are there
-                | any questions that come up when looking at the
-                | graph?
-            textarea(name="answer07" class="form-control" id="answer07" rows="2")
+        +shortanswer("answer07", "What do you wonder about this graph? Are there any questions that come up when looking at the graph?", "3")
 
-        div(class="form-group")
-            label(for="answer08")
-                | Create a catchy title for the graph.
-            textarea(name="answer08" class="form-control" id="answer08" rows="2")
+        +shortanswer("answer08", "Create a catchy title for the graph.", "1")
+
+        h4 Part 3: What is with this graph?
+
+        p.
+
+            The Georgia Department of Health released a graph that showed the top five Georgia counties with the greatest number of cases of coronavirus from April 28 to May 9. Looking at the graph (below) it appears to show a steady decline in case for the counties. 
+
+        a: img(src="/covid_graph.PNG" alt="Covid Georgia graph")
+
+        +shortanswer("answer09", "Give two reasons why the above graph does not accurately reflect the trend of cases in Georgia", "3")
 
         button(class="btn btn-md btn-primary" type="submit") submit
