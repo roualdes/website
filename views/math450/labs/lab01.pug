@@ -7,8 +7,7 @@ include ../../mixins/shortanswer.pug
 include ../../mixins/multiplechoice.pug
 
 block content
-    +title("MATH 105 Lab 01 Introduction to Statistics")
-    +warning("Due date 2020-06-24 @ 23:59")
+    +title("MATH 450 Chapter 2-Part 1 Notes")
     +warning("Leaving or refreshing this page might lose your work.")
 
     form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
@@ -18,218 +17,97 @@ block content
         input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
         +userinfo()
 
-        p.
-            This Lab is designed to give you a taste of what is to come in this course. Each week you will be doing a hands-on lab that incorporates relavent topics and real data.
+        h4 Subjective Worlds of Frequentist and Bayesian Statistics
 
+        h4 Bayes' Theorem
 
-        h4 Part 1. Types of variables
-        p.
-            In this class we will look at many interesting data sets. A data set consists of characteristics recorded on people, places, objects, etc. The characteristics are called #[strong variables] and the people, places, objects, etc. that the information is recorded on are called #[strong observational units]. It is important to identify the #[strong observational units] and also the #[strong variables] for each data set that we will explore in this class.
-
-        h4 Roller Coaster Data
+        a: img(src="/bayes_th.PNG" alt="Bayes", style='width:700px;height:400px;')
 
         p.
 
-        a: img(src="/math105/teddy_bears.PNG" alt="Teddy Bears")
+            In Math 350 you learned about Bayes' theorem. We will review that theorem briefly before we dive into other topics that lead up to Bayesian statistics. As you might have guessed, Bayesian statistics is built on Bayes' theorem.
 
+        p. 
 
-        p.
-            If you have already purchased MyStatLab, go ahead and log into StatCrunch #[+url("https://statcrunch")]
-
-        p.
-            and follow along to the video below to open the RollerCoaster data set.
-
-        p.
-            #[+url("https://media.csuchico.edu/media/Open+Roller+Coaster/0_287lqhl8")]
+            Please take about 20 minutes to read the following article about Bayes' theorem
 
         p.
 
-        a: img(src="/math105/roller_coaster.PNG" alt="Roller Coaster Data")
+            #[+url("https://blogs.scientificamerican.com/cross-check/bayes-s-theorem-what-s-the-big-deal/")]
 
         p.
 
-        +multiplechoice("answer01", "What are the observational units?")
-            option(selected) choose one
-            option State
-            option Roller coasters
-            option Amusement parks
-            option Riders of roller coasters
-            option Type of roller coaster
-
-        p.
-            Without formally defining categorical and quantitative variables, see if you can give an example of each from the roller coaster data set.
-
-        +shortanswer("answer02", "An example of a categorical variable in the roller coaster data set is:", "1")
-
-        +shortanswer("answer03", "An example of a quantitative variable in the roller coaster data set is:", "1")
-
-        p.
-            #[strong Categorical] variables are variables that observations are placed in #[i one of several categories]. For instance, dog breed is a categorical variable because dogs are placed into a breed category like lab, poodle, etc. #[strong Quantitative] variables are variables that are #[i measurements] or #[i counts]. For instance, your weight is a quantitative variable because it is a measurement and the number of siblings that you have is a quantitative variable because it is a count.
+            Bayes' Theorem:
 
         p.
 
-            In addition to specifying whether a variable is quantitative or categorical, we also divide the two types of variables into two groups. #[strong Discrete quantitative] variables represents a count and can only be #[i whole integers] whereas a #[strong continuous quantitative] variable is a measurement so #[i decimals] or #[i fractions] are valid for measurements because they occur along a continuous scale.
+            Suppose that we are interested in which of several events #[i A#[sub 1]],#[i A#[sub 2]] ,...,#[i A#[sub k]] will occur and that we will get to observe some other event #[i B].  If $$\textmd{P}(B|A_{i})$$ is available for each #[i i], then Bayes' theorem is a useful formula for computing the conditional probabilities of the #[i A#[sub i]] events given #[i B].
 
         p.
 
-            Categorical variables can also be divided into 2 categories, #[strong nominal] and #[strong ordinal]. A nominal categorical variable is a categorical variable where there is no natural ordering to the categories. In contrast, a ordinal categorical variable has a natural ordering to the categories. For instance, dog breed is a nominal categorical variable whereas college grade level (Freshman, Sophomore, Junior, Senior) is a ordinal categorical variable.
+            Theorem: Law of total Probability and Bayes' Theorem:
 
-        +multiplechoice("answer04", "Which variaable in the roller coaster data is a continuous quantitative variable?")
-            option(selected) choose one
-            option Construction
-            option Height
-            option Numinversions
-            option Inversions
+            #[+url("https://media.csuchico.edu/media/Math+450-Chapter+2+Bayes/0_9h6v3hs7")]
 
-        +multiplechoice("answer05", "Which variaable in the roller coaster data is a discrete quantitative variable?")
-            option(selected) choose one
-            option Construction
-            option Height
-            option Numinversions
-            option Inversions
+            Suppose that the events #[i A#[sub 1]],#[i A#[sub 2]] ,...,#[i A#[sub k]] form a partition of the space #[i S] and P(#[i A#[sub j]])>0 for #[i j]=1,...,#[i k].  Then, for every event #[i B] in #[i S], $$\textmd{P}(B)=\sum^{k}_{j=1}\textmd{P}(A_{j})\textmd{P}(B|A_{j})$$
 
-        h4 Part 2. Observational studies and experiments
+        p. 
+
+            Theorem Bayes' Theorem
+
+            Let #[i A#[sub 1]],#[i A#[sub 2]] ,...,#[i A#[sub k]] form a partition of the space #[i S] and P(#[i A#[sub j]])>0 for #[i j]=1,...,#[i k].  Then, for every event #[i B] in #[i S], $$S=A_{1}\cup A_{2}\cup \cdots \cup A_{k}$$
+
+            and $$A_{i}\cap A_{j}=\emptyset, i\neq j$$
+
 
         p.
 
-        a: img(src="/math105/observational_experiment.PNG" alt="Observational Studies and Experiments")
+            Suppose that #[i B] is an event, then #[i B]  is the union of $k$ mutually exclusive events: $$B=\left(A_{1}  \cap B\right)\cup\left(A_{2} \cap B\right)\cup \cdots\cup\left(A_{k}\cap B\right)$$
 
-        p.
-            Some questions that a research might want to answer by collecting data might be
+        p. 
 
-        p.
-            1. Do therapy dogs relieve stress before an exam?
-
-        p.
-
-            2. Does a new moisturizer reduce the signs of aging?
+            Thus, $$P(B)=P\left(A_{1}  \cap B\right)\cup P\left(A_{2} \cap B\right)\cup \cdots\cup P\left(A_{k}\cap B\right)$$
 
         p.
 
-            3. Does increasing Vitamin D decrease the chance of breast cancer?
+            If P#[i B]>0, then we have that $$\textmd{P}\left(A_{j}|B\right)=\frac{P(B|A_{j})P(A_{j})}{\sum P(B|A_{i})P(A_{i})}$$
 
         p.
 
-            These are all questions for which researchers would like to establish a cause and effect relationship. For instance, we might want to conclude that Vitamin D causes a reduction in the chance of breast cancer.
+            The conditional probability P(#[i A #[sub j]]|B) is often called the #[strong posterior probability] of #[i A #[sub j]] because it is the probability of #[i A #[sub j]] occurring after we know that A has occurred.  The probability of #[i A #[sub j]] is called the prior probability because P(#[i A #[sub j]]) is the probability of #[i A #[sub j]] occurring before we know the outcome of #[i B].
+
+        h4 Example:
 
         p.
 
-            Two different types of study are available to address the above questions:
+            #[+url("https://media.csuchico.edu/media/Math+450-Chapter+2-Bayes+Example/0_d6kcz4p7")]
 
         p.
 
-            1. Observational studies
+            Suppose that you are walking down the street and notice that the Department of Public Health is giving a free medical test for a certain disease.  The test is 90 percent reliable in the following sense:  If a person has the disease, there is a probability of .9 that the test will yield a positive response; whereas, if a person does not have the disease, there is a probability of .1 that the test will give a positive response.
 
         p.
 
-            2. Experiment
+            Data indicate that your chances of having the disease  are only 1 in 10,000.  However, since the test costs you nothing, and is fast and harmless, you decide to stop and take the test.  A few days later you learn that you had a positive response to the test.  Now, what is the probability that you have the disease?
 
-        p.
+        p. 
+        
+            This example illustrates the idea of Bayes' Theorem.  
 
-            In an #[strong observational study] researchers #[i observe] traits about the subjects without assigning specific treatments to the study.
+        +shortanswer("answer01", "We have a piece of information that we know which is", "2")
 
-        p.
+        +shortanswer("answer02", "and there are (at least) two disjoint events which are", "2")
 
+        +shortanswer("answer03", " What is the probability that, given that the person tested positive for the disease, he actually has the disease?", "1")
 
-            In an #[strong experiment] researchers #[i assign treatments] to the subjects in the study. For instance, the researcher would #[strong randomly assign] inviduals to either a drug or a placebo. The use of #[strong randomness] is extremely important in an experiment because it balances out any confounding variables that may exist.
+        h4 You try it:
 
-        p.
+        p. 
 
-            We can only establish a #[strong cause and effect relationship for experiments] because without randomization there could be other variables that are having an effect on the results. Randomization balances the confounding variables between groups. For instance, we can use randomization to ensure that treatment groups have approximately the same average age and income. Without randomization, a treatment group might consist of older individuals with higher income.
+            In a certain factory, machines I, II, and III are all producing springs of the same length.  Of their production,
+            machines I, II, and III produce 2%, 1%, and 3% defective springs, respectively.  Of the total production of springs in the factory, machine I produces 35%, machine II produces 25%, and machine III produces 40%.  If one spring is selected at random is defective, find the conditional
+            probability that it was produced by machine III.
 
-        p.
-
-            A confounding variables is an extraneous variable that interferes with the research. They can influence the outcome of the study, however, they are not the variables of interest in the study. When there are confounding variables it is not possible to tell if differences between treatment groups is due to the treatment or the confounding variables.
-
-        p.
-
-            Let’s consider the research question does increasing Vitamin D decrease the chance of breast cancer. We have two variables here: Vitamin D increase and development of breast cancer.
-
-        p.
-
-            When we have a research question we want to consider what variable(s) are the explanatory variable(s) and what variable(s) are the response variable(s).
-
-        p.
-
-            To determine which one is which, we want to consider what variable will have an effect on the other variable. Another way to think about it is, what variable comes first? The variable that has an effect on the other variable is the explanatory variable and will come first in a study. The variable that we are interested in measuring the effect of the other variable is the response variable and comes second in time to the explanatory variable. For instance, if we want to examine the effect of exercise on weight loss then exercise is the explanatory variable because that would need to come before we measured weight loss due to exercise. Thus, exercise would be the explantory variable (sometimes referred to as factor) and weight loss would be the response variable.
-
-        p.
-
-            Let's consider again the question does increasing Vitamin D decrease the chance of breast cancer?
-
-        +multiplechoice("answer06", "Which variable is the explanatory variable?")
-            option(selected) choose one
-            option Vitamin D intake
-            option Chance of breast cancer
-            option Women taking Vitamin D
-            option Age
-
-        +multiplechoice("answer07", "Which variable is the explanatory variable?")
-            option(selected) choose one
-            option Vitamin D intake
-            option Chance of breast cancer
-            option Women taking Vitamin D
-            option Age
-
-
-        +shortanswer("answer08", "How would you make this an experiment?", "3")
-
-        +shortanswer("answer09", "Name two possible confounding variables.", "2")
-
-        p.
-            Use the following app to participate in the Variable Types Matching Game. At the end of the game submit your name. If you end up on the leaderboard you will get a special prize.
-
-        p.
-
-            #[+url("https://psu-eberly.shinyapps.io/Variable_Types_Matching_Game/")]
-
-        h4 An example of an observational study: Effectiveness of Hydroxychloroquie as a Treatment for COVID-19
-
-        p.
-
-            In a study to examine hydroxychlorquie (HQ) as a treatment for COVID-19 26 patients were treated with HQ. Of these 26 patients, 20 completed the study. Of these, 6 also received Azithromycin (AZ), an antibiotic. During the 6 day study, patients were sampled for the presence or absence of the COVID-19 virus (PCR positivity). On day 6, most of the 16 conrol patients, about half of hte HQ treated patients, and none of the 6 HQ+AZ patients were PCR postivie. The conclusion was that HQ treatment, especially HQ+AZ treatment is very effective in treating COVID-19. The study was peer-reviewed, however, it was #[i accepted in less than a day.] The graph below shows the three different groups of patients. The y-axis is #[strong Percentage of patients with PCR-positive samples].
-
-        p.
-
-        a: img(src="/math105/covid_hq_graph.PNG" alt="Covid HQ graph")
-
-        +shortanswer("answer10", "Write a few sentences that describe the above graph.", "4")
-
-        p.
-
-            #[strong Confounding variables]: In an ideal clinical trial study, the control group and treatment group should be as similar as possible. Patients should be of similar age and gender ratio, be equally sick at the start, and analyzed in the same way. Ideally, the only difference between the 2 groups should be weather or not the patient received the treatment. Of course, even randomization of treatment groups cannot guarantee that, however, randomization does guarantee no systematic differences between treatment groups. In this study, there were a number of possible confounding variables due to the nature of this #[strong observational study].
-
-        p.
-
-            In this case, the patients were recruited at different centers. The HQ treated patients were all in Marseille, while controls could have come from other centers.
-
-
-        +shortanswer("answer11", "Why might the location of the treatments be a confounding variable?", "4")
-
-        p.
-
-            The patients were not randomly assigned to treatment groups. In fact, patients got to decide what treatment group they wanted to be part of.
-
-        +shortanswer("answer12", "Why might patients choice of treatment be a confounding variable?", "4")
-
-        p.
-
-            Additionally, the patients in the control group (group that didn't get either treatment) had some very young patients.
-
-        +shortanswer("answer13", "Why might patients' age be a confounding variable?", "4")
-
-        p.
-
-            If you were interested in learning more about this you can read the initial paper at
-
-        p.
-
-             #[+url("https://www.sciencedirect.com/science/article/pii/S0924857920300996?via%3Dihub")]
-
-        p.
-
-            And an article of the critique of the study
-
-            #[+url("https://scienceintegritydigest.com/2020/03/24/thoughts-on-the-gautret-et-al-paper-about-hydroxychloroquine-and-azithromycin-treatment-of-covid-19-infections/]")]
+        +shortanswer("answer04", " If one spring selected at random is defective, find the conditional probability that it was produced by maching III.", "1")  
 
         button(class="btn btn-md btn-primary" type="submit") submit

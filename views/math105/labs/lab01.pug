@@ -8,7 +8,6 @@ include ../../mixins/multiplechoice.pug
 
 block content
     +title("MATH 105 Lab 01 Introduction to Statistics")
-    +warning("Due date 2020-06-24 @ 23:59")
     +warning("Leaving or refreshing this page might lose your work.")
 
     form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
@@ -30,7 +29,7 @@ block content
 
         p.
 
-        a: img(src="/math105/teddy_bears.PNG" alt="Teddy Bears")
+        a: img(src="/teddy_bears.PNG" alt="Teddy Bears")
 
 
         p.
@@ -44,10 +43,10 @@ block content
 
         p.
 
-        a: img(src="/math105/roller_coaster.PNG" alt="Roller Coaster Data")
+        a: img(src="/roller_coaster.PNG" alt="Roller Coaster Data", style='width:600px;height:250px;')
 
         p.
-
+        
         +multiplechoice("answer01", "What are the observational units?")
             option(selected) choose one
             option State
@@ -63,24 +62,24 @@ block content
 
         +shortanswer("answer03", "An example of a quantitative variable in the roller coaster data set is:", "1")
 
-        p.
-            #[strong Categorical] variables are variables that observations are placed in #[i one of several categories]. For instance, dog breed is a categorical variable because dogs are placed into a breed category like lab, poodle, etc. #[strong Quantitative] variables are variables that are #[i measurements] or #[i counts]. For instance, your weight is a quantitative variable because it is a measurement and the number of siblings that you have is a quantitative variable because it is a count.
+        p. 
+            #[strong Categorical] variables are variables where characteristics are placed in #[i one of several categories]. For instance, dog breed is a categorical variable because dogs are placed into a breed category like lab, poodle, etc. #[strong Quantitative] variables are variables that are #[i measurements] or #[i counts]. For instance, your weight is a quantitative variable because it is a measurement and the number of siblings that you have is a quantitative variable because it is a count.
 
         p.
-
+            
             In addition to specifying whether a variable is quantitative or categorical, we also divide the two types of variables into two groups. #[strong Discrete quantitative] variables represents a count and can only be #[i whole integers] whereas a #[strong continuous quantitative] variable is a measurement so #[i decimals] or #[i fractions] are valid for measurements because they occur along a continuous scale.
 
         p.
 
             Categorical variables can also be divided into 2 categories, #[strong nominal] and #[strong ordinal]. A nominal categorical variable is a categorical variable where there is no natural ordering to the categories. In contrast, a ordinal categorical variable has a natural ordering to the categories. For instance, dog breed is a nominal categorical variable whereas college grade level (Freshman, Sophomore, Junior, Senior) is a ordinal categorical variable.
-
+        
         +multiplechoice("answer04", "Which variaable in the roller coaster data is a continuous quantitative variable?")
             option(selected) choose one
             option Construction
             option Height
             option Numinversions
             option Inversions
-
+                
         +multiplechoice("answer05", "Which variaable in the roller coaster data is a discrete quantitative variable?")
             option(selected) choose one
             option Construction
@@ -92,7 +91,7 @@ block content
 
         p.
 
-        a: img(src="/math105/observational_experiment.PNG" alt="Observational Studies and Experiments")
+        a: img(src="/observational_experiment.PNG" alt="Observational Studies and Experiments")
 
         p.
             Some questions that a research might want to answer by collecting data might be
@@ -135,7 +134,7 @@ block content
 
         p.
 
-            We can only establish a #[strong cause and effect relationship for experiments] because without randomization there could be other variables that are having an effect on the results. Randomization balances the confounding variables between groups. For instance, we can use randomization to ensure that treatment groups have approximately the same average age and income. Without randomization, a treatment group might consist of older individuals with higher income.
+            We can only establish a #[strong cause and effect relationship for experiments] because without randomization there could be other variables that are having an effect on the results. Randomization balances the confounding variables between groups. For instance, we can use randomization to ensure that treatment groups have approximately the same average age and income. Without randomization, a treatment group might consist of older individuals with higher income. 
 
         p.
 
@@ -171,13 +170,13 @@ block content
             option Women taking Vitamin D
             option Age
 
-
+        
         +shortanswer("answer08", "How would you make this an experiment?", "3")
 
         +shortanswer("answer09", "Name two possible confounding variables.", "2")
 
         p.
-            Use the following app to participate in the Variable Types Matching Game. At the end of the game submit your name. If you end up on the leaderboard you will get a special prize.
+            Use the following app to participate in the Variable Types Matching Game. At the end of the game submit your name. If you make it to the top 100 quickest times with 100% then you will get a special prize.
 
         p.
 
@@ -185,51 +184,65 @@ block content
 
         h4 An example of an observational study: Effectiveness of Hydroxychloroquie as a Treatment for COVID-19
 
-        p.
+        p. 
 
             In a study to examine hydroxychlorquie (HQ) as a treatment for COVID-19 26 patients were treated with HQ. Of these 26 patients, 20 completed the study. Of these, 6 also received Azithromycin (AZ), an antibiotic. During the 6 day study, patients were sampled for the presence or absence of the COVID-19 virus (PCR positivity). On day 6, most of the 16 conrol patients, about half of hte HQ treated patients, and none of the 6 HQ+AZ patients were PCR postivie. The conclusion was that HQ treatment, especially HQ+AZ treatment is very effective in treating COVID-19. The study was peer-reviewed, however, it was #[i accepted in less than a day.] The graph below shows the three different groups of patients. The y-axis is #[strong Percentage of patients with PCR-positive samples].
 
         p.
 
-        a: img(src="/math105/covid_hq_graph.PNG" alt="Covid HQ graph")
+        a: img(src="/covid_hq_graph.PNG" alt="Covid HQ graph")
 
         +shortanswer("answer10", "Write a few sentences that describe the above graph.", "4")
 
-        p.
+        p. 
 
-            #[strong Confounding variables]: In an ideal clinical trial study, the control group and treatment group should be as similar as possible. Patients should be of similar age and gender ratio, be equally sick at the start, and analyzed in the same way. Ideally, the only difference between the 2 groups should be weather or not the patient received the treatment. Of course, even randomization of treatment groups cannot guarantee that, however, randomization does guarantee no systematic differences between treatment groups. In this study, there were a number of possible confounding variables due to the nature of this #[strong observational study].
+            #[strong Confounding variables]: In an ideal clinical trial study, the control group and treatment group should be as similar as possible. Patients should be of similar age and gender ratio, be equally sick at the start, and analyzed in the same way. Ideally, the only difference between the 2 groups should be weather or not the patient received the treatment. Of course, even randomization of treatment groups cannot guarantee that, however, randomization does guarantee no systematic differences between treatment groups. In this study, there were a number of possible confounding variables due to the nature of this #[strong observational study]. 
 
-        p.
+        p. 
 
-            In this case, the patients were recruited at different centers. The HQ treated patients were all in Marseille, while controls could have come from other centers.
+            In this case, the patients were recruited at different centers. The HQ treated patients were all in Marseille, while controls could have come from other centers. 
 
 
         +shortanswer("answer11", "Why might the location of the treatments be a confounding variable?", "4")
 
-        p.
+        p. 
 
-            The patients were not randomly assigned to treatment groups. In fact, patients got to decide what treatment group they wanted to be part of.
+            The patients were not randomly assigned to treatment groups. In fact, patients got to decide what treatment group they wanted to be part of. 
 
         +shortanswer("answer12", "Why might patients choice of treatment be a confounding variable?", "4")
+        
+        p. 
 
-        p.
-
-            Additionally, the patients in the control group (group that didn't get either treatment) had some very young patients.
+            Additionally, the patients in the control group (group that didn't get either treatment) had some very young patients. 
 
         +shortanswer("answer13", "Why might patients' age be a confounding variable?", "4")
 
-        p.
+        p. 
 
             If you were interested in learning more about this you can read the initial paper at
 
-        p.
+        p. 
 
              #[+url("https://www.sciencedirect.com/science/article/pii/S0924857920300996?via%3Dihub")]
 
-        p.
+        p. 
 
             And an article of the critique of the study
 
             #[+url("https://scienceintegritydigest.com/2020/03/24/thoughts-on-the-gautret-et-al-paper-about-hydroxychloroquine-and-azithromycin-treatment-of-covid-19-infections/]")]
 
         button(class="btn btn-md btn-primary" type="submit") submit
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
