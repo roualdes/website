@@ -1,10 +1,10 @@
-extends lab
-include ./mixins/url.pug
-include ./mixins/title.pug
-include ./mixins/userinfo.pug
-include ./mixins/warning.pug
-include ./mixins/shortanswer.pug
-include ./mixins/multiplechoice.pug
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/shortanswer.pug
+include ../../mixins/multiplechoice.pug
 
 block content
     +title("MATH 105 Lab 01 Introduction to Statistics")
@@ -63,7 +63,7 @@ block content
         +shortanswer("answer03", "An example of a quantitative variable in the roller coaster data set is:", "1")
 
         p. 
-            #[strong Categorical] variables are variables that observations are placed in #[i one of several categories]. For instance, dog breed is a categorical variable because dogs are placed into a breed category like lab, poodle, etc. #[strong Quantitative] variables are variables that are #[i measurements] or #[i counts]. For instance, your weight is a quantitative variable because it is a measurement and the number of siblings that you have is a quantitative variable because it is a count.
+            #[strong Categorical] variables are variables where characteristics are placed in #[i one of several categories]. For instance, dog breed is a categorical variable because dogs are placed into a breed category like lab, poodle, etc. #[strong Quantitative] variables are variables that are #[i measurements] or #[i counts]. For instance, your weight is a quantitative variable because it is a measurement and the number of siblings that you have is a quantitative variable because it is a count.
 
         p.
             
