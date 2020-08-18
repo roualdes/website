@@ -3,13 +3,14 @@ include ./mixins/url.pug
 include ./mixins/title.pug
 include ./mixins/userinfo.pug
 include ./mixins/warning.pug
+include ./mixins/shortanswer.pug
+include ./mixins/multiplechoice.pug
 
 block content
     +title("MATH 105 Lab 04 Normal Distribution Introduction")
-    +warning("Due date 2020-06-24 @ 23:59")
     +warning("Leaving or refreshing this page might lose your work.")
 
-    form(action="/math105labs/submit" method="post" class="needs-validation" novalidate)
+    form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
         input(type="hidden" name="_csrf" value= csrfToken)
         input(type="hidden" name="lab" value= labId)
         // Due date is in UTC
@@ -30,74 +31,43 @@ block content
 
         p.
 
-        div(class="form-group")
-            label(for="answer01")
-                | Suppose we want to model blood pressure using the normal model. What must be true of the shape of the          | distribution if we want to | use the normal distribution model the variable?
-            select(class="form-control" id="answer01" name="answer01")
-                option(selected) choose one
-                option The distribution must be skewed right.
-                option The distribution must be skewed left.
-                option The distribution must be symmetric and bell-shaped.
-                option The distribution must be uniform.
+        +multiplechoice("answer01", "Suppose we want to model blood pressure using the normal model. What must be true of the shape of the distribution if we want to use the normal distribution model the variable?")
+            option(selected) choose one
+            option The distribution must be skewed right.
+            option The distribution must be skewed left.
+            option The distribution must be symmetric and bell-shaped.
+            option The distribution must be uniform.
 
         p. 
 
             Take a few minutes to examine the distribution of the two variables in this data set (Systolic BP and Diastolic BP).
 
-        div(class="form-group")
-            label(for="answer02")
-                | Suppose we want to model blood pressure using the normal model. What must be true of the shape of the           | distribution if we want to use the normal distribution model the variable?
-            select(class="form-control" id="answer02" name="answer02")
-                option(selected) choose one
-                option Systolic BP.
-                option Diastolic BP.
+        +multiplechoice("answer02", "Suppose we want to model blood pressure using the normal model. What must be true of the shape of the distribution if we want to use the normal distribution model the variable?")
+            option(selected) choose one
+            option Systolic BP.
+            option Diastolic BP.
 
+        +shortanswer("answer03", "Explain your reasoning for the variable that you picked.", "2")
 
-        div(class="form-group")
-            label(for="answer03")
-                | Explain your reasoning for the variable that you picked.
-            textarea(name="answer03" class="form-control" id="answer03" rows="3")
+        p. 
 
-        div(class="form-group")
-            label(for="answer04")
-                |Mean:
-            textarea(name="answer04" class="form-control" id="answer04" rows="1")
+            Report the mean and stndard deviation of diastolic blood pressure.
 
-        div(class="form-group")
-            label(for="answer5")
-                |Standard Deviation:
-            textarea(name="answer5" class="form-control" id="answer5" rows="1")
+        +shortanswer("answer04", "Mean:", "1")
 
-        div(class="form-group")
-            label(for="answer6")
-                | Recall that you were asked to measure your diastolic blood pressure last week. Was you measurement less than or | greater than the mean calculated above?
-            textarea(name="answer6" class="form-control" id="answer6" rows="1")
+        +shortanswer("answer05", "Standard Deviation:", "1")
 
-        div(class="form-group")
-            label(for="answer7")
-                | Calculate the number of standard deviations away from the mean your blood pressure is.
-            textarea(name="answer7" class="form-control" id="answer7" rows="1")
+        +shortanswer("answer06", "Recall that you were asked to measure your diastolic blood pressure last week. Was you measurement less than or greater than the mean calculated above?", "1")
 
-        div(class="form-group")
-            label(for="answer8")
-                | Calculate the number of standard deviations away from the mean your blood pressure is.
-            textarea(name="answer8" class="form-control" id="answer8" rows="1")
+        +shortanswer("answer07", "Calculate the number of standard deviations away from the mean your blood pressure is.", "1")
 
-        div(class="form-group")
-            label(for="answer9")
-                | Now calculate a z-score by taking the difference between your values and the mean and then dividing by the     | standard deviation.
-            textarea(name="answer9" class="form-control" id="answer9" rows="1")
+        +shortanswer("answer08", "Now calculate a z-score by taking the difference between your blood pressure and the mean and then dividing by the standard deviation.", "1")
 
-        div(class="form-group")
-            label(for="answer9")
-                | Now calculate a z-score by taking the difference between your values and the mean and then dividing by the     | standard deviation.
-            textarea(name="answer9" class="form-control" id="answer9" rows="1")
+        p.
+
+            If your blood pressure value is less than the mean then your z-score should be negative and if it is greater than the mean then your z-score should be positive.
         
-        div(class="form-group")
-            label(for="answer10")
-                | Interpret the z-score for your blood pressure. Write a sentence in context of the problem.
-            textarea(name="answer10" class="form-control" id="answer10" rows="2")
-        
+        +shortanswer("answer09", "Interpret the z-score for your blood pressure. Write a sentence in context of the problem.", "1")        
 
         h4 Part 2 Flashlight batteries
 
@@ -117,46 +87,27 @@ block content
 
             Now make a histogram of the simulated data. For convenience, check the box that says #[i values above the bar]. Use the histogram to answer the following questions.
             
-        div(class="form-group")
-            label(for="answer11")
-                | What is the probability that a battery will last longer than 8 hours?
-            textarea(name="answer11" class="form-control" id="answer11" rows="1")
+        +shortanswer("answer10", "What is the probability that a battery will last longer than 8 hours?", "1") 
 
-        div(class="form-group")
-            label(for="answer12")
-                | What is the probability that a battery will last less than 4.5 hours?
-            textarea(name="answer12" class="form-control" id="answer12" rows="1")
+        +shortanswer("answer11", "What is the probability that a battery will last less than 4.5 hours?", "1") 
+        
+        +shortanswer("answer12", "What is the probability that a battery will last between 5 and 7.5 hours?", "1") 
             
-        div(class="form-group")
-            label(for="answer13")
-                | What is the probability that a battery will last between 5 and 7.5 hours?
-            textarea(name="answer13" class="form-control" id="answer13" rows="1")
-
         p.
 
             Although simulation is a valid way to solve normal distribution problems, we can also use the StatCrunch normal distribution app to solve the same problems as above. Rather than using a histogram to determine the probabilities that we determined above, we can use the actual normal distribution model and the app will compute the area under the curve. It is important to determine the correct side of the curve. You should read the problem carefully and look for key words such as #[strong less than or greater than].
 
+        p.
+
             #[+url("https://media.csuchico.edu/media/simulate+battery+lifetimes/0_v46wf9j4")]
 
-        div(class="form-group")
-            label(for="answer14")
-                | What is the probability that a battery will last longer than 8 hours?
-            textarea(name="answer14" class="form-control" id="answer14" rows="1")
+        +shortanswer("answer13", "What is the probability that a battery will last longer than 8 hours?", "1") 
 
-        div(class="form-group")
-            label(for="answer15")
-                | What is the probability that a battery will last less than 4.5 hours?
-            textarea(name="answer15" class="form-control" id="answer15" rows="1")
-            
-        div(class="form-group")
-            label(for="answer16")
-                | What is the probability that a battery will last between 5 and 7.5 hours?
-            textarea(name="answer16" class="form-control" id="answer16" rows="1")
+        +shortanswer("answer14", "What is the probability that a battery will last less than 4.5 hours?", "1") 
+        
+        +shortanswer("answer15", "What is the probability that a battery will last between 5 and 7.5 hours?", "1") 
 
-        div(class="form-group")
-            label(for="answer17")
-                | Compare your answers with the answers you got simulating data from the normal distribution.
-            textarea(name="answer17" class="form-control" id="answer17" rows="1")
+        +shortanswer("answer16", "Compare your answers with the answers you got simulating data from the normal distribution.", "2") 
 
         p.
 

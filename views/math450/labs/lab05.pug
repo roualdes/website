@@ -1,0 +1,200 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/shortanswer.pug
+include ../../mixins/multiplechoice.pug
+
+
+block content
+    +title("MATH 450 Chapter 3-Part 3")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Probability-The Nuts and Bolts of Bayesian Inference-Continued
+
+        p.
+
+            #[strong Marginal Pdfs for Continuous Random Variables]:
+
+        p.
+
+            The notion of marginal pdfs in connection with discrete random variables was already introduced.  An analogous relationship holds in the continuous case.  Integration replaces the summation notation.
+
+        p. 
+
+            #[strong Theorem]
+
+        p.
+
+            Suppose #[i X] and #[i Y] are jointly continuous with joint pdf \(f_{X,Y}(x,y)\).  Then the marginal pdfs, \(f_{X}(x)\) and \(f_{Y}(y)\) are given by $$f_{X}(x)=\int^{\infty}_{-\infty}f(x,y)dy$$ 
+
+        p.
+
+            for \(-\infty < x < \infty\)
+
+        p.
+
+            and
+
+        p.
+
+            $$f_{Y}(y)=\int^{\infty}_{-\infty}f(x,y)dx$$
+
+        p.
+
+            for \(-\infty < y < \infty\)
+
+
+        p.
+
+            #[strong Example]
+
+        p.
+
+            Suppose that #[i X] and #[i Y] have a continuous joint distribution for which the joint p.d.f. is defined \(f_{X,Y}(x,y)=\frac{3}{2}y^{2}\) for \(0 \leq x \leq 2\) and \(0 \leq y \leq 1\) and 0 otherwise.
+
+        p.
+
+            Determine the marginals for #[i X] and #[i Y]
+
+        p.
+            #[+url("https://media.csuchico.edu/media/Math+450+350+Marginals/0_gxuuvpw9")]
+
+        p.
+
+            #[strong You try it]:
+
+        p.
+
+            Find the marginal pds for each joint pdf listed below:
+
+        p.
+
+            1. \(f_{X,Y}(x,y)=\frac{1}{2}\) for \(0 \leq x \leq 2\) and \(0 \leq y \leq 1\)
+
+        p.
+
+            \(f_{X}(x)\)
+        +shortanswer("answer01", "", "1")
+
+        p.
+
+            \(f_{Y}(y)\)
+        +shortanswer("answer02", "", "1")
+
+        p.
+
+        p.
+
+            2. \(f_{X,Y}(x,y)=\frac{2}{3}(x+2y)\) for \(0\leq x\leq 1\) and \(0\leq y \leq 1\)
+
+        p.
+
+            \(f_{X}(x)\)
+        +shortanswer("answer03", "", "1")
+
+        p.
+
+            \(f_{Y}(y)\)
+        +shortanswer("answer04", "", "1")
+
+        p.
+
+            #[strong Independent of Random Variables]
+
+        p.
+
+            The concept of independent events that was introduced in your previous class leads quite naturally to a similar definition for independence for random variables.
+
+        p.
+
+            Recall that two events are independent if learning the outcome of one event does not change the probability of the occurrence of the other event.  Two random variables #[i X] and #[i Y] are #[i independent] if, for every two sets #[i A] and #[i B] of real numbers, \(P(X\in A\)  and \(Y \in B\))=P\((X\in A)P(Y\in B)\).
+
+        p.
+
+            If #[i X] and #[i Y] are independent, then for all real numbers #[i x] and #[i y], it must be true that \(P(X \leq x\) and \(Y \leq y)\)=\(P(X\leq x)P(Y\leq y)\)
+
+        p.
+
+            It can be shown that if the above equation is satisfied for all values of #[i x] and #[i y], then #[i X] and #[i Y] must be independent.
+
+        p.
+
+
+            If \(f_{1}\) and \(f_{2}\) are the marginal p.f.'s or p.d.f's of #[i X] and #[i Y], respectively, then #[i X] and #[i Y] are independent if and only if the following is satisfied for all real numbers #[i x] and #[i y]  $$f_{X,Y}(x,y)=f_{X}(x)f_{Y}(y)$$
+
+        p.
+
+            #[strong Example]
+
+        p.
+
+            A joint p.d.f. is given by $$12xy(1-y)$$
+
+        p. 
+
+            where both x and y are bounded between 0 and 1.
+
+        p.
+            #[+url("https://media.csuchico.edu/media/Math+450+350+Independence/0_n6i57pug")]
+
+        +multiplechoice("answer05", "Are X and Y independent?")
+            option(selected) choose one
+            option Yes
+            option No
+            option I give up (then you might want to watch the video)
+
+        p.
+
+           Suppose that #[i X] and #[i Y] have a continuous joint distribution for which the joint p.d.f. is defined as follows: $$f_{X,Y}(x,y)\frac{3}{2}y^{2}$$
+
+        p.
+
+            for \(0\leq x\leq 2)\) and \(0\leq y\leq 1)\)
+
+        p. 
+
+        +multiplechoice("answer06", "Are X and Y independent?")
+            option(selected) choose one
+            option Yes
+            option No
+            option I give up (for reals this time)
+
+        p.
+
+            #[strong Independence of Random Variables]
+
+        p.
+
+            Just like with the independence of more than 2 events we can extend the concept of more than 2 independent random variables very easily.
+
+        p.
+
+            The #[i n] random variables \(X_{1},...,X_{n}\) are said to be #[i independent] if there are functions \(g_{1}(x_{1}),g_{2}(x_{2}),...,g_{n}(x_{n})\) such that for every \(x_{1},x_{2},...,x_{n}\)
+            $$f_{X_{1},X_{2},...,X_{n}}\left(x_{1},x_{2},...,x_{n}\right)=g_{1}(x_{1})g_{2}(x_{2})\cdots g_{n}(x_{n})$$
+
+        p.
+
+            #[strong Random Samples]
+
+        p. 
+
+            The above definition of independence as it applies to having $n$ random variables having marginal pdfs that might be quite different.  A special case of this occurs for virtually every set of data collected for statistical analysis.  Suppose an experimenter takes a set of #[i n] measurements \(x_{1},...,x_{n}\), under the same conditions.
+
+        p.
+
+            #[strong Definition]
+
+        p.
+
+            Let \(X_{1},...,X_{n}\) be a set of #[i n] independent random variables, all having the same pdf.  Then \(X_{1},...,X_{n}\) are said to be #[i random sample of size n].
+
+        button(class="btn btn-md btn-primary" type="submit") submit

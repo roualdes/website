@@ -1,0 +1,123 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/shortanswer.pug
+include ../../mixins/multiplechoice.pug
+
+block content
+    +title("MATH 450 Chapter 3-Part 1")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Probability-The Nuts and Bolts of Bayesian Inference
+
+        p.
+
+            In Bayesian statistics, we formulate models in terms of entities called #[ iprobability distributions]. This chapter will largely be review since you have learned about probability distributions in other classes.
+
+        p.
+
+            Before we look out the window in the morning or get our exam results back we are uncertain of the world that lies in wait. To plan, and make sense of things we want to use a suitable framework to describe the uncertainty inherent in a range of situations. In probability theory, we describe the behaviour of \textit{random variables}. This is a statistical term for variables that associate different numeric values with each of the possible outcomes of some random process. A random process is simply a process whose outcome cannot be perfectly known ahead of time (although it may be quite predictable). So for a coin flip we may take on a the value of 1 if it lands head and 0 for tails. Because the coin flip can produce only #[i countable] number of outcomes, #[i X] is a discrete random variable. By contrast suppose we measure the weight of an individual, #[i Y]. In this case #[i Y] is a continuous random variable because in principle it can take on any positive real number.
+
+        h4 What makes a probability distribution valid?
+
+        p.
+
+            Imagine that we enter a lottery, where we select a number from 1 to 100, to have a chance of winning $1000. We suppose that in the lottery only one ball is drawn and it is fair, meaning that all numbers are equally likely to win. Although we have not stated this world view in mathematical notation, we have without realising it formulated a valid probability distribution for the number drawn in the lottery. The outcome of the lottery is an example of a discrete probability distribution since the variable we measure is confined to a set of values. 
+
+        +shortanswer("answer01", " What are the two defining characteristics that make a probability distribution valid?", "4") 
+
+        h4 The mean of a distribution
+
+        p.
+
+            A popular way of summarizing a distribution is by its #[i mean] which is a measure of central tendency for a distribution. More intuitively, a mean or #[i expected value] of a distribution is the long-run average value that would be obtained if we sampled from it an infinite number of times.
+
+        p.
+
+            The method to calculate the mean of a distribution depends on whether it is #[i discrete] or #[i continuous] in nature. However, the concept is essentially the same in both cases. The mean is calculated as the weighted sum for discrete variables or integral for continuous variables across all potential values of the random variable where the weights are provided by the probability distribution. This results in the following expressions for the mean of a discrete variable and continuous variable, respectively: $$E(X)=\sum_{all X} xP(X=x)$$ $$E(X)=\int_{all X} x f_{X}(x)$$
+
+            In the two expressions, #[ ix] is any one of the discrete set or continuum, of possible values for the random variable #[i X].
+
+        h4 Example
+
+        p.
+
+            Consider the below probability distribution: 
+
+        a: img(src="/math105/example_prob_dist.PNG" alt="Probability Distribution", style='width:400px;height:200px;')
+
+        +shortanswer("answer02", " Explain why this is a valid probability distribution", "3")
+
+        +shortanswer("answer03", " What is the probability tht 0.2<=X<-0.5?", "1")
+
+        +shortanswer("answer04", " Find the mean of the distribution", "1")
+
+        +shortanswer("answer05", "What is the median of the distribution?", "1")
+
+        h4 Generalising the probability distributions to two dimensions
+
+        p.
+
+            Life is usually more complex than one variable can describe. Many times we need to model a number of processes whose results are interdependent. We begin by considering the outcomes of two measurements to introduce the mechanics of two-dimensional probability distributions.
+
+        p.
+
+            In this section we extend the properties of distribution functions from one random variable to two random variables.  We will look at the joint d.f. for two discrete variables and also two continuous variables.
+
+        h4 Discrete Joint pdfs
+
+        p.
+
+            Suppose that a given experiment involves two random variables, #[i X] and #[i Y], each of which has a discrete distribution.  If both #[i X] and #[i Y] have discrete distributions with a finite possible of values, then there will be a finite number of different values (#[i x],#[i y]).  If there are infinite number of different possible values for either #[i X] or #[i Y] then there will be an infinite number of possible values (#[i x],#[i y]).
+
+        p.
+        
+            The #[i joint probability function], or the #[i joint] p.d.f. of #[i X] and #[i Y] is defined as the function #[i f] such that for every point (x,y) in the xy-plane, $$f_{X,Y}(x,y)=\textmd{Pr}(X=x \:\textmd{and}\: Y=y)$$.
+
+        p.
+
+            If (#[i x],#[i y]) is not one of the possible values of the pair of random variables (#[i X],#[i Y]), then it is clear that f(x,y)=0.  Also, since there can be at most countable pairs (x,y) with \(f_{X,Y}(x,y)>0\) $$\sum_{\textmd{All}(x,y)}f_{X,Y}(x,y)=1$$
+
+        h4 Example
+
+        p.
+
+            Suppose that in an electric display sign there are three light bulbs in the first row and four light bulbs in the second row.  Let #[i X] denote the number of bulbs in the first row that will be burned out at a specified time, and let #[i Y] denote the number of bulbs in the second row that will be burned out by the same time.  Suppose that the joint p.f. of #[i X] and #[i Y] is as specified in the following table: 
+
+        p.
+
+        a: img(src="/math105/light_bulbs.PNG" alt="Light Bulb Example", style='width:300px;height:300px;')
+
+        +shortanswer("answer06", "Calculate P(X=2).", "1")
+
+        +shortanswer("answer07", "Calculate P(Y>=2).", "1")
+
+        +shortanswer("answer08", "Calculate P(X<=2 and Y<=2).", "1")
+
+        +shortanswer("answer09", "Calculate P(X>Y).", "1")
+
+        h4 Marginal Distributions for Discrete Random Variables
+    
+        p.
+
+            #[strong Theorem] Suppose that \(f_{X,Y}(x,y)\) is some joint pdf of the discrete random variables #[i X] and #[i Y].  Then $$f_{X}(x)=\sum_{All\hspace{.1in}y}f_{X,Y}(x,y)$$ and $$f_{Y}(y)=\sum_{All\hspace{.1in}x}f_{X,Y}(x,y)$$.
+
+        p.
+
+            An individual pdf obtained by summing a joint pdf over all values of the other random variable is called a #[i marginal pdf].
+
+        p.
+
+        +shortanswer("answer10", "For the above example give the marginal pdfs of #[i X].", "2")
+   
+
+        button(class="btn btn-md btn-primary" type="submit") submit

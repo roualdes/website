@@ -8,7 +8,6 @@ include ../../mixins/multiplechoice.pug
 
 block content
     +title("MATH 105 Lab 02 Show me the data")
-    +warning("Due date 2020-06-24 @ 23:59")
     +warning("Leaving or refreshing this page might lose your work.")
 
     form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
@@ -82,9 +81,9 @@ block content
             Now, let’s add a state to the graph to compare to California.
             #[+url("https://media.csuchico.edu/media/Scatterplot+2+states/0_nn6mr80v")]
 
-        +shortanswer("answer03", "Write a few sentences describing the graph for California. Consider using descriptive words such as gradual, abrupt, linear, exponential, steeply climbing, decreasing, etc.", "4")
+        +shortanswer("answer03", "Write a few sentences describing the graph you created above. Make sure that you compare California to the state that you picked.", "4")
 
-        +shortanswer("answer04", "What do you think makes it hard to compare California to a state like Alabama when looking at the variable number of cases?", "2")
+        +shortanswer("answer04", "What do you think makes it hard to compare California to other states when looking at the variable number of cases?", "2")
 
         p.
             Because California has such a large population, it makes
@@ -121,7 +120,7 @@ block content
 
         p.
 
-        The Georgia Department of Health released a graph that showed the top five Georgia counties with the greatest number of cases of coronavirus from April 28 to May 9. Looking at the graph (below) it appears to show a steady decline in case for the counties.
+            The Georgia Department of Health released a graph that showed the top five Georgia counties with the greatest number of cases of coronavirus from April 28 to May 9. Looking at the graph (below) it appears to show a steady decline in case for the counties. 
 
         a: img(src="/math105/covid_graph.PNG" alt="Covid Georgia graph")
 
