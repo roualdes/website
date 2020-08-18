@@ -52,7 +52,7 @@ app.use(passwordless.sessionSupport());
 app.use(passwordless.acceptToken({enableOriginRedirect: true}));
 app.use(favicon(__dirname + '/public/favicon/er.ico'));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/math105')));
 
 // init passwordless
 passwordless.init(new LokiTokenStore('tokens.json'));
