@@ -5,6 +5,10 @@ include ../../mixins/userinfo.pug
 include ../../mixins/warning.pug
 include ../../mixins/shortanswer.pug
 include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
+
+block head
+    +katex()
 
 block content
     +title("MATH 450 Chapter 4-Part 1")
@@ -19,7 +23,7 @@ block content
 
         h4 Likelihoods
 
-        p. 
+        p.
 
             This section introduces us to the idea of likelihood.
 
@@ -77,7 +81,7 @@ block content
 
         p.
 
-        a: img(src="/math105/max_likelihood.PNG" alt="Max Likelihood graph")    
+        a: img(src="/math105/max_likelihood.PNG" alt="Max Likelihood graph")
 
         p.
 
@@ -113,7 +117,7 @@ block content
             for #[i x]=0,1,2,....
 
         p.
-        
+
             #[+url("https://media.csuchico.edu/media/Math+450+MLE+Poisson/0_qax11lsw")]
 
         p.

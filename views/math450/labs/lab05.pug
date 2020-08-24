@@ -5,7 +5,10 @@ include ../../mixins/userinfo.pug
 include ../../mixins/warning.pug
 include ../../mixins/shortanswer.pug
 include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
 
+block head
+    +katex()
 
 block content
     +title("MATH 450 Chapter 3-Part 3")
@@ -28,13 +31,13 @@ block content
 
             The notion of marginal pdfs in connection with discrete random variables was already introduced.  An analogous relationship holds in the continuous case.  Integration replaces the summation notation.
 
-        p. 
+        p.
 
             #[strong Theorem]
 
         p.
 
-            Suppose #[i X] and #[i Y] are jointly continuous with joint pdf \(f_{X,Y}(x,y)\).  Then the marginal pdfs, \(f_{X}(x)\) and \(f_{Y}(y)\) are given by $$f_{X}(x)=\int^{\infty}_{-\infty}f(x,y)dy$$ 
+            Suppose #[i X] and #[i Y] are jointly continuous with joint pdf \(f_{X,Y}(x,y)\).  Then the marginal pdfs, \(f_{X}(x)\) and \(f_{Y}(y)\) are given by $$f_{X}(x)=\int^{\infty}_{-\infty}f(x,y)dy$$
 
         p.
 
@@ -139,7 +142,7 @@ block content
 
             A joint p.d.f. is given by $$12xy(1-y)$$
 
-        p. 
+        p.
 
             where both x and y are bounded between 0 and 1.
 
@@ -160,7 +163,7 @@ block content
 
             for \(0\leq x\leq 2)\) and \(0\leq y\leq 1)\)
 
-        p. 
+        p.
 
         +multiplechoice("answer06", "Are X and Y independent?")
             option(selected) choose one
@@ -185,7 +188,7 @@ block content
 
             #[strong Random Samples]
 
-        p. 
+        p.
 
             The above definition of independence as it applies to having $n$ random variables having marginal pdfs that might be quite different.  A special case of this occurs for virtually every set of data collected for statistical analysis.  Suppose an experimenter takes a set of #[i n] measurements \(x_{1},...,x_{n}\), under the same conditions.
 

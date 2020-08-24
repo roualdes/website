@@ -3,7 +3,13 @@ include ../../mixins/url.pug
 include ../../mixins/title.pug
 include ../../mixins/userinfo.pug
 include ../../mixins/warning.pug
-include ../../mixins/hlcode.pug
+include ../../mixins/highlighting.pug
+include ../../mixins/code.pug
+include ../../mixins/katex.pug
+
+block head
+    +katex()
+    +highlighting()
 
 block content
     +title("Lab 00 Showcase")
@@ -33,7 +39,7 @@ block content
         p.
             Show off some R code and fake some output.
 
-        +hlcode("R").
+        +code("R").
             foo <- function(x) {
                 y <- "a random string"
                 return(sum(x * x)) # element-wise multiplication
@@ -41,12 +47,12 @@ block content
             x <- rnorm(1001)
             foo(x)
 
-        +hlcode("plaintext").
+        +code("plaintext").
             [1] 998.5973
 
         p.
             Stan too? &#161;Fantástico!  MATH 450, here we come.
-        +hlcode("Stan").
+        +code("Stan").
             data {
               int<lower=0> d;   // dimension
               real<lower=0> nu; // degrees of freedom

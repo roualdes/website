@@ -5,6 +5,10 @@ include ../../mixins/userinfo.pug
 include ../../mixins/warning.pug
 include ../../mixins/shortanswer.pug
 include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
+
+block head
+    +katex()
 
 block content
     +title("MATH 450 Chapter 2-Part 2 Notes")
@@ -50,7 +54,7 @@ block content
 
         p.
 
-            Bayesians assume that, since we are witness to the data, it is fixed and therefore does not vary. We do not need to imagine that there are infinite number of possible samples, or that our data are the undetermined outcome of some random process of sampling. Because we never know the exact value of a parameter, the parameter is viewed as a quantity that is probabilistic. 
+            Bayesians assume that, since we are witness to the data, it is fixed and therefore does not vary. We do not need to imagine that there are infinite number of possible samples, or that our data are the undetermined outcome of some random process of sampling. Because we never know the exact value of a parameter, the parameter is viewed as a quantity that is probabilistic.
 
         h4 Do parameters actually exist and have a point value?
 
@@ -61,7 +65,7 @@ block content
         p.
 
 
-            In the Bayesian approach, parameters can be viewed from two perspectives: Either we view the parameters as truly varying, or we view our knowledge about the parameters as imperfect. 
+            In the Bayesian approach, parameters can be viewed from two perspectives: Either we view the parameters as truly varying, or we view our knowledge about the parameters as imperfect.
 
         p.
 
@@ -89,7 +93,7 @@ block content
 
         p.
 
-            Bayes' rule tells us how to update our prior beliefs in order to derive better, more informed, beliefs about a situation in light of new data. In Bayesian inference, we test hypotheses about the real world using these posterior beliefs. As part of this process, we estimate characteristics that interest us,which we call #[i parameters] that are then used to test such hypotheses. From this point onward we will use \(\theta\) to represent the unknown parameter(s) which we want to estimate. 
+            Bayes' rule tells us how to update our prior beliefs in order to derive better, more informed, beliefs about a situation in light of new data. In Bayesian inference, we test hypotheses about the real world using these posterior beliefs. As part of this process, we estimate characteristics that interest us,which we call #[i parameters] that are then used to test such hypotheses. From this point onward we will use \(\theta\) to represent the unknown parameter(s) which we want to estimate.
 
         p.
 
@@ -119,7 +123,7 @@ block content
 
         p.
 
-           The final term on the right-hand side of the above expression is the denominator, $$p(data)$$. This represents the probability of obtaining our particular sample of data if we assume a particular model and prior. The denominator is fully determined by our choice of prior and likelihood function. 
+           The final term on the right-hand side of the above expression is the denominator, $$p(data)$$. This represents the probability of obtaining our particular sample of data if we assume a particular model and prior. The denominator is fully determined by our choice of prior and likelihood function.
 
         h4 Posterior
 
@@ -143,7 +147,7 @@ block content
 
             Suppose we know that an examination of logs for the past several months suggests that \(\lambda\) equals 10 about three-quarters of the time, and it equals 8 about one-quarter of the time.  Described in Bayesian terminology, the rate parameter is a random variable, \(\Lambda\), and the (discrete) prior distribution for \(\Lambda\) is defined by the two probabilities 0.25 and 0.75 .
 
-        p. 
+        p.
 
             Now suppose certain facets of the retailer's operation have recently changed.  Those changes may very well affect the distribution associated with the call rate.  Updating the prior distribution for \(\Lambda\) requires (a) some data and (b) an application of Bayes' Theorem.  The retailer decides to construct a posterior distribution for \(\Lambda\) on the basis of a single observation.  To that end, a five-minute interval is preselected at random and the corresponding value for [i X] is found to be 7.  How should we revise the previous probabilities for \(\Lambda\)?
 

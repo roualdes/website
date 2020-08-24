@@ -5,6 +5,10 @@ include ../../mixins/userinfo.pug
 include ../../mixins/warning.pug
 include ../../mixins/shortanswer.pug
 include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
+
+block head
+    +katex()
 
 block content
     +title("MATH 450 Chapter 3-Part 1")
@@ -31,9 +35,9 @@ block content
 
         p.
 
-            Imagine that we enter a lottery, where we select a number from 1 to 100, to have a chance of winning $1000. We suppose that in the lottery only one ball is drawn and it is fair, meaning that all numbers are equally likely to win. Although we have not stated this world view in mathematical notation, we have without realising it formulated a valid probability distribution for the number drawn in the lottery. The outcome of the lottery is an example of a discrete probability distribution since the variable we measure is confined to a set of values. 
+            Imagine that we enter a lottery, where we select a number from 1 to 100, to have a chance of winning $1000. We suppose that in the lottery only one ball is drawn and it is fair, meaning that all numbers are equally likely to win. Although we have not stated this world view in mathematical notation, we have without realising it formulated a valid probability distribution for the number drawn in the lottery. The outcome of the lottery is an example of a discrete probability distribution since the variable we measure is confined to a set of values.
 
-        +shortanswer("answer01", " What are the two defining characteristics that make a probability distribution valid?", "4") 
+        +shortanswer("answer01", " What are the two defining characteristics that make a probability distribution valid?", "4")
 
         h4 The mean of a distribution
 
@@ -51,7 +55,7 @@ block content
 
         p.
 
-            Consider the below probability distribution: 
+            Consider the below probability distribution:
 
         a: img(src="/math105/example_prob_dist.PNG" alt="Probability Distribution", style='width:400px;height:200px;')
 
@@ -80,7 +84,7 @@ block content
             Suppose that a given experiment involves two random variables, #[i X] and #[i Y], each of which has a discrete distribution.  If both #[i X] and #[i Y] have discrete distributions with a finite possible of values, then there will be a finite number of different values (#[i x],#[i y]).  If there are infinite number of different possible values for either #[i X] or #[i Y] then there will be an infinite number of possible values (#[i x],#[i y]).
 
         p.
-        
+
             The #[i joint probability function], or the #[i joint] p.d.f. of #[i X] and #[i Y] is defined as the function #[i f] such that for every point (x,y) in the xy-plane, $$f_{X,Y}(x,y)=\textmd{Pr}(X=x \:\textmd{and}\: Y=y)$$.
 
         p.
@@ -91,7 +95,7 @@ block content
 
         p.
 
-            Suppose that in an electric display sign there are three light bulbs in the first row and four light bulbs in the second row.  Let #[i X] denote the number of bulbs in the first row that will be burned out at a specified time, and let #[i Y] denote the number of bulbs in the second row that will be burned out by the same time.  Suppose that the joint p.f. of #[i X] and #[i Y] is as specified in the following table: 
+            Suppose that in an electric display sign there are three light bulbs in the first row and four light bulbs in the second row.  Let #[i X] denote the number of bulbs in the first row that will be burned out at a specified time, and let #[i Y] denote the number of bulbs in the second row that will be burned out by the same time.  Suppose that the joint p.f. of #[i X] and #[i Y] is as specified in the following table:
 
         p.
 
@@ -106,7 +110,7 @@ block content
         +shortanswer("answer09", "Calculate P(X>Y).", "1")
 
         h4 Marginal Distributions for Discrete Random Variables
-    
+
         p.
 
             #[strong Theorem] Suppose that \(f_{X,Y}(x,y)\) is some joint pdf of the discrete random variables #[i X] and #[i Y].  Then $$f_{X}(x)=\sum_{All\hspace{.1in}y}f_{X,Y}(x,y)$$ and $$f_{Y}(y)=\sum_{All\hspace{.1in}x}f_{X,Y}(x,y)$$.
@@ -118,6 +122,6 @@ block content
         p.
 
         +shortanswer("answer10", "For the above example give the marginal pdfs of #[i X].", "2")
-   
+
 
         button(class="btn btn-md btn-primary" type="submit") submit

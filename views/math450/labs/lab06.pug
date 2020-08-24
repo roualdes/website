@@ -5,7 +5,10 @@ include ../../mixins/userinfo.pug
 include ../../mixins/warning.pug
 include ../../mixins/shortanswer.pug
 include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
 
+block head
+    +katex()
 
 block content
     +title("MATH 450 Chapter 3-Part 4")
@@ -28,7 +31,7 @@ block content
 
             The concepts we have already learned for conditional probabilities can be generalized for conditional distributions.  Conditional distributions will be the probabilities of some events determined by some random variables conditional on events determined by other random variables.  For example, the height and girth of a tree can be considered a pair of random variables.  While it is easy to measure the girth of a tree, the height of a tree is harder to measure.  Thus, it might be of interest to know the probabilities of a tree being a certain height based on the value of the girth.  In the discrete case, the conditional pdf can be treated the same way as a conditional probability.
 
-        p. 
+        p.
 
             #[strong Discrete Conditional Distributions]
 
@@ -56,7 +59,7 @@ block content
 
             #[+url("https://media.csuchico.edu/media/Math+450+Conditional+Distribution+Example/0_zbapj3ir")]
 
-        p. 
+        p.
 
             Find \(f_{X}(x)\) and \(f_{Y}(y)\)
 

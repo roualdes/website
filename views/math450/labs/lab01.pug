@@ -5,6 +5,10 @@ include ../../mixins/userinfo.pug
 include ../../mixins/warning.pug
 include ../../mixins/shortanswer.pug
 include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
+
+block head
+    +katex()
 
 block content
     +title("MATH 450 Chapter 2-Part 1 Notes")
@@ -27,7 +31,7 @@ block content
 
             In Math 350 you learned about Bayes' theorem. We will review that theorem briefly before we dive into other topics that lead up to Bayesian statistics. As you might have guessed, Bayesian statistics is built on Bayes' theorem.
 
-        p. 
+        p.
 
             Please take about 20 minutes to read the following article about Bayes' theorem
 
@@ -51,7 +55,7 @@ block content
 
             Suppose that the events #[i A#[sub 1]],#[i A#[sub 2]] ,...,#[i A#[sub k]] form a partition of the space #[i S] and P(#[i A#[sub j]])>0 for #[i j]=1,...,#[i k].  Then, for every event #[i B] in #[i S], $$\textmd{P}(B)=\sum^{k}_{j=1}\textmd{P}(A_{j})\textmd{P}(B|A_{j})$$
 
-        p. 
+        p.
 
             Theorem Bayes' Theorem
 
@@ -64,7 +68,7 @@ block content
 
             Suppose that #[i B] is an event, then #[i B]  is the union of $k$ mutually exclusive events: $$B=\left(A_{1}  \cap B\right)\cup\left(A_{2} \cap B\right)\cup \cdots\cup\left(A_{k}\cap B\right)$$
 
-        p. 
+        p.
 
             Thus, $$P(B)=P\left(A_{1}  \cap B\right)\cup P\left(A_{2} \cap B\right)\cup \cdots\cup P\left(A_{k}\cap B\right)$$
 
@@ -90,9 +94,9 @@ block content
 
             Data indicate that your chances of having the disease  are only 1 in 10,000.  However, since the test costs you nothing, and is fast and harmless, you decide to stop and take the test.  A few days later you learn that you had a positive response to the test.  Now, what is the probability that you have the disease?
 
-        p. 
-        
-            This example illustrates the idea of Bayes' Theorem.  
+        p.
+
+            This example illustrates the idea of Bayes' Theorem.
 
         +shortanswer("answer01", "We have a piece of information that we know which is", "2")
 
@@ -102,12 +106,12 @@ block content
 
         h4 You try it:
 
-        p. 
+        p.
 
             In a certain factory, machines I, II, and III are all producing springs of the same length.  Of their production,
             machines I, II, and III produce 2%, 1%, and 3% defective springs, respectively.  Of the total production of springs in the factory, machine I produces 35%, machine II produces 25%, and machine III produces 40%.  If one spring is selected at random is defective, find the conditional
             probability that it was produced by machine III.
 
-        +shortanswer("answer04", " If one spring selected at random is defective, find the conditional probability that it was produced by maching III.", "1")  
+        +shortanswer("answer04", " If one spring selected at random is defective, find the conditional probability that it was produced by maching III.", "1")
 
         button(class="btn btn-md btn-primary" type="submit") submit
