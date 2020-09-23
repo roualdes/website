@@ -6,6 +6,7 @@ include ../../mixins/warning.pug
 include ../../mixins/highlighting.pug
 include ../../mixins/code.pug
 include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
 
 block head
     +katex()
@@ -22,6 +23,10 @@ block content
         // Due date is in UTC
         input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
         +userinfo()
+
+        +numericanswer("answer01", "State the first 3 digits of pi.", "0.01")
+
+        +numericanswer("answer01", "What is your favorit integer?", "1")
 
         p.
             Include an image.
