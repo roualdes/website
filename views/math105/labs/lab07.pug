@@ -1,0 +1,142 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/shortanswer.pug
+include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block head
+    +katex()
+
+block content
+    +title("MATH 105 Lab 07 Confidence Interval for a Proportion")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        p.
+            
+            This lab is designed to increase your understanding of confidence intervals for a proportion.
+
+        h4 Part 1. Dollar Street Data Introduction
+
+        p.
+
+            The Dollar Stree dataset was collected by a team of photographers with the goal of making "everyday life on different income levels understandable". The dataset contains photos of 135 different classes of items (i.e. pets, plate, toilet, etc.) in 264 homes across 54 countries. The picture below shows photos of teeth of a sample from around the world (top row) and also a sample of pictures of pets from India (2nd row).
+
+        a: img(src="/math105/dollar_street_pics.PNG" alt="Dollar Street", style='width:575px;height:325px;')
+
+        p.
+
+            The Dollar Street dataset contains information on 1) The country in which the photograph was collected; and 2) the monthly consumption income of the photographed family in dollars adjusted for purchasing power parity. The photographer goes to a families' household and takes over a hundred pictures. 
+
+        p. 
+
+            And watch this brief video of how to navigate dollar street.
+
+            #[+url("https://media.csuchico.edu/media/Math+105-Lab+7+Dollar+Street+Website/0_1q85ncwt")]
+
+
+        p. 
+
+            Go ahead and navigate to the dollar street website and explore #[+url("https://www.gapminder.org/dollar-street/")].
+
+        p.
+
+            While navigating the site try to think of some interesting questions that you could answer with this site.
+
+        +shortanswer("answer01", "Give one question that you can think of that you would be able to answer from collecting data from the phots?", "2")
+
+        h4 Collecting data and calculating a confidence interval for a proportion.
+
+        p.
+
+            For this assignment you and your group members will be using the website Dollar Street to practice creating and interpreting confidence intervals. We will use the photographs to collect data on a variable of your choice.
+
+        +multiplechoice("answer01", "You will be calculating a confidence interval for a propotion on a variable of your choice. Because it is a confidence interval for a proportion, what type of variable do you need to use?")
+            option(selected) choose one
+            option Categorical variable
+            option Quantitative variable
+            option Doesn't matter, any variable will do
+
+        p.
+
+            You and your group members will pick a question that can be answered using a confidence interval for a proportion. There are many different variables to choose from. Here are some example of questions that can be answered using the data set. 
+
+        p.
+
+            #[i Does their drinking water come from a faucet or not?]
+
+        p.
+
+            #[i Is their comb/brush missing teeth]
+
+        p.
+
+            #[i Are there pillows on the bed or is the bed on a frame or on the floor?]
+
+        p. 
+
+            #[i Does the toilet have a flusher?]
+
+        p.
+
+            #[i What type of pet do they have?]
+
+        +shortanswer("answer02", "What question is your group addressing? What will you be calculating the proportion of?", "2")
+
+        p.
+
+            Each group member will calculate the confidence interval for a different continent. For instance, one student should do this for Asia while another student should do this for Europe and etc. You may not have enough members in your group to cover all continents. What you will need to do is filter by the variable that you are interested in and also the continent that you are interested in. Record the number of photos as well as the number of photos with a certain attribute. Make sure that you have at least 30 photos when you do your data collection. If you don't adjust the question of interest so that you have  sufficiently larege enough pictures to choose from (at least 30).
+
+            For instance, if I was interested in the proportion of households that have cats as pets in the Americas, I would pick the variable #[strong Pets] in #[strong The Americas]. First I would count the number of photos and then I would count the number of photos with #[i cats]. Please see the video if you are confused about what to do.
+
+            #[+url("https://media.csuchico.edu/media/Math+105-Lab+7-Collecting+data/0_2fk0d9wz")]
+
+        p. 
+
+        +numericanswer("answer03", "What is the sample proportion for your data?", "0.001")
+
+        p. 
+
+        +shortanswer("answer04", "What continent did you pick?", "1")
+
+        p.
+
+            Calculate a 95% confidence interval for the true proportion. You can do it by hand or watch the video to see how to calculate it in StatCrunch.
+
+            #[+url("https://media.csuchico.edu/media/Math+105-Lab+7+StatCrunch+CI+Prop/0_6q4noi4u")]
+
+        p.
+
+        +shortanswer("answer05", "Report your confidence interval", "1")
+
+        p.
+
+        +shortanswer("answer06", "Write a sentence interpreting your confidence interval", "3")
+
+        p.
+
+        +shortanswer("answer07", "Report the confidence intervals of the other continents that your group members computed.", "4")
+
+        p.
+
+            Discuss among your group members whether the confidence intervals overlap for continents. Are the continents similar or different with respect to the variable you collected? Do the confidence intervals overal?
+
+        +shortanswer("answer08", "Write a few sentences comparing the confidence intervals for each continent.", "6")
+
+        p. 
+
+            Take a moment to think about your confidence interval. How is it useful in learning about the population of interest? Can you think of any limitations/things to be aware of when using your confidence interval to make inferences about the population? Do you have questions about the activity or the use of confidence intervals that you would like to have answered?
+
+        +shortanswer("answer09", "Summarize your thoughts in a few sentences", "6")
+        
+        button(class="btn btn-md btn-primary" type="submit") submit

@@ -1,0 +1,163 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/shortanswer.pug
+include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block content
+    +title("MATH 105 Lab 08 Are Female Mallards Attracted to the Color Green")
+    +warning("Due date 2020-06-24 @ 23:59")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        p.
+            This lab will guide you through from a research question to a conclusion by using hypothesis testing.
+
+        a: img(src="/math105//mallards.PNG" alt="Mallards", style='width:500px;height:250px;') 
+        
+        p.
+
+            Of all the types of ducks, the mallard (#[i Anas platy]) is one of the most widespread and familiar species in the world. A male mallard in breeding plumage is recognizable by his iridescent green head which is bordered by a white collar. The chest is a rich chestnut and leads to grayish white underparts. The back is grayish brown and the blue speculum on the wings is bordered by thick white lines. 
+
+        p. 
+
+            #[strong Are female mallards attracted to the color green?]
+
+        p.
+
+            Suppose you are a student taking a biology class that studies animal behavior and you are assigned to the following research question: #[i In a certain species (mallards), male ducks have green heads and females are plain color. Probably the purpose of the green coloring of the male heads is to attract the females. The question is: are female ducks also attracted to the green color in food, for example bread?]
+
+        p.
+
+            #[strong Writing a statistical hypotheses]
+
+            We basically want to know if female ducks are indifferent to green bread versus plain bread or if they prefer green bread. 
+
+        a: img(src="/math105/greenbread.PNG" alt="Green Bread", style='width:400px;height:300px;')
+
+        p.
+
+            The research question can be translated into the confrontation of two opposite ideas:
+
+        p.
+
+            #[strong Idea 1]: Female ducks are indifferent to plain versus green bread.
+        p.
+
+            #[strong Idea 2]: Female ducks prefer green bread.
+
+        p.
+
+            When a female duck of the above mentioned species is confronted with two pieces of bread, one plain and one green, the probability of picking the green one will be called #[strong p]. Write the two previous ideas in terms of #[strong p]
+
+        +numericanswer("answer01", "Idea 1: p =", "0.1")
+
+        +numericanswer("answer02", "Idea 2: p >", "0.1")
+
+        p.
+
+            We call these these confronting ideas #[i statistical hypotheses]. The first one states that the ducks equally like the green and the plain bread. This statement is called the #[strong null hypothesis] because it represents an idea of no difference and is labeled by the symbol 'H0'. The second idea says that the ducks prefer the green bread and states something different than the first one, so it is called the #[strong alternative hypothesis]. The symbol used for the alternative hypothesis is 'Ha'. 
+
+        p. 
+
+            We must decide which of these two statistical hypotheses is more likely to be true. 
+
+        p.
+
+            #[strong Gathering Evidence to make the decision]
+
+        +shortanswer("answer03", "In a few sentences, describe how you would collect data to answer the research question", "3")
+
+        p.
+
+            Suppose that the student designs a study in order to be able to mkae a decision about the two statistical hypotheses. She will go to a lake near campus where mallards are quite abundant and will randomly select 10 female ducks. Each duck will be offered two pieces of bread: one plain and one dyed green. The student will write down which piece of bread each duck approaches first. Then she will summarize her information reporting how many ducks approach the green bread first.
+
+        p.
+
+        +numericanswer("answer04", "If the mallard ducks have no color preference, how many of the 10 ducks would you expect to pick green bread?", "1.0")
+
+        p.
+
+            Of course even if the null hypothesis was true we are not always going to get the results that we would expect. This is due to sampling variablilty which we learned about in Chapter 7. For instance, if we toss a fair coin 10 times we won't always get 5 heads and 5 tails. On rare occasions, we might get something like 9 heads and 1 tail.
+
+        p.
+
+        +shortanswer("answer05", "Suppose, of the 10 ducks, 6 of them picked the green bread. Do you think this shows that mallards prefer the green bread? Explain.", "2")
+
+        p.
+
+            As mentioned previously, we will need to pick a hypothesis after we examine the data. The idea with statistical hypothesis testing is that we only go with the alternative hypothesis (Idea 2) if we have #[strong convincing] evidence for the alternative. It is similar to going to court where we do not convict someone unless there is #[strong evidence beyond a reasonable doubt that someone is guilty]. 
+
+        p. 
+
+            In hypothesis testing we #[strong assume that the null hypothesis is true] and then we collect data and see how unusual our results are under that assumption.
+
+        p. 
+
+        +shortanswer("answer06", "If the null hypothesis is true (ducks have no preference) what would we expect to happen when the 10 ducks are presented with bread?", "3")
+
+        p.
+
+            Now that we have an idea of how to run a hypothesis test we will use #[simulation] to mimick what happens when we give the 10 ducks green and regular bread #[strong assuming that they have no preference]. View the video below to see how to do this in StatCrunch.
+
+            #[+url("https://media.csuchico.edu/media/Math+105+Lab+8+Null+Histogram/1_9ns9hdnn")]
+
+        p.
+
+        a: img(src="/math105/duck_histogram.PNG" alt="Duck Histogram", style='width:400px;height:300px;')   
+
+        p.
+
+            The above histogram is called the null distribution.
+
+        +shortanswer("answer07", "If the null hypothesis is true (ducks have no preference) what would we expect to happen when the 10 ducks are presented with bread?", "3")
+
+        p.
+
+        +shortanswer("answer08", "Why do you think the above histogram is called the null distribution?", "3")
+
+        p.
+
+            Suppose you did this experiment and 7 of the ducks that you fed went for the green bread. Remember that for us to pick the alternative we need #[strong convincing evidence] similar to what we would need in court to convict someone (evidence beyond a reasonable doubt). 
+
+        +multiplechoice("answer09", "Based on the results stated above, would we go with the null or the alternative?")
+            option(selected) choose one
+            option Null hypothesis 
+            option Alternative hypothesis
+        
+        p.
+
+        +numericanswer("answer10", "Based on the above histogram, what is the probability of a duck picking the green bread 7 or more times even though ducks don't have a preference (the null hypothesis is true)?", ".001")
+
+        p.
+
+            The value you calculated above is called the #[strong p-value] and it represents #[i the probability of getting our sample results if the null hypothesis is true.] Therefore, in context of the problem, the p-value you calculated is #[i the probability of 7 or more ducks picking green bread even though they have no preference].
+
+        p.
+
+        +shortanswer("answer11", "What would the p-value be if in the experiment 9 ducks out of 10 preferred the green bread?", "1")
+
+        p.
+
+        a: img(src="/math105/bear.PNG" alt="Bear", style='width:300px;height:200px;') 
+
+        +multiplechoice("answer12", "Looking at the above calculations what can we say about p-values and the alternative hypothesis?")
+            option(selected) choose one
+            option A small p-value is more convincing evidence that ducks prefer green bread 
+            option A large p-value is more convincing evidence that ducks prefer green bread 
+
+        a: img(src="/math105/duck_bread.PNG" alt="Mallards3", style='width:400px;height:250px;') 
+
+        p.
+
+        button(class="btn btn-md btn-primary" type="submit") submit
