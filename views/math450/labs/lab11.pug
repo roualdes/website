@@ -1,0 +1,130 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/shortanswer.pug
+include ../../mixins/multiplechoice.pug
+
+include ../../mixins/katex.pug
+
+block head
+    +katex()
+
+block content
+    +title("MATH 450 Chapter 9-Part 1")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 9: Conjugate Distributions
+
+    p.
+
+        This chapter introduces posterior distributions and the approaches used to summarise these objects. The posterior distribution is denoted \(p(\theta|data)\). Calculating the posterior distribution can be used to yield estimates of parameters that interest us, to forecast and to test a model's foundations.
+
+    p.
+
+        Bayes' rule is the recipe for combining our pre-data beliefs with information from our data sample to produce an updated set of beliefs. This process involves first choosing a likelihood function. We also must state a prior probability distribution for the parameter. Once a likelihood and a prior are selected, Bayes' rule requires calculation of a denominator term to ensure that the posterior is a valid probability distribution. This chapter explains how the shape of the likelihood and prior influences the shape of the posterior.
+
+    p.
+
+
+        #[strong Expressing Parameter Uncertainty in Posteriors]
+
+    p.
+
+        Unlike looking out of the window to determine the weather, in inference we typically do not learn the true state of the world. The uncertainty is both in the present and the future. Partly because we are unable to perfectly explain the world today, we are unable to perfectly predict the state of the world tomorrow.
+
+    p.
+
+        We represent our ignorance, or uncertainty, in a parameter's value through probability distributions. These is a major difference with frequentist statistics where we view the parameter as fixed. However, just like in frequentist we are usually interested in a point estimate for a parameter as well as some measure of our uncertainty in that point estimate. Once we know the posterior distribution, we can calculate the mean and variance of the distribution using traditional methods (generally integration). Additionally, just like in frequentist statistics, we usually represent our uncertainty in our parameter estimate with an interval. In frequentist statistics we call this a #[i confidence interval] and in Bayesian statistics we will call this a #[i credible interval].
+
+    p.
+
+        #[strong Bayesian Statistics: Updating our Pre-Data Uncertainty]
+
+    p.
+
+        In Bayesian statistics, the posterior distribution combines our pre-existing beliefs with information from observed data to produce an updated belief, which is used as the starting point for all further analyses. To calculate it we must choose a likelihood function that determines the influence of the data on the posterior. In Bayesian analysis, the parameters in the likelihood function are assigned priors that represent our pre-data beliefs. The priors and likelihoods are then combined in a certain way using Bayes' rule to yield the posterior distribution. #[strong The posterior is the synthesis of past experience and information observed from the data and represent our updated state of knowledge].
+
+    p.
+
+        #[strong Bayesian Estimation]
+
+    p.
+
+        Bayesian analysis is a set of statistical techniques based on inverse probabilities calculated from Bayes' Theorem.  In particular, Bayesian statistics provide formal methods for incorporating prior knowledge into the estimation of unknown parameters.
+
+    p.
+
+        A major difference between Bayesian analysis and non-Bayesian analysis (everything we have learned thus far) is the assumptions associated with unknown parameters.  In a non-Bayesian world, unknown parameters are viewed as constants; in a Bayesian world, unknown parameters are viewed as random variables which means they have pdfs.
+
+    p.
+
+        At the onset in a Bayesian analysis, the pdf assigned to the parameter may be based on little or no information or may be based on one's beliefs of possible values and is referred to as the #[i prior distribution].  As soon as some data are collected, it becomes possible via Bayes' Theorem to revise and refine the pdf ascribed to the parameter.  Any such updated pdf is referred to as a #[i posterior distribution].
+
+    p.
+
+        #[strong Definition]:  Let #[i W] be a statistic dependent on a parameter \(\theta\).  Call its pdf \(f_{W}(w|\theta)\).  Assume that \(\theta\) is the value of a random variable \(\Theta\), whose prior distribution is denoted \(p_{\Theta}(\Theta)\), if \(\Theta\) is discrete, and \(f_{\Theta}(\theta)\), if \(\Theta\) is continuous.  The #[i posterior distribution] of \(\Theta\), given that #[i W=w], is the quotient $$g_{\theta}(\theta|W=w)=\frac{p_{W}(w|\theta)f_{\Theta}(\theta)}{\int^{\infty}_{-\infty}p_{W}(w|\theta)f_{\Theta}(\theta)d\theta}.$$
+
+    p.
+
+        If no information is available on which to base a prior distribution we can use the uniform distribution for either \(p_{\Theta}(\theta)\) or \(f_{\Theta}(\theta)\).  This is called a noninformative prior.
+
+    p.
+
+        #[strong Example]:  Max, a video game pirate is trying to decide how many illegal copies of #[i Zombie Beach Party] to have on hand for the upcoming holiday season.  To get a rough idea of what the demand might be, he talks with #[i n] potential customers and finds that #[i X=k] would buy a copy for a present or for themselves.  The obvious choice for a probability model for #[i X] would be the binomial pdf.  Given #[i n] potential customers, the probability that #[i k] would actually buy one of Max's illegal copies is the familiar $$p_{X}(k|\theta)={n\choose k}\theta^{k}(1-\theta)^{n-k}, k=0,1,...,n$$
+
+    p.
+
+        where the maximum likelihood estimate for \(\theta\) is given by \(\theta_{e}=\frac{k}{n}\).
+
+    p.
+
+        It may very well be that Max has some additional insight about the value of \(\theta\) on the basis of similar video games that he illegally marketed in previous years.  Suppose he suspects, for example, that the percentage of potential customers who will buy #[i Zombie Beach Party] is likely to be between 3% and 4% and will probably not exceed 7%.  A reasonable prior distribution for \(\Theta\) would be a pdf mostly concentrated over the interval 0 to 0.07 with a mean or median in the 0.035 range.
+
+    p.
+
+        #[+url("https://media.csuchico.edu/media/Max+Video+Zombie/1_u1fawgq8")]
+
+    p.
+
+        One such probability model whose shape would comply with the restraints that Max is imposing is called the #[i beta pdf]. Written with \(\Theta\) as the random variable, the beta pdf is
+        $$f_{\Theta}(\theta)=\frac{\Gamma\left(r+s\right)}{\Gamma(r)\Gamma(s)}\theta^{r-1}\left(1-\theta\right)^{s-1},0\leq\theta\leq 1$$
+
+    p.
+
+        By choosing different values for #[i r] and #[i s], \(f_{\Theta}(\theta)\) can be skewed more sharply to the right or left, and the bulk of the distribution can be concentrated close to zero or close to one.  
+
+    p.
+
+        The question is #[i if an appropriate beta pdf is used as a prior distribution for \(\Theta\), and if a random sample of #[i k] potential customers (out of n) said they would buy the video, what would be a reasonable posterior distribution for \(\Theta\)]?
+
+    p.
+
+        Substitution into the numerator gives us
+
+
+    p.
+
+        It follows that  \(g_{\Theta}(\theta|X=k)\) is a beta pdf with parameters #[i k+r] and #[i n-k+s].  
+
+    p.
+
+        The final step in the construction of the posterior distribution for \(\Theta\) is to choose values for #[i r] and #[i s] that would produce a prior distribution that has a mean at .035 and the bulk of the distribution between 0 and .07.  It can be shown that the expected value for a beta distribution is \(r/(r+s)\).  This implies that #[i s=28r].
+
+    p.
+
+        #[+url("https://media.csuchico.edu/media/Max%27s+Prior/1_svklkryw")]
+
+    p.
+
+        Through trial and error, the values #[i r=4] and #[i s=28(4)]=102 are found to yield  a distribution having almost all of its area to the left of 0.07.  Substituting those values in for #[i r] and #[i s] into \(g_{\Theta}(\theta|X=k)\) gives the completed posterior distributions.
+
+    button(class="btn btn-md btn-primary" type="submit") submit
