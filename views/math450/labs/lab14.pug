@@ -1,0 +1,109 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/shortanswer.pug
+include ../../mixins/multiplechoice.pug
+include ../../mixins/numericanswer.pug
+include ../../mixins/katex.pug
+
+block head
+    +katex()
+
+block content
+    +title("MATH 450 Chapter 9-Part 4")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 9: Conjugate Distributions Part 4
+
+    p.
+
+        We will cover Bayesian estimation and credible intervals in this lab.
+
+    p.
+
+        #[strong Bayesian credible intervals]:
+
+    p.
+
+        This section describes the Frequentist and Bayesian approaches to parameter uncertainty intervals.
+
+    p.
+
+        The mainstay of the Frequentist estimation procedure is the confidence interval. For example, #[i From our research, we concluded that the percentage of penguins with red tails has a 95% confidence interval of between 1% and 5%.]
+
+    p.
+
+        Since the parameter is considered to be constant, we #[strong cannot] say that #[i the probability that the true percent of red tail penguins is between 1% and 5% is 95%].
+
+    p.
+
+        In the frequentisit paradigm we imagine taking repeated samples from a population of interest, and for each of these make believe samples we estimate a confidence interval. A 95% confident interval means that across all the intervals, 95% of them would contain the true parameter. 
+
+    p.
+
+        In reality, we only draw one sample from the population and have no way of knowing whether the confidence interval we calculated is in the confidence interval. 
+
+    p.
+
+        #[strong Credible Intervals]:
+
+    p.
+
+        Bayesian credible intervals, in contrast to confidence intervals, describe our uncertainty in the location of the parameter values. The are calculated from the posterior distribution. In particular, a 95% credible region satisfies the condition that  posterior probability lies in this parameter range. The statement
+
+    p.
+
+        #[i From our research, we concluded that the percentage of penguins with red tails has a 95% credible interval of between 1% and 5%]
+
+    p.
+
+        can be interpreted straightforwardedly as #[i From our research, we conclude that there is a 95% probability that the percentage of penguins with red tails lies between 1% and 5%]
+
+    p.
+
+        An arbitrary credible interval of #[i X%] can be constructed from the posterior density by finding a region that is equal to \(X/100\).
+
+    p.
+
+        To calculate the upper and lower bounds of an #[i X%] central posterior interval, we find the \((100-X)/2\) and \(X+(100-X)/2\) quantiles of the posterior distribution. This results in an interval that is centred on the median parameter value.
+
+    p.
+
+        #[strong Example]
+
+    p.
+
+        Because of her past convictions for mail fraud and forgery, Jody thinks that her probability of getting audited ($\theta$) can be modeled by a beta distribution with parameters $r=5$ and $s=8$. Let $X$ be equal to the number of years before her first audit.
+
+    p.
+
+        #[+url("https://media.csuchico.edu/media/bayesian+credible+geometric/1_q82ylubn")]
+
+    p.
+
+        1. Give the posterior distribution for \(\theta\).
+
+    +shortanswer("answer01", "Give the posterior distribution for theta.", "1")
+
+    p.
+
+        2. Suppose that on the third year she gets audited. Give the squared-error loss Bayes estimate for the parameter \(\theta\).
+
+    +numericanswer("answer02", "Give the squared-error loss Bayes estimate for the parameter", "0.01")
+
+    p.
+
+        3. Use #[i R] to calculate a 90% credible interval for \(\theta\).
+
+    +shortanswer("answer03", "Interpret the credible interval.", "0.01")
+    
+    button(class="btn btn-md btn-primary" type="submit") submit
