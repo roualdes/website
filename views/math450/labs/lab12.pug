@@ -24,40 +24,40 @@ block content
 
         h4 Chapter 9: Conjugate Distributions Part 2
 
-    p.
+        p.
 
-        We will continue with examples of conjugate distributions which are likelihoods and priors that ''play nice'' together.
+            We will continue with examples of conjugate distributions which are likelihoods and priors that ''play nice'' together.
 
-    p.
+        p.
 
-        #[strong Example]:  Suppose that #[i X] is a geometric random variable, where \(p_{X}(k|\theta)=\left(1-\theta\right)^{k-1}\theta\), k=0,1,2,....  
+            #[strong Example]:  Suppose that #[i X] is a geometric random variable, where \(p_{X}(k|\theta)=\left(1-\theta\right)^{k-1}\theta\), k=0,1,2,....  
 
-    p.
+        p.
 
-        Assume that the prior distribution for \(\theta\) is the beta pdf with parameters #[i r] and #[i s].  Find the posterior distribution for \(\theta\).
+            Assume that the prior distribution for \(\theta\) is the beta pdf with parameters #[i r] and #[i s].  Find the posterior distribution for \(\theta\).
 
-    p.
+        p.
 
-        #[+url("https://media.csuchico.edu/media/Geometric+Beta/1_esm2of6e")]
+            #[+url("https://media.csuchico.edu/media/Geometric+Beta/1_esm2of6e")]
         
-    p.
+        p.
 
-        Thus, assigning a beta distribution to the unknown parameter in a binomial pdf yields a beta posterior distribution.
+            Thus, assigning a beta distribution to the unknown parameter in a binomial pdf yields a beta posterior distribution.
 
-    p.
+        p.
 
 
-        As we just saw, certain prior distributions ``fit'' especially well with certain parameters in the sense that the resulting posterior distributions are easy to work with.  Another example is  if a gamma pdf is used as the prior distribution for the parameter in a Poisson model.
+            As we just saw, certain prior distributions ``fit'' especially well with certain parameters in the sense that the resulting posterior distributions are easy to work with.  Another example is  if a gamma pdf is used as the prior distribution for the parameter in a Poisson model.
 
-    p.
+        p.
 
-        #[strong Example]:  Suppose \(X_{1},X_{2},...,X_{n}\) denotes a random sample from the Poisson pdf, \(p_{X}(k|\theta)=e^{-\theta}\theta^{k}/k!\) where \(k=0,1,....\).  Let \(W=\sum^{n}_{i=1}X_{i}\).  It can be shown that \(W\) has a Poisson distribution with parameter \(n\theta\), that is \(p_{W}(w|\theta)=e^{-n\theta}(n\theta)^{w}/w!\), w=0,1,2.... Let the Gamma pdf $$f_{\Theta}(\theta)=\frac{\mu^{s}}{\Gamma(s)}\theta^{s-1}e^{-\mu\theta}\hspace{.25in}0<\theta<\infty$$
+            #[strong Example]:  Suppose \(X_{1},X_{2},...,X_{n}\) denotes a random sample from the Poisson pdf, \(p_{X}(k|\theta)=e^{-\theta}\theta^{k}/k!\) where \(k=0,1,....\).  Let \(W=\sum^{n}_{i=1}X_{i}\).  It can be shown that \(W\) has a Poisson distribution with parameter \(n\theta\), that is \(p_{W}(w|\theta)=e^{-n\theta}(n\theta)^{w}/w!\), w=0,1,2.... Let the Gamma pdf $$f_{\Theta}(\theta)=\frac{\mu^{s}}{\Gamma(s)}\theta^{s-1}e^{-\mu\theta}\hspace{.25in}0<\theta<\infty$$
 
-    p.
+        p.
 
-        be the prior distribution assigned to \(\Theta\).
-    p.
+            be the prior distribution assigned to \(\Theta\).
+        p.
 
-    +shortanswer("answer01", "Give the name of the posterior distribution and the parameters", "2")
+        +shortanswer("answer01", "Give the name of the posterior distribution and the parameters", "2")
 
-    button(class="btn btn-md btn-primary" type="submit") submit
+        button(class="btn btn-md btn-primary" type="submit") submit
