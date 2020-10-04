@@ -211,6 +211,11 @@ block content
         
             Which variable (vote_democratic or unemployment_low) seems to be more associated with whether or not a county is going to be mask compliant? In other words, if you had to predict whether a county is mask compliant and you could find out only one piece of information, would you want to know if the county voted for Clinton or if the county had low unemployment.
 
+        +multiplechoice("answer10", "Which variable seems to be better at predicting whether a county is mask compliant?")
+            option(selected) choose one
+            option whether or not a county voted democratic in the last election
+            option whether or not a county has low unemployment
+
         p.
 
             Of course, we don't only have one piece of information so let's consider more than just one variable. Let's consider the rule
@@ -229,11 +234,11 @@ block content
 
         p.
 
-        +numericanswer("answer10", "Report the confidence?", "0.01")
+        +numericanswer("answer11", "Report the confidence?", "0.01")
 
         p.
 
-        +shortanswer("answer11", "If you know that a county voted for Clinton in the last election and also has more than 20% of the residents college educated would you guess that they are mask compliant? Explain.", "3")
+        +shortanswer("answer12", "If you know that a county voted democratic in the last election and also has more than 20% of the residents college educated would you guess that they are mask compliant? Explain.", "3")
 
         button(class="btn btn-md btn-primary" type="submit") submit
 
