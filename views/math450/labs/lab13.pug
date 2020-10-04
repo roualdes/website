@@ -24,47 +24,47 @@ block content
 
         h4 Chapter 9: Conjugate Distributions Part 3
 
-    p.
+        p.
 
-        We will cover Bayesian estimation and credible intervals in this lab.
+            We will cover Bayesian estimation and credible intervals in this lab.
 
-    p.
+        p.
 
-        #[strong Bayesian Esimation]: The next step is to find an appropriate point estimator for \(\hat{\theta}\) given the posterior distribution \(g_{\Theta}(\theta|W=w)\).  One way to determine the point estimator is similar to the maximum likelihood estimator in that we differentiate the distribution and solve for \(\hat{\theta}\).
+            #[strong Bayesian Esimation]: The next step is to find an appropriate point estimator for \(\hat{\theta}\) given the posterior distribution \(g_{\Theta}(\theta|W=w)\).  One way to determine the point estimator is similar to the maximum likelihood estimator in that we differentiate the distribution and solve for \(\hat{\theta}\).
 
-    p.
+        p.
 
-        For theoretical reasons a method much preferred by Bayesians is to use some key ideas from #[i decision theory] as a framework for identifying a reasonable \(\hat{\theta}\).  Specifically, Bayesian estimates are chosen to minimize the #[i risk] associated with \(\hat{\theta}\), where the risk is the expected value of the #[i loss] occurred by the error in the estimate.  The idea is that as \(\hat{\theta}-\theta\) gets further away from 0 (as the estimate error gets larger) the loss associated with \(\hat{\theta}\) increases.
+            For theoretical reasons a method much preferred by Bayesians is to use some key ideas from #[i decision theory] as a framework for identifying a reasonable \(\hat{\theta}\).  Specifically, Bayesian estimates are chosen to minimize the #[i risk] associated with \(\hat{\theta}\), where the risk is the expected value of the #[i loss] occurred by the error in the estimate.  The idea is that as \(\hat{\theta}-\theta\) gets further away from 0 (as the estimate error gets larger) the loss associated with \(\hat{\theta}\) increases.
 
-    p.
+        p.
 
-        #[strong Definition]:  Let \(\hat{\theta}\) be an estimator for \(\theta\).  The #[i loss function] associated with \(\hat{\theta}\) is denoted \(L(\hat{\theta},\theta)\), where \(L(\hat{\theta},\theta)\geq0\) and \(L(\theta,\theta)=0\).  
+            #[strong Definition]:  Let \(\hat{\theta}\) be an estimator for \(\theta\).  The #[i loss function] associated with \(\hat{\theta}\) is denoted \(L(\hat{\theta},\theta)\), where \(L(\hat{\theta},\theta)\geq0\) and \(L(\theta,\theta)=0\).  
 
-    p.
+        p.
 
-        #[i Theorem]:  Let \(g_{\Theta}(\theta|W=w)\) be the posterior distribution for the unknown parameter \(\theta\). If the loss function associated with \(\hat{\theta}\) is \(L(\hat{\theta}-\theta)^{2}\), then the Bayes estimate for \(\theta\) is the mean of \(g_{\Theta}(\theta|W=w)\).
-
-
-
-    p.
-
-        #[strong Example]:  Find the squared-error loss \(\left[L(\hat{\theta},\theta)\right]\) Bayes estimate for \(\theta\) in Example involving Max's video games and express it as a weighted average of the maximum likelihood estimate for \(\theta\) and the mean of the prior pdf.
-
-    p.
-
-        #[+url("https://media.csuchico.edu/media/max+loss+square/1_eq2cfz3e")]
-
-    p. 
-
-    +numericanswer("answer01", "Suppose Max was able to ask 25 customers if they would be Zombie Beach Party and he finds out that 5 of the customers said they are interested in buying it. What would be the posterior squared-error loss for theta?", "0.01")
-
-    p.
-
-        #[strong Example]: What is the squared-error loss Bayes estimate for the parameter \(\theta\) in a binomial pdf, where \(\theta\) has a uniform distribution.  That is, a noninformative prior?  A uniform prior is a beta pdf for which r=s=1.
-
-    p.
-
-        #[+url("https://media.csuchico.edu/media/square+error+uniform/1_25kt6o7f")]
+            #[i Theorem]:  Let \(g_{\Theta}(\theta|W=w)\) be the posterior distribution for the unknown parameter \(\theta\). If the loss function associated with \(\hat{\theta}\) is \(L(\hat{\theta}-\theta)^{2}\), then the Bayes estimate for \(\theta\) is the mean of \(g_{\Theta}(\theta|W=w)\).
 
 
-    button(class="btn btn-md btn-primary" type="submit") submit
+
+        p.
+
+            #[strong Example]:  Find the squared-error loss \(\left[L(\hat{\theta},\theta)\right]\) Bayes estimate for \(\theta\) in Example involving Max's video games and express it as a weighted average of the maximum likelihood estimate for \(\theta\) and the mean of the prior pdf.
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/max+loss+square/1_eq2cfz3e")]
+
+        p. 
+
+        +numericanswer("answer01", "Suppose Max was able to ask 25 customers if they would be Zombie Beach Party and he finds out that 5 of the customers said they are interested in buying it. What would be the posterior squared-error loss for theta?", "0.01")
+
+        p.
+
+            #[strong Example]: What is the squared-error loss Bayes estimate for the parameter \(\theta\) in a binomial pdf, where \(\theta\) has a uniform distribution.  That is, a noninformative prior?  A uniform prior is a beta pdf for which r=s=1.
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/square+error+uniform/1_25kt6o7f")]
+
+
+        button(class="btn btn-md btn-primary" type="submit") submit
