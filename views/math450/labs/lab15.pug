@@ -12,7 +12,7 @@ block head
     +katex()
 
 block content
-    +title("MATH 450 Chapter 9-Part 4")
+    +title("MATH 450 Chapter 10")
     +warning("Leaving or refreshing this page might lose your work.")
 
     form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
@@ -22,88 +22,118 @@ block content
         input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
         +userinfo()
 
-        h4 Chapter 9: Conjugate Distributions Part 4
+        h4 Chapter 10: Evaluation of Model Fit:
 
-    p.
+        p.
 
-        We will cover Bayesian estimation and credible intervals in this lab.
+            Models are interpretations of real life, and are reduced versions of it. However, a good model can suggest valuable strategies for navigating the real world. This begs the questions, #[What is a good model?]. Such a model should incorporate just enough realism so that we trust its outputs while being simple enough to allow interpretation and extrapolation. But how can we determine whether or not it meets that criteria?
 
-    p.
+        p.
 
-        #[strong Bayesian credible intervals]:
+            The Bayesian testing framework which allows us to judge the fit of a model to data is known as #[i posterior predictive checks](PPCs). The idea is that if the model is a good fit to the data, then fake data that we generate from the fitted model should look indistinguishable from the real thing. PPCs will allow us to understand the ways in which a model is good and the ways in which it is deficient.
 
-    p.
+        p.
 
-        This section describes the Frequentist and Bayesian approaches to parameter uncertainty intervals.
+            #[strong From Posterior to Predictions by Samping]
 
-    p.
+        p.
 
-        The mainstay of the Frequentist estimation procedure is the confidence interval. For example, #[i From our research, we concluded that the percentage of penguins with red tails has a 95% confidence interval of between 1% and 5%.]
+            Because of the two scores of uncertainty included in our model-the parameter uncertainty and sampling variability -the uncertainty of the Bayesian predictive distribution is typically greater than the Frequentist equivalent approach to forecasting. By ignoring any uncertainty in the parameter's value, the Frequentist approach produces predictive intervals that are overly confident.
 
-    p.
+        p.
 
-        Since the parameter is considered to be constant, we #[strong cannot] say that #[i the probability that the true percent of red tail penguins is between 1% and 5% is 95%].
+            The two uses for posterior predictive distributions are
 
-    p.
+        p.
 
-        In the frequentisit paradigm we imagine taking repeated samples from a population of interest, and for each of these make believe samples we estimate a confidence interval. A 95% confident interval means that across all the intervals, 95% of them would contain the true parameter. 
+            1. Predict future values
 
-    p.
+        p.
 
-        In reality, we only draw one sample from the population and have no way of knowing whether the confidence interval we calculated is in the confidence interval. 
+            2. Check appropriateness of model
 
-    p.
+        p.
 
-        #[strong Credible Intervals]:
+            This section outlines what is involved in this process.
 
-    p.
+        p.
 
-        Bayesian credible intervals, in contrast to confidence intervals, describe our uncertainty in the location of the parameter values. The are calculated from the posterior distribution. In particular, a 95% credible region satisfies the condition that  posterior probability lies in this parameter range. The statement
+            There are two sources of uncertainty in prediction.
 
-    p.
+        p.
 
-        #[i From our research, we concluded that the percentage of penguins with red tails has a 95% credible interval of between 1% and 5%]
+            1. Uncertainty in the distribution of the parameter.
 
-    p.
+        p.
 
-        can be interpreted straightforwardedly as #[i From our research, we conclude that there is a 95% probability that the percentage of penguins with red tails lies between 1% and 5%]
+            2. Uncertainity in the model for our data.
 
-    p.
+        p.
 
-        An arbitrary credible interval of #[i X%] can be constructed from the posterior density by finding a region that is equal to \(X/100\).
+            The first of these uncertainties is represented by the posterior distribution. The second is represented by our choice of the likelihood.
 
-    p.
+        p.
 
-        To calculate the upper and lower bounds of an #[i X%] central posterior interval, we find the \((100-X)/2\) and \(X+(100-X)/2\) quantiles of the posterior distribution. This results in an interval that is centred on the median parameter value.
+            #[strong Posterior Predictive Checks]:
 
-    p.
+        p.
 
-        #[strong Example]
+            As a review, if we fit a Bayesian model to data, #[i X], we obtain the posterior distribution \(p(\theta|x)\). We can use this distribution to generate samples from the posterior predictive distribution, which is a probability distribution over possible values of future data x'. In particular, we iterate the following:
 
-    p.
+        p.
 
-        Because of her past convictions for mail fraud and forgery, Jody thinks that her probability of getting audited ($\theta$) can be modeled by a beta distribution with parameters $r=5$ and $s=8$. Let $X$ be equal to the number of years before her first audit.
+            1. Sample \(\theta_{i}\sim p(\theta|x)\). That is, sample a parameter value from the posterior distribution.
 
-    p.
+        p.
 
-        #[+url("https://media.csuchico.edu/media/bayesian+credible+geometric/1_q82ylubn")]
+            2. Sample \(X_{i}'\sim p(x'|\theta_{i})\): that is, sample a data value from the sample distribution conditional on the parameter value from the previous step.
 
-    p.
+        p.
 
-        1. Give the posterior distribution for \(\theta\).
+            #[+url("https://youtu.be/TMnXQ6G6E5Y")]
+            
+        p.
 
-    +shortanswer("answer01", "Give the posterior distribution for theta.", "1")
+            #[strong Example]: Suppose that we estimate the prevalence of a certain disease in the UK population using a sample of 10 individuals, where we find that #[i X=1] individual is disease-positive. We use a binomial to explain disease prevalence \(\theta\) in the sample which, along with a uniform prior results in the posterior. We then follow the steps above to generate an approximate posterior predictive distribution, which forecasts the number of disease-positive individuals in a future sample of the same size. In each iteration, #[i i], we collect a paired sample \((\theta_{i},X_{i})\). The set of all samples for the number of disease-cases \(X_{i}\) forms our posterior predictive distribution. This distribution is peaked at \(X=1\) and has an 80% predictive interval of zero to four cases. 
 
-    p.
+        p.
 
-        2. Suppose that on the third year she gets audited. Give the squared-error loss Bayes estimate for the parameter \(\theta\).
+            By repeating these steps a large number of times we eventually obtain a reasonable approximation to the #[i posterior predictive distribution]. This distribution represents our uncertainty about the outcome of future data and accounts for error in our observed data and our model choice.
 
-    +numericanswer("answer02", "Give the squared-error loss Bayes estimate for the parameter", "0.01")
+        p.
 
-    p.
+            This two state process reflects the two sources of uncertainty that we have: the uncertainty in the parameter value (reflected in the posterior distribution) and the uncertainty due to sampling variation (reflected by the sampling distribution).
 
-        3. Use #[i R] to calculate a 90% credible interval for \(\theta\).
+        p.
 
-    +shortanswer("answer03", "Interpret the credible interval.", "0.01")
+            If the two above steps are iterated a sufficient number of times, then the resultant histogram of our data samples approaches the shape of the exact posterior predictive distribution. For the majority of cases, we estimate the posterior predictive distribution by sampling since the high dimensional integrals involved are often intractable.
+
+        p.
+
+            #[strong Example]: Lyme disease is a tick-borne infectious disease spread by bacteria of species #[i Borrelia] which are transmitted to ticks when they feed on animal hosts. While fairly common in the eastern US, this disease has been spreading to the western US. Imagine you are researching the occupance of Lyme disease in the western US, and counting the occurrence of the #[Borrelia] bacteria in ticks.
+
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Lyme+Disease+Example/1_v658mkq6")]
+
+        p.
+
+            You start by assuming the number of ticks with the bacteria in a sample of #[i n] ticks follows a binomial distribution with parameter \(\theta\). Suppose also that from a previous study you think that the value of \(\theta\) is around 10% so you decide that the prior distribution follows a beta with #[i r=5] and #[i s=40]. Give the posterior distribution for \(\theta\).
+
+        p.
+            Suppose you sample 40 ticks and find that 7 of them carry the disease. Compute squared-error loss Bayes estimate for the parameter \(\theta\).
+
+        +numericanswer("answer01", "Give the squared-error loss Bayes estimate for the parameter. Round to 2 decimals.", "0.01")
+
+        p.
+
+            Using R, calculate a 90% credible interval for \(\theta\) the probability of a tick having the disease.
+
+        p.
+
+            Using R, obtain an approximate to the #[i posterior predictive distribution]. Give a 80% interval for the number of ticks having this disease in a future sample of #[i n=40].
+
+        +numericanswer("answer02", "Give the lower bound for a future sample value based on the 80% interval. Report a whole integer.", "1")
+
+        +numericanswer("answer03", "Give the upper bound for a future sample value based on the 80% interval. Report a whole integer.", "1")
     
-    button(class="btn btn-md btn-primary" type="submit") submit
+        button(class="btn btn-md btn-primary" type="submit") submit

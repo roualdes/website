@@ -1,0 +1,87 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/shortanswer.pug
+include ../../mixins/multiplechoice.pug
+include ../../mixins/numericanswer.pug
+include ../../mixins/katex.pug
+
+block head
+    +katex()
+
+block content
+    +title("MATH 450 Chapter 10-Part 2")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 10: Evaluation of Model Fit continued:
+
+        p.
+
+            In Bayesian analysis we leverage the power of the posterior predicative distribution to test whether our model can replicate the behaviours that are most important to its eventual use. Specifically, we use these distributions to generate fake data samples, which we then compare to the real thing. These comparative tests are what constitute PPCs. We interpret the data that we generate from the posterior predictive distributions as being the data sample that #[strong we might collect tomorrow if the data-generating process remained the same as it is today].
+
+        p.
+
+            #[+url("https://youtu.be/yDPJnV9vcHs")]
+
+        p.
+
+            Graphical visualisations are a great way to test the performance of our models. By visually comparing key aspects of the simulated and actual data samples, we can quickly determine if our model is reasonable. Graphical PPCs are an important first step in testing a model's performance. However, we also use a numerical measure of a model's coherence with the data known as a #[i Bayesian] p #[i value].
+
+        p.
+
+            #[strong Why do we call it a p-value]?
+
+        p.
+
+            As done above, we can generate simulations from the posterior predictive distribution, \(y_{sim}\), and statistics denoted \(T(Y_{sim},\theta)\) calculated on the fake data samples to capture some key aspect of the data-generating process. We then generate a Bayesian p-value by comparing the simulated data test statistic with its value on the actual data, \(T(y,\theta)\):
+            $$p=P(T(y_{sim},\theta)>T(y,\theta)|y)$$
+
+        p.
+
+            where the probability is calculated by, first, comparing the real and fake data statistics for each fake data sample that we generate from the posterior predictive distribution, and then, second, we count the number of fake data samples where the simulated statistic exceeds the actual, which equals #[i p]. This differs from the Frequentist #[i p] value because here we do not condition on the parameter value \(\theta\) and instead allow for its variation in accordance with the posterior distribution. This is due to the fact that Bayesian regard the data as fixed and the parameter to vary, whereas Frequentist see the converse. The quantity #[i p] is a probablity that is a measure of model (mis)fit. Values near 0 or 1 indicate a discrepancy between the model and the data; values of #[i p]=0.5 are ideal. Typically, values lower than 5% or 10% or higher than 90% to 95% are chosen as thresholds to indicate a significant misfit.
+
+        p.
+
+            #[strong Example: WHO's reported novel disease outbreaks]: Suppose that you are interested in modelling the number of outbreaks of novel diseases that the WHO reports each year. Since these outbreaks are of new diseases, you assume you can model the outbreaks in #[i independent] events, and hence decide to use a Poisson likelihood, \(X_{t}\sim Poisson(\lambda)\) where \(X_{t}\) is the number of outbreaks in year #[i t], and \(\lambda\) is the mean number of outbreaks.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+WHO+Example+P-value/1_ciai6m66")]
+
+        p.
+
+            1. You decide to use a \(\Gamma(3,0.5)\) prior for the mean parameter \(\lambda\) of your Poisson likelihood. Graph this prior.
+
+        p.
+
+            2. Suppose that the number of new outbreaks over the past 5 years is \(X=(3,7,4,10,11)\). Using the conjugate prior rules for a Poisson distribution with gamma prior, find the posterior and graph it.
+
+        p.
+
+            3. Generate 10000 samples from the posterior predictive distribution, and graph the distribution. To do this we first independently sample a value \(\lambda_{i}\) from the posterior distribution, then sample a value of #[i X] from a Poisson\((\lambda_{i})\) distribution. We carry out this process 10000 times.
+
+        p.
+
+            4. Compare the actual data with your 10000 posterior predictive samples. Does your model fit the data?
+
+        p.
+
+            5. Calculate a #[i p]-value by using the maximum value as a test statistic. The maximum value of the data is 11. For the #[i p]-value we would want to calculate the proportion of times that we generate a sample of 5 using the methods above and get a maximum value greater than 11. This would be the #[i p]-value. Like stated earlier we would be concerned if we got a p-value less than 5 to10\% or greater than 90 to 95\%.
+
+        +numericanswer("answer01", "What was the p-value? Round to 3 digits", ".001")
+
+        p.
+
+        +multiplechoice("answer02", "What do you conclude about the fit of the model?")
+            option(selected) choose one
+            option Based on the p-value it appears that the fit of the model is adequate.
+            option Based on the p-value it appears that the fit of the model is not adequate.
+    
+        button(class="btn btn-md btn-primary" type="submit") submit
