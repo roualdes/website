@@ -1,0 +1,117 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/highlighting.pug
+include ../../mixins/code.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block head
+    +katex()
+    +highlighting()
+
+block content
+    +title("MATH 450 Chapter 13-Part 1")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 13: Random Walk Metropolis
+
+        p.
+
+            #[strong Moving from independent to dependent sampling]: As a recap: We would ideally like to draw independent samples from our posterior distribution in order to understand it. However, calculating the denominator of Bayes' rule is typically very difficult for high-dimensional problems. Also, it is usually impossible to generate independent samples from it. We learned above that we do not need the denomiator to calculate the relative height of the posterior at one point versus all others. However, does this mean we need to compute an unfeasibly large number of ratios? It turns out that using dependent sampling is a way out of these problems. What does dependent sampling mean?
+
+        p.
+
+            Dependent sampling implies that the next sample depends in some way on the value of the current value. 
+
+        p.
+
+            In the simplest form of dependent sampling (Random Walk Metropolis), we essentially do a type of random walk through the posterior space. At each point in parameter space we randomly determine a proposed stepping location and then based on the height of the PDF at the proposed location, we either accept or reject the proposal. If the proposed location is higher than our current position, we accept the proposal and move there. If the height it lower, we only accept the proposal probabilistically, with a probability that depends on how much lower the proposed location is than our current position. If we do not accept the proposal we remain at our current location for the next sample. If we repeat this process a large number of times, we hope to have surveyed much of the posterior space with areas sampled in direct proportion to their height. This represents the most simple type of dependent sampler, where the decision of where and whether to step is determined solely by the current state of the sampler. This type of sampler is known #[Markov chains] where the run of consecutive samples we generate forms the chain. The Markov part of the name describes the memoryless aspect. MCMC is a dependent sampling method resulting in the current sample value being correlated with the previous sample value. This correlation means that an MCMC algorithm takes many more samples to reach a reasonable approximation of the posterior than would be necessary for an independent sample.
+
+        p.
+
+            In the previous chapter, although we may not have been able to determine the exact global structure of the posterior, we can nevertheless build up a picture of it by local exploration using dependent sampling, where the next sample value depends on the current value. Although not as efficient independent sampling, dependent sampling is easier to implement, and only requires calculation of the un-normalised posterior, avoiding the troublesome denominator term.
+
+        p.
+
+            MCMC is typically used to do dependent sampling. It is called Monte Carlo because the decision of where to step next involves a random component. In this chapter we see that there are two components to this decision: In the first, we choose #[i where] to propose a next step from the current position; in the second, we choose #[i whether] we accept this step or stay where we are. 
+
+        p.
+
+            We aim to generate samples at points in parameter space whose frequency varies in proportion to the corresponding values of the posterior density. We need to design the stepping routine so that we are sampling more from the peaks and less from the valleys. One of the most commonly used routines that satisfies these conditions is known as the #[i Random Walk Metropolis] algorthm and is the focus of this chapter.
+
+        p.
+
+            #[strong Example: Sustainable Fishing]: Suppose that a fisherman has access to four freshwater  lakes of different sizes, each of which has a supply of fish. Furthermore, suppose that the amount of fish in each lake is proportional to its size. The fisherman knows this and would like to ensure that he does not overfish each resource. He would like to fish each lake proportional to the fish that the lake contains. Unfortunately, he is a drunk and cannot remember the size of the lake he previously visited.
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Chapter+13+Sustainable+Fish+Example/1_juqvpq5o")]
+
+        p.
+
+        a: img(src="/math105/fishes.PNG" alt="Fishes")
+          
+        p.
+
+            We assume on a given day, he fishes and then camps next to a lake which is connected by a series of paths in such away that he cannot walk from lake A to lake C or from lake B to lake D. 
+
+        p.
+
+            One way for him to proceed is for him to flip a coin and move clockwise for heads; if it is tails he proposes a move in the anticlockwise direction. He then calculates the following ratio using the proposed lake size \(S_{proposed}\) and the current lake size \(S_{current}\)
+
+        p.
+
+        a: img(src="/math105/r_fishes.PNG" alt="r", style='width:250px;height:75px;')
+
+        p.
+
+            He also has the technology to generate a single random number from the Uniform(0,1). He compares the calculated value of #[i r] with #[i p] and moves to the new location if #[i p]<#[i r] or fishes the same lake tomorrow if \(p\geq r\).
+
+        p.
+
+            Using this method we computationally simulate his journey from lake to lake recording which lake he goes to each time. After 500 days, the difference between sampled and actual distributions of fish is small.
+
+        p.
+
+            #[strong Defining the random walk metropolis algorithm:]
+
+        p.
+
+            Imagine that we have a posterior whose density is known up to a proportion: $$p(\theta|data)\propto p(data|\theta)\times p(\theta)$$
+
+        p.
+
+            We would like to sample from this posterior to build an understanding of its shape and properties. We would like to sample from this posterior to build an understanding of its shape and properties. Because we got rid of the pesky denominator we will be able to sample from $p(data|\theta)\times p(\theta)$ which will give us an estimate of the posterior height. 
+
+        p.
+
+            #[strong Another Example]:
+
+        p.
+
+        a: img(src="/math105/iron.PNG" alt="r")
+
+        p.
+
+            We are employed as a contractor for a company to map the amount of subterranean iron across a vast, lifeless desert. The desert is flat and uninformative of the treasures that lie underneath. However, we have a machine that measures the magnetic field directly underneath which varies in proportion to the total amount of iron below. Suppose that the mining company has already determined that the area is rich with iron deposits and is interested only in mapping the relative abundance of deposits over the desert.
+
+        p.
+
+            The simplest way to conduct the survey would be to grid up the area in say 1 km intervals. However, even at this modest resolution we would need to sample 1000 \(\times\) 1000=1 million points. 
+
+        p.
+
+            Suppose that we start in a random location in the desert and measure the magnetic field beneath. We then use a random sample from a bivariate normal distribution centred on our current location, to pick a new location to sample. We then measure the magnetic field there, and if it exceeds the value of the old site, we move to the new location and add the new (north,east) to our list. By contrast, if the value of the magnetic field is lower than the current value then we only move there #[i probabilistically] with a probability given by the ratio of the new value to the old. To do this, we compare the ratio with a random sample form a uniform distribution \(U\sim(0,1)\). If our ratio exceeds #[i p], then we move there and add the new (north, east) to our current list. If it does not, then we move back to where we were, and add our previous location to the list again. If we follow this procedure a large number of times, and look at the concentration of sample points across the desert, we can obtain a map, after only 1000 samples, we have built up a rough, yet usable map. Note the indirect way that we built this map, we only used the measurements as a way to determine where to move next, we did not actually record the measurement of the magnetic field. The spatial density of the above-ground (north,east) samples then determined the amount of iron below. 
+
+
+        button(class="btn btn-md btn-primary" type="submit") submit

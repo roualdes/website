@@ -1,0 +1,136 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/highlighting.pug
+include ../../mixins/code.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block head
+    +katex()
+    +highlighting()
+
+block content
+    +title("MATH 450 Chapter 12-Part 2")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 12: Leaving Conjugates Behind: Markov Chain Monte Carlo
+
+        p.
+
+            #[strong An Introduction to Monte Carlo]: Often in applied Bayesian analyses, we want to estimate models with hundreds of thousands of parameters. In these cases, discretisation is not feasible. To handle models of arbitrary complexity, indexed by a number of parameters, we need a new approach. Alternative methods do exist where we estimate these quantities indirectly through sampling.
+
+        p.
+
+            In general, if we can repeatedly generate independent samples form a continuous distribution, \(X_{i}~p(x)\) we can estimate its mean by the following formula: $$E(X)=\int x  p(x)dx$$ $$=\frac{1}{n}\sum X_{i}$$
+
+        p.
+
+            where #[i n] is the number of samples. 
+
+        p.
+
+            While this method seems limited in scope, in that we can only calculate the mean of a given distribution, it turns out that the above is specific example of a more general rule. If we can generate samples from a probability distribution, \(X_{i}\sim p(x)\), we can estimate the expectation of any function \(g(X)\) by: $$E(g(X))=\int g(x)p(x) dx$$ $$=\frac{1}{n}\sum_{i=1}^{n}g(X_{i})$$
+
+        p.
+
+            We can also manipulate it to allow us to estimate the variance of a distribution by: $$\textmd{Var}(X)=E(X^{2})-\left[E(X)\right]^{2}$$ $$=\frac{1}{n}\sum X_{i}^{2}-\left[\frac{1}{n}\sum X_{i}\right]^{2}$$
+
+        p.
+
+            The class of method that relies on computational random sampling is known as #[i Monte Carlo] methods.
+
+        p.
+
+            Additionally, if we can generate independent samples from a multidimensional probability distribution \(X_{i}\sim p(x)\) where \(X_{i}=(X_{1i},X_{2i},...,X_{ki})\) then we can approximate multidimensional integrals as simply as we did for the univariate case: $$E(g(X))=\int\int\cdots\int g(x)p(x)dx_{1}dx_{2}...dx_{n}$$ $$=\frac{1}{n}\sum g(X_{i})$$
+
+        p.
+
+            Importantly, we have found a methodology whose complexity appears insensitive to the dimensionality of the probability distribution we use.
+
+        p.
+
+            #[strong Example]: Calculate the following integral by sampling: $$\int_{-\infty}^{\infty}\frac{x^{6}}{\sqrt{2\pi}}\textmd{exp}\frac{-x^{2}}{2}dx$$
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Chapter+12+Integration/1_p6h58rcv")]
+
+        p.
+
+            We can recognize this as \(E(X^{6})\) of the standard normal distribution.   
+
+        p.
+
+            Therefore, in R, we just need to sample from the normal distribution with mean of 0 and standard deviation of 1 and raise each sample to the sixth power. We can also double check this in R by doing the actual integration.
+
+        +code("R").
+            x<-rnorm(100000,0,1)
+            mean(x^6)
+
+        +code("plaintext").
+            [1] 15.15334
+            
+        +code("R").
+            integrand<-function(x){(x^6/sqrt(2*pi))*exp(-x^2/2)} 
+            integrate(integrand,-Inf,Inf)
+
+        +code("plaintext").
+            15 with absolute error <7.9e-05
+
+        p.
+
+            #[strong You try it:] Calculate the following integral by sampling. $$\int_{0}^{\infty}\frac{x}{\sqrt{2\pi}}\textmd{exp}\left(-\frac{\left(\textmd{ln}x-1\right)^{2}}{2}\right)$$
+
+        +numericanswer("answer01", "Report your answer to 1 decimal.", "0.1")
+
+        p.
+
+            #[strong Ideal sampling from a posterior using only the numerator of Bayes' rule]
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Chapter+12+Unormalised+Posterior/1_lpug33wk")]
+
+        p.
+
+            Consider two points in posterior space \(\theta_{A}\) and \(\theta_{B}\), each representing different parameter values. If the ratio of the posterior at the two points is $$\frac{p(\theta_{A}|data)}{p(\theta_{B}|data)}=\frac{3}{1}$$
+
+        p.
+
+            then intuitively we want our sampler to generate random samples three times as often from the point \(\theta_{A}\) as for the point \(\theta_{B}\). This is because this is what the pdf actually represents-the frequency that we will sample a particular value. Hence, we can use the histogram of many samples from a distribution to proxy for its pdf. Therefore, we want a sampling methodology that produces samples across parameter space in accordance with the relative heights of the posterior. In other words, to determine the frequency of samples at a given point in parameter space, we do not need the absolute values of the pdf at that point, so long as we know its value relative to other parameters. While we cannot generally calculate the absolute posterior pdf value at a given point (this requires knowledge of the denominator), we can determine its value relative to other points. Consider our points \(\theta_{A}\) and \(\theta_{B}\) and calculate the ratio of the posterior density at the two parameter values: $$\frac{p(\theta_{A}|data)}{p(\theta_{B}|data)}=\frac{\frac{p(data|\theta_{A})\times p(\theta_{A})}{p(data)}}{\frac{p(data|\theta_{B})\times p(\theta_{B})}{p(data)}}$$ $$=\frac{p(data|\theta_{A})\times p(\theta_{A})}{p(data|\theta_{B})\times p(\theta_{B})}$$
+
+        p.
+
+            Thus we have that the denominator has been cancelled. Now everything in the bottom equation is known; we just have the likelihoods and priors at each of the two points. This is called the #[i un-normalised] posterior (the numerator of Bayes' rule). This tells us the relative frequency at each point in parameter space versus all others. In theory, we could then calculate the sampling frequency at all points in the parameter space since for each point we could calculate the ratio of the pdf value compared to all other points. However, how can we do this in practice? Does this require us to do an infinite number of calculations for each parameter value to determine the ratio of its posterior density versus all other points?
+
+        p.
+
+            #[strong The un-normalised posterior]: Revisiting Bayes' rule we can write it as: $$p(\theta|data)=\frac{p(data|\theta)\times p(\theta)}{p(data)}\propto p(data|\theta)\times p(\theta)$$
+            
+        p.
+
+            Thus, all the shape of the posterior is determined by the numerator, since the denominator does not contain any \(\theta\) dependence. It turns out that if we can generate samples with a distribution of the same shape as the posterior then we can still calculate all the properties we want. The mean and the variance can both be estimated as well as other summary statistics.
+
+        p.
+
+            #[+url("https://youtu.be/CfpRdmddVPM")]
+
+        p.
+
+            #[strong Moving from independent to dependent sampling]: As a recap: We would ideally like to draw independent samples from our posterior distribution in order to understand it. However, calculating the denominator of Bayes' rule is typically very difficult for high-dimensional problems. Also, it is usually impossible to generate independent samples from it. We learned above that we do not need the denomiator to calculate the relative height of the posterior at one point versus all others. However, does this mean we need to compute an unfeasibly large number of ratios? It turns out that using dependent sampling is a way out of these problems. What does dependent sampling mean?
+
+        p.
+
+            In the simplest form of dependent sampling (Random Walk Metropolis), we essentially do a type of random walk through the posterior space. At each point in parameter space we randomly determine a proposed stepping location and then based on the height of the PDF at the proposed location, we either accept or reject the proposal. If the proposed location is higher than our current position, we accept the proposal and move there. If the height it lower, we only accept the proposal probabilistically, with a probability that depends on how much lower the proposed location is than our current position. If we do not accept the proposal we remain at our current location for the next sample. If we repeat this process a large number of times, we hope to have surveyed much of the posterior space with areas sampled in direct proportion to their height. This represents the most simple type of dependent sampler, where the decision of where and whether to step is determined solely by the current state of the sampler. This type of sampler is known #[i Markov chains] where the run of consecutive samples we generate forms the chain. The Markov part of the name describes the memoryless aspect. MCMC is a dependent sampling method resulting in the current sample value being correlated with the previous sample value. This correlation means that an MCMC algorithm takes many more samples to reach a reasonable approximation of the posterior than would be necessary for an independent sample.
+
+        button(class="btn btn-md btn-primary" type="submit") submit
