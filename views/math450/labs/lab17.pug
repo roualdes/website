@@ -1,0 +1,141 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/highlighting.pug
+include ../../mixins/code.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block head
+    +katex()
+    +highlighting()
+
+block content
+    +title("MATH 450 Chapter 12-Part 1")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 12: Leaving Conjugates Behind: Markov Chain Monte Carlo
+
+        p.
+
+            Bayes' rule dictates that we sum (for discrete) and integrate (for continuous) the product of the likelihood and prior, across all parameter ranges, in order to estimate its denominator. For problems  involving continuous parameters, this multidimensional integral is practically intractable. This means that in order to conduct Bayesian analysis in practice, we need to change tactics somewhat and abandon the relative comfort of exact calculation in favour of an alternative approach. 
+
+        p.
+
+            While we are able to sample from a posterior distribution, the sampling is somewhat different to that of say flipping a coin where the trials are assumed to be independent. Instead, we must use dependent samples, where the next sample value depends on the value of the current sample. Markov chain Monte Carlo (MCMC) is a type of dependent sampling which will be introduced. Dependent sampling results in a correlation between consecutive samples. This correlation means that the incremental informational value of each new sample is less than would be obtained from an independent sampler, where each sampled value does not depend on the previous value. This means that we need more dependent samples to characterise our posterior than would be necessary from independent samples.
+
+        p.
+
+            #[strong The difficulty with real-life Bayesian inference]:
+
+        p.
+
+            Bayes' rule gives us the recipe for calculating a posterior distribution: $$p(\theta|data)=\frac{p(data|\theta)p(\theta)}{p(data)}$$
+
+        p.
+
+            As an example, imagine that we count the number of secondary bovine spongiform encephalopathy (BSE) cases (also known as mad cow disease) originating from a particular infected cow. Further suppose that we use a Poisson distribution for our likelihood with a mean parameter $\lambda$. We expect that the mean could take a large range of possible values, and hence we specify a log N(1,1) prior for $\lambda$ which allows significant pre-data uncertainty.
+
+        p.
+
+            To calculate the posterior, Bayes' rule tells us that we need to calculate the denominator, \(p(data)\), which we obtain by multiplying the likelihood and prior, and then integrating over \(\theta\). This involves calculating the following integral: $$p(x)=\int_{0}^{\infty}\left(\prod_{N}^{i=1}\frac{\lambda^{x_{i}}e^{-\lambda}}{x_{i}!}\right)\times\frac{1}{\lambda\sqrt{2\pi}}\textmd{exp}\left(-\frac{\left(\log(\lambda)-1\right)^{2}}{2}\right)d\lambda$$
+
+        p.
+
+            While the model is not conceptually challenging, we have arrived at an expression that is difficult to work out. Furthermore, if we were interested in calculating the expected value, then the integral would be even more difficult. This difficulty only becomes exacerbated as the complexity of the model increases. In general, as the dimensionality of a model increased (the number of parameters increases) we see an exponential-like increase in the difficulty of calculating the integrals. Exact calculation of the posterior will be difficult for all but the simplest examples. There are a number of methods proposed to derive approximate versions of the posterior.
+
+        p.
+
+            #[strong Discrete approximation to continuous posteriors]
+
+        p
+
+            The denominator for continuous parameters problems is typically harder to calculate than for discrete parameter models, where we would just need to calculate $$p(data)=\sum p(data|\theta)p(\theta)$$
+
+        p.
+
+            The above is easy to calculate on a computer. So if we had a way of converting our continuous parameter problems into discrete versions, we could then calculate an approximate posterior. This discretisation process is an approximation where we suppose that our prior likelihood exist on at a finite set of points on a grid, resulting in a posterior that is discrete.   
+
+        p.
+
+            Recall a previous example:
+
+        p.
+
+            #[strong Example]: Entomologists estimate that an average person consumes almost a pound of bug parts each year. There are many insect eggs,larvae, and miscellaneous body pieces in the foods we eat and the liquids we drink. The Food and Drug Administration (FDA) sets a Food Defect Action Level (FDAL) for each product: Bug-part concentrations below the FDAL are considered acceptable. Let's consider a jar of peanut butter. The legal limit for peanut butter for example is thirty insect fragments per hundred grams. Suppose we are intereted in estimating \(\lambda\) which is the average rate of bug-part concentration per jar. We take a simple random sample of peanut butter jars and record the following counts of insect parts: 2,5,2,3,15,8,4,8,10. Suppose that we assume that \(\lambda\) is either 3,4,5,6,7,or 8 all with equal probability.
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Chapter+12+Bugs+example/1_zdwwl23e")]
+
+        p.
+
+            Why is this example somewhat unrealistic?
+
+        p.
+
+            Usually when we are interested in parameters they are on the continuous scale. For the above example, there is no reason why \(\lambda\) couldn't be 3.45. However, making it discrete made the calculation of the posterior of \(\lambda\) much easier because it avoids the integration aspect of the denominator.
+
+        p.
+
+            What model might be appropriate for this example?
+
+        p.
+
+            The likelihood would be a Poisson(\(n\lambda)\).
+
+        p.
+
+            We can do this example using R to help us along. Consider the following code.
+
+        +code("R").
+            bugs<-c(2,5,2,3,15,8,4,8,10)
+            lambda<-3:8
+            prior<-rep(1/6,6)
+            n<-length(bugs)
+            w<-sum(bugs)
+            likelihoods<-exp(-n*lambda)*(n*lambda)^w/factorial(w)
+            posterior_lambda<-likelihoods*prior/sum(likelihoods*prior)
+            posterior_lambda
+
+        p.
+
+            To get the posterior we calculated a sum for the denominator because we artificially set \(\lambda\) to be discrete. However, because we can use R to quickly calculate the posterior, we don't necessarily have to limit ourselves to just 6 possible numbers. How might we set this up in R to consider more than just 6 numbers?
+            The following R code lets us examine more than just the 6 numbers that we were initially limited too.
+
+        +code("R").
+            bugs<-c(2,5,2,3,15,8,4,8,10)
+            lambda<-seq(3,8,.01)
+            prior_length<-length(lambda)
+            prior<-rep(1/prior_length,prior_length)
+            n<-length(bugs)
+            w<-sum(bugs)
+            likelihoods<-exp(-n*lambda)*(n*lambda)^w/factorial(w)
+            posterior_lambda<-likelihoods*prior/sum(likelihoods*prior)
+
+        p.
+
+            which yields the following graph:
+
+        p.
+
+        a: img(src="/math105/graph_bugs2.PNG" alt="Bugs")
+
+        p.
+
+            We can see that this gives us a much better picture of the posterior distribution.
+
+        p.
+
+            While this discretisation procedure works well for relatively simple problems, it quickly becomes unwieldy as the number of parameters involved increases. Suppose that we discretise each parameter in a model by 10 grid points. If there are 2 parameters then that would be 100 point grid. However, if there are 20 parameters then we would have \(10^{20}\) grid points.
+
+        button(class="btn btn-md btn-primary" type="submit") submit
