@@ -1,0 +1,292 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/highlighting.pug
+include ../../mixins/code.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block head
+    +katex()
+    +highlighting()
+
+block content
+    +title("MATH 450 Chapter 16-Stan")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 16: Stan
+
+        p.
+
+            Stan is a probabilistic modelling language that implements black box MCMC that can be accessed through a variety of interfaces, including R. The R interface is known as #[strong RStan]. Stan programs are composed of a number of blocks, which are used to specify a model. Having sections in compartments makes things a lot easier. In this chapter, we step individually through the different blocks. Stan supports a large range of data and parameter types. We have been introduced to a few flavours of MCMC namely Random Walk Metropolis and Gibbs. Given more time we could have covered a few others such as Hamilton MC. They all have there strengths and weaknesses and there will be circumstances when they can't be used. Stan is an intuitive, probabilistic language that provides an interface to a recently proposed extension of Hamilton MC, known as NUTS. The idea is that you code up a model using Stan's syntax, and then Stan does the MCMC for you which we can all be thankful to Stan for.
+
+        p.
+
+            #[strong How to get Stan]: To get up and running with Stan follow these steps:
+
+        p.
+
+            1. Install R and RStudio. 
+
+        p.
+
+            2. The Stan package relies on your computer having a few necessary tools to handle C++ files. The best way to get the requisite software for a Windows or Mac computer is to install #[strong RTools]. 
+
+        p.
+
+            The only remaining thing that we need is the RStan package itself. This can be done using the following commands:
+
+        +code("R").
+            install.packages('rstan',
+            repos='https://cloud.r-project.org/',
+            dependency=TRUE)
+
+        p.
+
+            In this introduction, we will go through the iterative process of model building starting with a simple example. 
+
+        p.
+
+            Once you have a sense of your data and what question you want to answer with your statistical model, you can begin the iterative process of building a Bayesian model:
+
+        p.
+
+            1. Design your model.
+
+        p.
+
+            2. Choose priors.
+
+        p.
+
+            3. Sample the posterior distribution.
+
+        p.
+
+            4. Inspect model convergence.
+
+        p.
+
+            5. Assess the model using posterior predictions and checking how they compare to your data.
+
+        p.
+
+            #[strong Example:] For our first pass at Stan we will use an example that we have already worked with. The file evaluationdiscoveries.csv contains data on the number of great inventions and scientific discoveries in each year from 1860 to 1959. Recall that we used a Poisson likelihood and a Gamma prior. This problem was certainly easy enough for us to do without the help of Stan but it will help us understand the steps in Stan that we need to create the posterior distribution and do diagnostic checks.
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Ch+16+Stan/1_1mvwrjzk")]
+
+        p.
+
+            We will start by writing the model in the language of Stan. This can be written in a Stan file (File then New File then Stan. A Stan program has three required blocks. These three requirements shouldn't come as a surprise.
+
+        p.
+
+            1. The #[strong data] block where you declare the data types, their dimensions, any restrictions (upper or lower bounds), and their names. Any names you give to your Stan program will also be the names used in other blocks.
+
+        p.
+
+            2. The #[strong parameters] block where you indicate the parameters you want in your model, their dimensions, restrictions and names.
+
+        p.
+
+            3. The #[strong model] block where you include any sampling statements, including the #[i liklihood] model you are using. The model block is where you indicate any prior distributions you want to include for your parameters. If no prior is defined, Stan uses the default \((-\infty,\infty)\). You can restrict priors using upper or lower when declaring the parameters.
+
+        p.
+
+            There are four other optional blocks which we may sometimes use: 1. functions 2. transformed data 3. transformed parameters, and 4. generated quantities.
+
+        p.
+
+            Go ahead and open up the discoveries.stan file and also the discoveries.R file which are available on BB Learn in this week's folder. 
+
+        p.
+
+            In the .stan file is where we create the blocks described above. We will go over each block individually. 
+
+        p.
+
+            The first block is the #[strong data] block and it is as follows:
+
+        +code("Stan").
+            // The input data is a vector 'Y' of length 'N'.
+            data {
+            int N; //number of observations
+            int<lower=0> Y[N]; //discoveries
+            }
+
+        p.
+
+            Note that we use slashes where we would like to insert comments. We have defined two variables, one of which is simply the number of observations, #[i N]. This number is restricted to be an integer. The other variable #[i Y] is the number of discoveries which is restricted to be a positive integer.
+
+        p.
+
+            The next block is the parameter block where we specify the parameters in the model. The only parameter for this example is \(\lambda\) which represents the average number of discoveries per year. \(\lambda\) is restricted to be positive and defined as a real value.
+
+        +code("Stan").
+            // The parameters accepted by the model. Our model
+            // accepts the parameter lambda.
+            parameters {
+            real <lower=0> lambda;
+            }
+
+        p.
+
+            Finally we specify the #[strong model] block. This is where we specify our likelihood and our prior. We will use a Poisson likelihood and a \(\gamma(3,1)\).
+
+        +code("Stan").
+            // The model to be estimated. We model the output
+            // 'y' to be Poisson with parameter lambda
+            // and lambda to be a gamma(3,1).
+            model {
+                Y~poisson(lambda);//likelihood
+                lambda~gamma(3,1);
+            }
+
+        p.
+
+            Before running the Stan model make sure that you save it.
+
+        p.
+
+            #[strong Running the model:] 
+
+            We fit our model using the #[strong Stan()] function and provide it with the actual data and indicate the number of iterations and how many chains we want to run. We also need to create a DataList for the data. The following code is in Rscript provided (discoveries.R) and will run the .stan file.
+
+        +code("R").
+            library(rstan)
+            library(bayesplot)
+            ##Need to change the below line for your computer
+            Y<-read.csv("C:/Users/klgray/Desktop/Math 450/Data/evaluation_discoveries.csv",header=TRUE) 
+            N<-nrow(Y)
+            Y<-Y$discoveries
+            dataList<-list(N=N,Y=Y)
+            ##The line below runs the Stan model you created in your .stan file.
+            fit<-stan('discoveries.stan',iter=1000,chains=4,data=dataList,seed=1)
+
+        p.
+
+            Now we are ready to run the file. You should create a folder on your computer for all Stan files and then set your working directory to this folder. Otherwise, your code will not run. To set your working directory you can go to #[strong Session] then #[strong Set Working Directory] then either browse or set to #[strong source file location]. Go ahead and run lines 1-6 in your script file. It will take a bit for it to run.
+
+        p.
+
+            Now that we ran our first Stan model (Yay!), we might want to look at some results. Recall that a 95\% credible interval was between 2.77 and 3.45. Because Stan is using sampling, we will not get the exact values we would if we were using the gamma distribution. However, they should be relatively close. Run the following line in R.
+
+        +code("R").
+            print(fit,probs=c(0.05,.95))
+
+        a: img(src="/math105/cred_int_stan.PNG" alt="credible", style='width:600px;height:200px;')
+
+        p.
+
+            From the output the above line produces, we see that if we look at the row for \(\lambda\) we get some summary statistics plus the quantiles that we requested. The credible interval produced by Stan was between 2.83 and 3.41 which is quite close to the exact credible interval.
+
+        p.
+
+            #[strong Assessing the model:] From the above output we can quickly assess model convergence by looking at Rhat values for each parameter. When these are at or near 1, the chains have converged.
+
+        p.
+
+            We can also look at the full posterior of our parameters by extracting them from the model output.
+
+        +code("R").
+            posterior<-extract(fit)
+            plot(density(posterior$lambda),main="lambda")
+
+        p.
+
+        a: img(src="/math105/lambda_graph.PNG" alt="credible", style='width:500px;height:300px;')
+
+        p.
+
+            #[strong Posterior Predictive Checks:] For prediction and model diagnostic, Stan can use generate predicted values at each iteration. This way we can generate predictions that also represent uncertainties in our model. We generate these using the #[strong Generated Quantities block]. This block can be used to get other information we want about the posterior, or make predictions for new data.
+
+        p.
+
+        +code("Stan").
+            //Get prediction check
+            generated quantities {
+            vector[N] y_ppc;
+            for (i in 1:N){
+                y_ppc[i]=poisson_rng(lambda);
+                }
+            }
+
+        p.
+
+            In order to create graphs and do model check we can extract the ppc matrix from our model using the following code:
+
+        +code("R").
+            y_ppc<-as.matrix(fit,pars="y_ppc")
+            dim(y_ppc)
+
+        +code("plaintext").
+            [1] 2000  100
+
+        p.
+
+            We can see that the dimensions of the matrix is 2000 rows by 100 columns. The 100 columns are because we have a data set of 100 values so each iteration produces 100 new values (fake data). The 2000 is because we repeated the process 2000 times. 
+
+        p.
+
+            Graphically, we can compare the original data to the new generated data by the following code:
+
+        +code("R").
+           ppc_dens_overlay(Y,y_ppc[1:200,])
+
+        a: img(src="/math105/ppc_graph.PNG" alt="credible", style='width:500px;height:250px;')
+
+        p.
+
+            where the darker line are the actual data and the lighter lines represent an iteration of the two step process that we use to generate the posterior predictive checks.
+
+        p.
+
+            We can also graphical compare summary statistics. Let's consider the mean of the actual data and the mean of each iteration of the ppc process. Therefore, we have 2000 simulated means to compare to the sample mean of the data.
+
+        +code("R").
+            ppc_stat(y=Y,yrep=y_ppc,stat="mean")
+
+        p.
+
+        a: img(src="/math105/ppc_mean_graph.PNG" alt="credible", style='width:500px;height:250px;')
+
+        p.
+
+            From the above we can conclude that our simulated means appear to be representative of the sample mean of the data so at least based on the graph there is no reason to believe that the model is suspect.
+
+        p.
+
+            We can also calculate a #[i p]-value using about the same code that we did in Chapter 10. Let's calculate a $p$-value for the 90th percentile just like in PS8. Recall we got a fairly small p-value then.
+
+        p.
+
+        +code("R").
+            T_stat<-rep(0,length(y_ppc[,1]))
+                for (i in 1:length(y_ppc[,1]))
+            T_stat[i]<-sum(quantile(y_ppc[i,],.9)>quantile(Y,.9))
+            sum(T_stat)/length(y_ppc[,1])
+
+        p.
+
+            We can see that we also get a small p-value. Actually quite a bit smaller than our other simulations, however, the conclusion is still that based on the p-value we our suspect that our model does not fit the data.
+
+        p.
+
+            #[strong Congrats! You just ran your first model in Stan!!] Many more to come.
+
+        p.
+
+            #[You try it]: Recall the Lyme disease example we worked with on WS 5. Lyme disease is a tick-borne infectious disease spread by bacteria of species #[i Borrelia] which are transmitted to ticks when they feed on animal hosts. Imagine you are researching the occurance of Lyme disease in the UK. As such, you begin by collecting 100 ticks in total, of which you find 7 that carry #[i Borrelia]. Assume a beta prior with parameters #[i r=1] and #[i s=1]. Adjust the R script file as well as the .stan file for the above example in order to estimate the posterior distribution for \(\theta), the proprotion of ticks infected with Lyme disease. Send me via email both files.
+
+        button(class="btn btn-md btn-primary" type="submit") submit

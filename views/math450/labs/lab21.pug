@@ -1,0 +1,224 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/highlighting.pug
+include ../../mixins/code.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block head
+    +katex()
+    +highlighting()
+
+block content
+    +title("MATH 450 Chapter 14-Gibbs Sampling")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 14: Gibbs Sampling
+
+        p.
+
+            The Random Walk Metropolis algorithm introduced in the previous section provides a powerful tool for doing MCMC. It can be applied to a large swathe of problems. However, it can be slow to converge to the posterior distribution for more complex models. Further, we must tune the proposal distribution for the Metropolis sample for each new model we estimate.
+
+        p.
+
+            The Metropolis algorithm is a type of rejection algorithm for generating dependent samples from the posterior distribution. We tend to reject a large proportion of steps. This high rate of rejection can limit the algorithm's ability to explore the posterior space. 
+
+            For a large set of models, it turns out that the #[i Gibbs sampler] is a sampler that always accepts a proposed step in posterior space. It turns out that while we often cannot calculate the posterior distribution itself, we may be able to calculate the #[i conditional] posterior distribution for one (or more) parameters. Furthermore, if we can independently sample from this conditional density, then we can accept all proposed steps. By accepting all steps, this should mean that we can explore the posterior space at a faster rate.Gibbs sampling works by exploiting coincidences of conditionality in posterior space. While this is not possible for all models, it may be possible to do so for a subset of parameters within a model and use Metropolis for the remaining parameters. To use the Gibbs sampler we need to analytically calculate the conditional densities, which is not always possible. Additionally, if there is a lot of correlation between parameter estimates then the Gibbs sampler may be slow to explore the parameter space.
+
+        p.
+
+            #[strong Gibbs sampling example]: Suppose we have two horses #[i A] and #[i B] and they compete in two races and the following table summarizes their probability of winning each race.
+            
+
+            a: img(src="/math105/horse.PNG")
+
+        p.
+            #[+url("https://media.csuchico.edu/media/Math+450+Gibbs+Sampling+Horse+Race/1_hlk6kv3j")]
+
+        p.
+
+            Suppose we want to sample from this joint distribution. What would this look like?
+
+        +code("R").
+            ##Example with two horses A and B
+            ##Setting up the table
+            A<-c(0,1)
+            B<-c(0,1)
+            AB<-expand.grid(A,B)
+            AB<-rename(AB,A=Var1,B=Var2)
+            AB.prob<-c(0.1,0.3,0.4,0.2)
+
+        +code("R").
+            ##Independent sampling
+            which.rows<-rep(0,10000)
+            for (i in 1:10000)
+            which.rows[i]<-sample(1:4,1,prob=AB.prob)
+            table(which.rows)%>%prop.table()
+
+        p.
+
+            Thus we are sampling sequences of outcomes with known probabilities. 
+
+        p.
+
+            What we will go over next is a different way to sample from this joint distribution. What Gibbs sampler relies on us knowing is the conditional distributions of the parameters. We first need to figure out the conditional distribution distributions.
+
+        p.
+
+            The first conditional distribution will be conditioned on A=0 and A=1.
+
+        p.
+
+            We then need to get the conditional distribution when B=0 and B=1.
+
+        p.
+
+            Hence, now we have four possible values for each table.
+
+        +code("R").
+            ##Computing conditional probabilities
+            A_conditional<-matrix(rep(0,length(AB.prob)),nrow=length(A))
+            B_conditional<-matrix(rep(0,length(AB.prob)),nrow=length(A))
+            for (i in 1:nrow(AB_matrix))
+                for (j in 1:nrow(AB_matrix))
+                    A_conditional[i,j]<-AB_matrix[i,j]/sum(AB_matrix[i,])
+            for (i in 1:nrow(AB_matrix))
+                for (j in 1:nrow(AB_matrix))
+                    B_conditional[i,j]<-AB_matrix[i,j]/sum(AB_matrix[,j])
+
+        p.
+
+            In order to perform Gibbs sampling we would do the following:
+
+        p.
+
+            1. We would start off by sampling a value of #[i A] (either 0 or 1) and a value for #[i B] (either 0 or 1) from their distribution. This would be considered step #[i t-1].
+
+        p.
+
+            2. Then for #[i t] in 1:#[i T]
+            $$A_{t}\sim P(A|B_{t-1})$$
+
+        p. 
+
+            $$B_{t}\sim P(B|A_{t})$$
+
+        p.
+
+            Let's check to see if Gibbs sampling works.
+
+        +code("R").
+            gibbs_sampling<-function(A_c,B_c){
+            gibbs<-matrix(rep(0,10000),nrow=5000)
+                for (i in 2:5000)
+                    for (j in 1:2)
+                        gibbs[i,j]<-ifelse(j==1,sample(0:1,1,prob=B_c[,gibbs[i-1,2]+1]),sample(0:1,1,prob=A_c[gibbs[i,1]+1,]))
+                gibbs
+            }
+
+            posterior<-gibbs_sampling(A_conditional,B_conditional)
+            final_results_tally<-rep(0,nrow(posterior))
+                for (i in 1:length(final_results_tally))
+            final_results_tally[i]<-ifelse(posterior[i,1]==0&posterior[i,2]==1,3,posterior[i,1]+posterior[i,2])
+            table(final_results_tally)%>%prop.table()
+
+
+        p.
+
+            First, perform regular independent sampling on the original table to check to make sure that you can get the correct distribution after about 1000 iterations of independent sampling.
+
+        p.
+
+            Now run the provided R code to perform Gibbs sampling and check to see if you end up with the correct distribution.
+
+        p.
+
+            #[strong Gibbs sampler]:
+
+        p.
+
+            Now that we have some intuition on the Gibbs algorithm we can more formally define it.
+
+        p.
+
+            In contrast to the Metropolis algorithm, Gibbs sampling is only valid for models with two or more parameters. So let's define it for three parameters \(\theta=(\theta_{1},\theta_{2},\theta_{3})\), with sample data #[strong y]. We assume that we cannot calculate the posterior distribution, but can determine exact expressions for the three conditional distributions: \(p(\theta_{1}|\theta_{2},\theta_{3},y)\),\(p(\theta_{2}|\theta_{1},\theta_{3},y)\), and \(p(\theta_{3}|\theta_{1},\theta_{2},y)\). Futhermore, we assume that these distributions are simple enough that we can generate independent samples from each of them.
+
+        p.
+
+            For our example, the Gibbs algorithm consists of  the following steps: first choose a random starting point \((\theta_{1}^{0},\theta_{2}^{0},\theta_{3}^{0})\). Then, in each subsequent integration, do the following:
+
+        p.
+
+            1. Choose a random parameter to update ordering.We might have an order of \((\theta_{3}^{0},\theta_{2}^{0},\theta_{1}^{0})\).
+
+        p.
+
+            2. In the order determined in step 1, sample from the conditional posterior for each parameter using the most up-to-date parameters. So, for an ordering \((\theta_{3}^{0},\theta_{2}^{0},\theta_{1}^{0})\) determined in step 1, we would first independently sample from \(p(\theta_{3}^{1}|\theta_{1}^{0},\theta_{2}^{0},\textbf{y})\) then, \(p(\theta_{2}^{1}|\theta_{1}^{0},\theta_{3}^{1},\textbf{y})\) and finally \(p(\theta_{1}^{1}|\theta_{2}^{1},\theta_{3}^{1},\textbf{y})\)
+
+        p.
+
+            Notice that, in the second step, we use the most recent parameters to create the conditionals we then sample from . This process is repeated until we determine our algorithm has converged. 
+
+        p.
+
+            We could also sample the parameters in blocks. Suppose that we can generate independent samples for the following conditionals: \(p(\theta_{1},\theta_{2}|\theta_{3},\textbf{y})\) ,\(p(\theta_{1},\theta_{3}|\theta_{2},\textbf{y})\) , and \(p(\theta_{2},\theta_{3}|\theta_{1},\textbf{y})\). We could repeat the exact methodology above, except replacing the old univariate distributions with bivariate ones. 
+
+        p.
+
+            #[strong Example: Crime and punishment]: Suppose that the distribution for the unemployment (#[i u]) and crime levels (#[i c]) in a town is estimated to be a bivariate normal distribution of the form:
+            $$\left(\begin{array}{l}
+            u\\c\end{array}\right)\sim N\left[\left(\begin{array}{l}
+            a\\b\end{array}\right),\left(\begin{array}{ll}
+            \sigma^{2}_{u}&\rho\\
+            \rho&\sigma^{2}_{u}
+            \end{array}\right)\right]$$
+
+        p.
+
+            where all parameters are estimated from data and \(\rho>0\). In this example we could estimate the posterior distribution analytically, however, we will use this example to demonstrate the workings of Gibbs. The bivariate normal has simple conditional distributions, which are themselves normal. They are given by
+
+        p.
+
+            $$u|c\sim N\left(a+\rho(c-b),\sqrt{1-\rho^{2}}\right)$$
+
+        p.
+
+            $$c|u\sim N\left(b+\rho(u-a),\sqrt{1-\rho^{2}}\right)$$
+
+        p.
+
+            Since they are both normal distributions we can independent sample from them using statistical software. By alternating between sampling from each of these expressions we can sample from the posterior.
+
+        p.
+
+            Imagine that we start at some random location in parameter space, say \((u^{0},c^{0})\) and then first update \(u^{0}\) by sampling from 
+
+        p.
+
+            $$u^{1}|c^{0}\sim N(a+\rho(c^{0}-b),\sqrt{1-\rho^{2}}$$
+
+        p.
+
+            This gives us a \(u^{1}\) which we use to characterise the conditional density \(c|u\). We then sample \(c^{1}\) from this distribution
+
+        p.
+
+            $$c^{1}|u^{1}\sim N\left(b+\rho(u-a,)\sqrt{1-\rho^{2}}\right)$$
+
+        p.
+
+            We then repeat this process over and over, resulting in samples that recapitulate the true posterior distribution's shape after some time.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Crime+and+Punishment/1_zz1is7if")]
+
+        button(class="btn btn-md btn-primary" type="submit") submit
