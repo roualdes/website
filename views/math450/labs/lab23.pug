@@ -1,0 +1,224 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/highlighting.pug
+include ../../mixins/code.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block head
+    +katex()
+    +highlighting()
+
+block content
+    +title("MATH 450 Chapter 17-Hierarchical Models")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 17: Hierarchical Models
+
+        p.
+
+            Suppose that we want to estimate the average decrement to life expectancy for an individual due to smoking one year during their teens. To do so, we conduct a meta-analysis, where we use the results of all previously published studies to produce an overall estimate of the effect of smoking. While we may believe that each of the studies follows good experimental and statistical protocol, there will no doubt be differences between the studies. For example, the research in each study will likely be carried out by unique teams, and the clinical methodology may also vary. One way to proceed is to take the raw data and apply a common statistical procedure to each individual data sample, to produce separate study-level estimates of the effect of smoking. We might even consider simply averaging these estimates to produce an overall estimate across all groups. 
+
+        p.
+
+            However, this approach does not give us exactly what we want which is a single posterior distribution representing the estimated effect of smoking that combines the evidence from all of the previous studies. Only when we have this object will our result truly represent the synthesis of all information available to us. Additionally, a posterior distribution will let us gauge the level of uncertainty in our parameter estimate.
+
+        p.
+
+            One way to generate an overall posterior would be to combine the raw data from the various studies, and estimate a model with a set of parameters that are fixed across the individual studies. By fixing the parameters and pooling the data, we arrive at `overall' effect estimates. However, these estimates will not be worth much because the assumptions that underlie a pooled model are inappropriate here. By pooling the data we assume that the methods used to generate each data set were the same. This will lead to an understatement of the uncertainty involved in the data-generating process.
+
+        p.
+
+            #[strong Hierarchical models] walk a line between the two extremes discussed: a heterogeneous model, where we estimate a separate model for each study; and a fully pooled one, where we estimate a model where the parameters are the same across all studies. Hierarchical models assume that the methods used to generate the data in each study are related to one another, but not the same. The data will actually determine the degree of similarity. The other benefit of this framework is that it can produce an overall estimate of the effect of interest (the average effect on life expectancy for smoking for a single year during the teenage years). And unlike the fully pooled estimates, the hierarchical posterior distribution will reflect the true uncertainty across all studies.
+
+        p.
+
+            Hierarchical models may appear complex due to the statistical models that we are required to use. However, one can actually view hierarchical models simpler than approaches where we estimate a different model for each group. An additional benefit is that we often achieve more precise estimates of quantities of interest at the group level. These estimates are generally more robust to extreme observations.
+
+        p.
+
+            #[strong Fully Pooled model example:] Suppose that we work for a state education authority and have the scores on a standardised mathematics test for randomly selected students of the same age from 100 schools in the region. Suppose that the scores are continuous and can be positive or negative. The goal is to estimate the mean test score for a randomly selected pupil within the region.
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Chapter+17+Hierarchical/1_en46vxau")]
+
+        p.
+
+            Initially we decide to forget about the school district which a student belongs to and consider the aggregate data. Suppose we model the data as coming from a normal model with mean \(\mu\) and standard deviation \(\sigma\) where \(S_{ij}\) is the test score for individual #[i i] who goes to school #[i j] with an overall mean of \(\mu\) and standard deviation \(\sigma\). We can code the model in Stan in order to estimate the posterior distribution. We use a N(50,20) for the prior of \(\mu\) and a lognormal(1,1) for the prior of \(\sigma\).
+
+        p.
+
+        +code("Stan").
+            data {
+                int N;
+                real X[N];
+            }
+
+            // The parameters accepted by the model. Our model
+            // accepts two parameters 'mu' and 'sigma'.
+            parameters {
+                real mu;
+                real<lower=0> sigma;
+            }
+
+
+            model {
+                for (i in 1:N){
+                X[i] ~ normal(mu, sigma);
+            }
+            //priors
+                mu~normal(50,20);
+                sigma~lognormal(1,1);
+            }
+
+        p.
+
+            This results in the posterior distribution shown below:
+
+        a: img(src="/math105/schoolposteriorpool.PNG") 
+
+        p.
+
+            We can then find the worst school in the simulated data and compare its mean to test score with the school that actually did the worst in the real data. None of the simulated data was as extreme as the real test scores making our model deficient.
+
+        p.
+
+            #[strong Heterogeneous model]
+
+        p.
+
+            We see there is considerable variation in test scores between schools. Perhaps it would be better if we used a model that accounted for this heterogeneity? We can decide to use a model that estimates separate means and standard deviations for each of the schools. The Stan code for this model is as follows:
+
+        +code("Stan").
+            data {
+                int K;//number of schools
+                int N;//total number of observations
+                real X[N];//observations
+                int school[N];//index 1-100 with identity of school to which individual belongs
+            }
+
+            // The parameters accepted by the model. Our model
+            // accepts two parameters 'mu' and 'sigma'.
+            parameters {
+                real mu[K];
+                real<lower=0> sigma[K];
+            }
+
+
+            model {
+                for (i in 1:N){
+                X[i] ~ normal(mu[school[i]], sigma[school[i]]);
+            }
+            //priors
+                mu~normal(50,20);
+                sigma~lognormal(1,1);
+            }
+
+        p.
+
+            where school is an index ranging from 1 to 100 which indicates the school each student belongs to. However, since this model allowed for each of the schools, this model will likely overfit the data. This means that if we compare the mean test score for simulated and real data for our worst-performing school, we will surely find these to be in good correspondence. Additionally, how can we draw conclusions about the overall mean test score, since all we have is a bunch of school-level estimates?
+
+        p.
+
+            #[strong Hierarchical Models]:
+
+        p.
+
+            The heterogeneous model accounted for differences between the schools by estimating separate models for each school. But this meant we were unable to make a statement about the overall mean as a whole. The fully pooled model allowed us to estate the overall mean test score but ignores the school-level grouping of the data. Thus, the overall estimate was not sufficient in estimating the uncertainty associated with it. 
+
+        p.
+
+            We would like a model that allows us to make inference about the overall population but still account for the hierarchical structure of the data. 
+
+        p.
+
+            In a hierarchical model we assume that the individual school means are, in some way, related to one another. This relationship results in our example because we assume the schools are similar because they are from the same state. While the individual students in the schools will be different, they will likely be from similar types of families. Also, the state's education policy will likely constrain the pedagogical practices of the teachers, and will naturally result in similar test score performances across different schools. However, we cannot conclude that the schools will be exactly the same. 
+
+        p.
+
+            In a hierarchical model, we therefore assume that the mean test scores in each school can differ, but that these means are related to one another. In particular, we assume that the \(\mu_{i}\) (representing the mean test score for school #[i i]) is determined from a state-level distribution of means: \(\mu_{i}\sim N(\bar{\mu},\bar{\sigma})\), where we have chosen to specify the sate-level distribution as another normal distribution where \(\bar{\mu}\) is the average of the mean test scores across all schools in the state, and \(\bar{\sigma}\) determines the spread of school means around the overall state-level mean.
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Hier+School+Data/1_sim0qvwa")]
+        
+        p.
+
+            We can consider the above relation to be just a type of prior, except where the prior distribution's inputs are parameters not numbers as before. These inputs are also called #[i hyper-priors] since they are specified for parameters that determine priors for other parameters. This results in the following Stan file:
+
+        +code("Stan").
+            data {
+                int K;//number of schools
+                int N;//total number of observations
+                real X[N];//observations
+                int school[N];//index 1-100 with identity of school to which individual belongs
+            }
+
+            // The parameters accepted by the model. Our model
+            // accepts two parameters 'mu' and 'sigma'.
+            parameters {
+                real mu[K];
+                real<lower=0> sigma[K];
+                real mu_bar;
+                real<lower=0> sigma_bar;
+            }
+
+            model {
+                for (i in 1:N){
+                X[i] ~ normal(mu[school[i]], sigma[school[i]]);
+                }
+                //priors
+                mu~normal(mu_bar,sigma_bar);
+                //assume heterogenous standard deviation across schools
+                sigma~lognormal(1,1);
+                //hyper-priors
+                mu_bar~normal(50,5);
+                sigma_bar~lognormal(-1,1);
+            }
+
+
+        p.
+
+            We want to use this model to estimate the mean test score for a randomly selected student in the state. We can do a PPC to obtain fake values for individual students.
+
+        +code("Stan").       
+            generated quantities{
+                real x_ppc[N];
+                for (i in 1:N)
+                    x_ppc[i]=normal_rng(mu[school[i]],sigma[school[i]]);
+            }
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Hier+School+Data/1_sim0qvwa")]
+
+        p.
+
+            The resultant posterior is better able to account for the variation in school quality that is evident in the data. Because of this greater variation in estimates the hierarchical model produces simulated means that are much closer to the actual means for the worst-performing school. By accounting for the hierarchies in the data, we have more confidence that the posterior distribution we estimate from this new approach truly represents the uncertainty seen in the data.
+
+        p.
+
+            To answer the remaining questions, focus your attention on the estimation of \(\bar{\sigma}\) (just like we did for \(\bar{\mu}\)).
+
+        +numericanswer("answer01", "Compute the mean of the sigma_bar. Take your answer to 1 digit", "0.01")
+
+        p.
+
+            Now create an 80% credible interval for \(\bar{\sigma}\). You can use the quantile function to do this just like we did a few chapters ago.
+
+        +numericanswer("answer02", "Lower bound of credible interval. Take your answer to 1 digit", "0.1")
+
+        +numericanswer("answer03", "Upper bound of credible interval. Take your answer to 1 digit", "0.1")
+   
+        button(class="btn btn-md btn-primary" type="submit") submit
