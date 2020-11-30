@@ -1,0 +1,172 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/highlighting.pug
+include ../../mixins/code.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block head
+    +katex()
+    +highlighting()
+
+block content
+    +title("MATH 450 Chapter 18-Linear Regression Models")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 18: Linear Regression Models
+
+        p.
+
+            In this section we will discuss Bayesian linear regression. Regression is used to determine the nature of relationships between sets of variables. For example, to determine how the weight of an individual is affected by their height. In linear regression the dependent variable (in this example, height) is modelled as being equal to a linear combination of coefficients and independent variables (weight in this case). The dependent variable depends on other factors not included in the regression, typically because we do not have data for these inputs. In our example, the height of an individual is determined by an individual's genetics, diet and so on. This means the dependent variable is not perfectly determined by the variables that we include and hence there is variation about the value predicted by the regression model. In the Bayesian approach to regression we specify a sampling distribution to describe this variation, which is often chosen to be a normal distribution. We then place priors on the regression coefficients. In our weight and height example, this amounts to specifying a prior on the strength of covariance between these two variables. The Bayesian approach to regression will typically produce results that look similar to those obtained from a frequentist approach particularly if vaguely informative priors are used. However, the Bayesian method really distinguishes itself when model complexity increases. In Bayesian hierarchical regression prior knowledge and data can be incorporated in the model at every level of hierarchy. This freedom means we can estimate models that are a much better approximation to real life than non-hierarchical approaches. Hierarchical models typically outperform other approaches.
+
+        p.
+
+            #[strong Example: High school test scores in England]:
+
+        p.
+
+            The data was collected by the Department for Education in England and contains measures of high school performance collected over the academic year 2015-2016. The variable of key interest to us is the percentage of students achieving a C or above in their maths and English standardized tests taken by pupils typically at 16 years for each school where data is available. For each school we also have data on the percentage of female students, the percentage of students receiving free school meals, and the percentage of students for whom English is not a first language. For all schools we also know which local education authority (LEA) they belong to. LEAs are responsible for managing education provision for schools within a given region. Since decisions made by LEAs may have an impact on the performance of students, we want our eventual model to allow us to determine the influence of LEAs on  test performance. The data is graphically shown below:
+
+        a: img(src="/math105/LEAdata.PNG" alt="LEA")
+
+        p.
+
+            #[strong Pooled model]:
+
+        p.
+
+            The most basic model to describe the test scores is a linear regression of the form:
+
+            $$\textmd{score}_{ij}\sim N(\alpha+\beta_{m}\textmd{meals}_{ij}+\beta_{e}\textmd{english}_{ij}+\beta_{f}\textmd{female}_{ij},\sigma)$$
+
+        p.
+
+            where #[i score] represents the percentage of students achieving a C or higher at GCSE in English and maths for a school #[i i] within a local education authority #[i j]. Here we have chosen a normal likelihood for computational ease. This model assumes that the effect of each of the independent factors on test scores is fixed across all LEAs. What does that mean?
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+Pooled+linear+model/1_rpd9xyu3")]
+
+        p.
+
+            This model can be coded in stan as follows:
+
+        +code("Stan").
+            data {
+                int N;//number of observations
+                real meals[N]; 
+                real scores[N];
+                real english[N];
+                real female[N];
+            }
+
+            parameters {
+                real alpha;
+                real beta_m;
+                real beta_f;
+                real beta_e;
+                real<lower=0> sigma;
+            }
+
+
+            model {
+                for (i in 1:N){
+                scores[i]~ normal(alpha+beta_m*meals[i]+beta_f*female[i]+beta_e*english[i], sigma);
+            }
+                alpha~normal(50,10);
+                beta_m~normal(0,1);
+                beta_f~normal(0,1);
+                beta_e~normal(0,1);
+                sigma~normal(0,2);
+            }
+
+        p.
+
+            where we have set fairly uninformative priors on each of the effect sizes, and a vaguely informative prior for \(\alpha\):
+
+        p.
+
+            #[strong Hierarchical model model]:
+
+        p.
+
+            The assumption that the provision of free school meals has the same effect across all of England is highly suspect. Schools, and the regions they belong to vary in quality of eduction provision. As an example, there may be a different effect size based on whether the school is located in an urban or rural area. Fortunately for each school, we know which LEA it belongs to. There are 152 LEAs in England, which are local councils responsible for education provision in their jurisdiction. 
+
+        p.
+
+            A better way to allow for LEA-level variation in the effect sizes is to estimate a hierarchical model. In this framework the parameters for each LEA are drawn from an overarching `England-level' distribution. For example, for the effect of free school meals, we use the following priors:
+            $$\beta_{m,j}\sim N(\bar{\beta}_{m},\sigma_{m})$$
+
+        p.
+
+            where \(\bar{\beta}_{m}\) is the average effect of free school meals across all of England, and \(\sigma_{m}\) measures the variation in to individuals LEA effects about this mean. 
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+LEA+Hier+Linear+Regression/1_mfkqm2lq")]
+        p.
+
+            This type of model can be implemented in Stan as follows:
+
+        +code("Stan").
+            data {
+                int N;//number of observations
+                int K;//number of LEAs
+                int LEA[N];
+                real meals[N]; 
+                real scores[N];
+                real english[N];
+                real female[N];
+            }
+
+            parameters {
+              real alpha[K];
+              real beta_m[K];
+              real beta_f[K];
+              real beta_e[K];
+              real<lower=0> sigma;
+              real alpha_bar;
+              real sigma_alpha;
+              real beta_bar_m;
+              real beta_bar_f;
+              real beta_bar_e;
+              real<lower=0> sigma_m;
+              real<lower=0> sigma_f;
+              real<lower=0> sigma_e;
+            }
+
+
+            model {
+                for (i in 1:N){
+                scores[i]~ normal(alpha[LEA[i]]+beta_m[LEA[i]]*meals[i]+beta_f[LEA[i]]*female[i]+beta_e[LEA[i]]*english[i],sigma);
+            }
+                alpha_bar~normal(50,10);
+                beta_bar_m~normal(0,1);
+                beta_bar_f~normal(0,1);
+                beta_bar_e~normal(0,1);
+                sigma_alpha~normal(0,1);
+                alpha~normal(alpha_bar,sigma_alpha);
+                beta_m~normal(beta_bar_m,sigma);
+                sigma_m~normal(0,1);
+                beta_f~normal(beta_bar_f,sigma);
+                sigma_f~normal(0,1);
+                beta_e~normal(beta_bar_e,sigma);
+                sigma_e~normal(0,1);
+                sigma~normal(0,2);
+            }
+
+        p.
+
+            The posterior distributions for the effect sizes are now wider than those that we found previously using the non-hierarchical model. This increased uncertainty seems warranted given the heterogeneous nature of the individual LEAs. The overall picture is similar: schools with a higher proportion of students who get free school meals perform much worse on GCSEs; those with a higher proportion of females do slightly better; and those with a greater proportion of students with English as a second language also score marginally higher.
+
+        button(class="btn btn-md btn-primary" type="submit") submit

@@ -1,0 +1,127 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/highlighting.pug
+include ../../mixins/code.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block head
+    +katex()
+    +highlighting()
+
+block content
+    +title("MATH 450 Chapter 17-Hierarchical Models Part 2")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math450/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        h4 Chapter 17: Hierarchical Models Part 2
+
+        p.
+
+           #[strong Case study: Forecasting the result of UK's referndum on EU membership]: We will use a hierarchical model to analyse political poll data. In particular, we consider a future in which the UK decides to hold a referendum about its membership in the EU. We work for an independent think tank and want to predict the outcome of the election using data from 30 recent polls, each comprising 10 individuals. These polls were conducted by a number of different polling agencies, with differing methodologies used to select their samples. The plot below shows the number of voters out of 10 that will vote to `remain' in the EU for 30 recent polls.
+
+        p.
+
+            #[+url("https://media.csuchico.edu/media/Math+450+EU+Example/1_3c9ehdbg")]
+
+        p.
+
+        a: img(src="/math105/polling.PNG") 
+
+        p.
+
+            What would be a reasonable model for our data, #[i X]?
+
+        p.
+
+            We will define #[i X] as the number of people out of 10 that vote `remain' and \(\theta\) will be defined as the probability that a randomly selected person votes remain.
+
+        p.
+
+            We know that the 30 polls were conducted by a number of agencies, each with their own sampling methodology. It therefore seems restrictive to assume a common \(\theta\) value for all polls. Instead we allow this probability to vary by poll and assume that each \(\theta_{i}\) is drawn from some population-level distribution:
+            $$\theta_{i}\sim beta(a,b)$$
+
+        p.
+
+            where #[i a] and #[i b] are parameters that characterise this distribution and must be assigned priors. The structure of the model will look like
+
+        a: img(src="/math105/remainmodel.PNG") 
+
+        p.
+
+            The prior will come from a previous case study about Baseball. We will set \(a=\alpha\times\kappa\) and \(b=\left(1-\alpha\right)\times\kappa\) where \(0\leq \alpha\leq 1\) measures the overall probability that an individual intends to vote `remain' and \(\kappa\geq 1\) represents the confidence in this value. The following code can be used to implement the model:
+
+        +code("Stan").
+            data {
+                int K;
+                int Y[K];
+                int N[K];
+            }
+
+            parameters {
+                real<lower=0, upper=1>alpha;
+                real<lower=1> kappa;
+                vector<lower=0,upper=1>[K] theta;
+            }
+
+            model {
+                for (i in 1:K){
+                Y[i]~binomial(N[i],theta[i]);
+            }
+                theta~beta(alpha*kappa,(1-alpha)*kappa);
+                kappa~pareto(1,.3);
+                alpha~beta(5,5);
+            }
+
+            generated quantities{
+                real<lower=0,upper=1>aTheta;
+                aTheta=beta_rng(alpha*kappa,(1-alpha)*kappa);
+            }
+
+        p.
+
+            We specify a #[i pareto(1,0.3)] distribution as a prior for #[i K] and  a beta prior for \(\alpha\) where we specify most weight towards \(\alpha=\frac{1}{2}\) corresponding to an equal split of remainers and leavers. The purpose of the model was to estimate the proportion of individuals that will vote `remain'. To do this we follow two steps:
+
+        p.
+
+            Independently sample \((\alpha,\kappa)\) from their posteriors, and then sample \(\theta\sim beta(\alpha\kappa,(1-\alpha)\kappa)\).
+
+        p.
+
+            This results in the posterior distribution shown below:
+
+        a: img(src="/math105/posteriorpolling.PNG")
+
+        p.
+
+            #[strong You try it:]
+
+        p.
+
+            The data are from a study that measured the effect of sleep deprivation on cognitive performance. There were 18 subjects chosen from a population of interest who were restricted to 3 hours of sleep during the trial. On each day of the experiment their reaction time to a visual stimulus was measured. The data for this example is contained within #[i evaluationsleepstudy.csv] consisting of three variables: #[i Reaction], #[i Days], and #[i SubjectID], which means the reaction time of a given subject on a particular day. A simple model that explains the variation in reaction times is a linear regression model of the form:
+            $$R(t)\sim N(\alpha+\beta t,\sigma)$$
+
+        p.
+
+            where \(R(t)\) is the reaction time on day #[i t] of the experiment across all observations.
+
+        p.
+
+            Assuming N(0,250) priors on both \(\alpha\) and \(\beta\) and N(0,50) for \(\sigma\), code up the above model in Stan. This would be considered the pooled model. We will calculate the hierarchical model on your next worksheet.
+
+        +numericanswer("answer01", "Report the mean of the posterior distribution of alpha. Use 1 decimal.", "0.01")
+
+        +numericanswer("answer02", "Report the mean of the posterior distribution of beta. Use 1 decimal.", "0.1")
+
+        +numericanswer("answer03", "Report the mean of the posterior distribution of sigma. Use 1 decimal.", "0.1")
+
+        button(class="btn btn-md btn-primary" type="submit") submit
