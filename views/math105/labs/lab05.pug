@@ -5,6 +5,8 @@ include ../../mixins/userinfo.pug
 include ../../mixins/warning.pug
 include ../../mixins/shortanswer.pug
 include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
 
 block content
     +title("MATH 105 Lab 05 Normal Distribution continued")
@@ -39,7 +41,7 @@ block content
 
         +shortanswer("answer01", "Identify the mistake in the StatCrunch normal calculator.", "2") 
 
-        +shortanswer("answer02", "What is the correct answer?", "1")  
+        +numericanswer("answer02", "What is the correct answer? Round to 3 decimals.", ".001")  
 
         p.
 
@@ -49,7 +51,7 @@ block content
 
         +shortanswer("answer03", "Identify the mistake in the StatCrunch normal calculator.", "2") 
 
-        +shortanswer("answer04", "What is the correct answer?", "1")      
+        +numericanswer("answer04", "What is the correct answer? Round to 1 decimal.", "0.1")      
 
         p.
 
@@ -59,7 +61,7 @@ block content
 
         +shortanswer("answer05", "Identify the mistake in the StatCrunch normal calculator.", "2") 
 
-        +shortanswer("answer06", "What is the correct answer?", "1")   
+        +numericanswer("answer06", "What is the correct answer? Round to 1 decimal.", "0.1")   
 
         h4 Part 2 Wristwatch Lifetimes
 
@@ -67,9 +69,9 @@ block content
 
             The mean lifetime of a certain type of wristwatch is 21.6 months, with a standard deviation of 6.3 months. Suppose the lifetimes of these watches follow a normal model.
 
-        +shortanswer("answer07", "What is the top 20th percentile of watch lifetimes?", "1") 
+        +numericanswer("answer07", "What is the top 20th percentile of watch lifetimes? Round to 1 decimal.", "0.1") 
 
-        +shortanswer("answer08", "Suppose the manufacturer of these watches wants to give refunds for watches that do not last at least a certain amount of time. However, he can only afford to give refunds to 3% of his customers. How long should the  manufacturer guarantee the watch for?", "1")   
+        +numericanswer("answer08", "Suppose the manufacturer of these watches wants to give refunds for watches that do not last at least a certain amount of time. However, he can only afford to give refunds to 3% of his customers. How long should the  manufacturer guarantee the watch for? Round to 1 decimal.", "0.1")   
 
         h4 Part 3 Hoping to get in to a university
 
@@ -77,7 +79,7 @@ block content
 
             Entry to a certain University is determined by a national test. The scores on this tes are normally distributed with a mean of 500 and a standard deviation of 100. Tom wants to be admitted to this univerisity and he knows that he must score better than at least 70% of the students who took the test. 
 
-        +shortanswer("answer09", "What score does he need to be admitted to the University?", "1")
+        +numericanswer("answer09", "What score does he need to be admitted to the University? Round to the nearest whole integer.", "1")
 
         h4 Part 4 Job training
 
@@ -85,7 +87,7 @@ block content
 
             The time it takes a randomly selected job applicant to perform a certain task has a distribution that can be approximated by a normal distribution with a mean of 120 seconds and a standard deviation of 20 seconds. The #[strong fastest 10%] are to be given advanced training.
 
-        +shortanswer("answer10", "What task times qualify individuals for such training?", "1")
+        +numericanswer("answer10", "What task times qualify individuals for such training? Round to the nearest whole integer.", "1")
         
         h4 Part 5 EPA
 
@@ -93,7 +95,17 @@ block content
 
             Environmental Protection Agency (EPA) fuel economy estimates gas efficiency for automobile models. The results of the tested models gave a  mean of 24.8 mpg and a standard deviation of 6.2 mpg for highway driving.  Assume that the distribution is normal.  
 
-        +shortanswer("answer11", "Between what two values would the middle 95% of the autos lie with respect to mpg?", "1")
+        p.
+
+            Between what two values would the middle 95% of the autos lie with respect to mpg? 
+
+        p.
+
+        +numericanswer("answer11", "Smaller number. Round to 1 decimal", "0.1")
+
+        p.
+
+        +numericanswer("answer12", "Larger number. Round to 1 decimal", "0.1")   
 
         p.
 

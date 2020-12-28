@@ -5,6 +5,8 @@ include ../../mixins/userinfo.pug
 include ../../mixins/warning.pug
 include ../../mixins/shortanswer.pug
 include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
 
 block content
     +title("MATH 105 Lab 03 Measures of Center and Variation")
@@ -104,16 +106,16 @@ block content
 
             #[+url("https://media.csuchico.edu/media/babyweight+mean+and+sd/0_9idl6vp9")]
 
-        +shortanswer("answer09", "Mean: ", "1")
-
-        +shortanswer("answer10", "Standard Deviation: ", "1")
+        +numericanswer("answer09", "Mean (round to 1 decimal): ", "0.1")
+        
+        +numericanswer("answer10", "Standard Deviation(round to 1 decimal): ", "0.1")
 
         p.
             Visually to see if we have other variables that might be helpful to predict birthweight we can adjust the histogram to account for other variables. Let's consider the variable #[i premature]. We can highlight the premature variables in the histogram as follows:
 
             #[+url("https://media.csuchico.edu/media/Histogram+adjusted+for+additional+variable/0_yezqbb4x")]
 
-        +shortanswer("answer11", "Does it appear that whether a baby is premature or not is an important factor of determining a baby's weight. Explain.", "4")
+        +shortanswer("answer11", "Does it appear that whether a baby is premature or not is an important factor of determining a baby's weight. Explain.", "3")
 
         p.
             Compute the mean and standard deviation of baby's weight for premature babies and full-term separately. View the below video if you are not sure how to do that.
@@ -121,9 +123,9 @@ block content
         p.
              #[+url("https://media.csuchico.edu/media/Group+by+/0_0b5bwuov")]
 
-        +shortanswer("answer12", "Mean: ", "1")
-
-        +shortanswer("answer13", "Standard Deviation: ", "1")
+        +numericanswer("answer12", "Mean (round to 1 decimal): ", "0.1")
+        
+        +numericanswer("answer13", "Standard Deviation(round to 1 decimal): ", "0.1")
 
         +shortanswer("answer14", "Suppose that you knew that the baby was full-term? What weight would you predict? What would be the minimum and maximum weight that you would predict for a full-term baby?", "1")
 
