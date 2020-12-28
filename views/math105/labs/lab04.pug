@@ -5,6 +5,8 @@ include ../../mixins/userinfo.pug
 include ../../mixins/warning.pug
 include ../../mixins/shortanswer.pug
 include ../../mixins/multiplechoice.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
 
 block content
     +title("MATH 105 Lab 04 Normal Distribution Introduction")
@@ -53,15 +55,15 @@ block content
 
             Report the mean and stndard deviation of diastolic blood pressure.
 
-        +shortanswer("answer04", "Mean:", "1")
+        +numericanswer("answer04", "Mean (round to 1 decimal): ", "0.1")
 
-        +shortanswer("answer05", "Standard Deviation:", "1")
+        +numericanswer("answer05", "Standard Deviation(round to 1 decimal): ", "0.1")
 
         +shortanswer("answer06", "Recall that you were asked to measure your diastolic blood pressure last week. Was you measurement less than or greater than the mean calculated above? If you weren't able to measure your diastolic blood pressure just use a value of 70 mmHG", "1")
 
         +shortanswer("answer07", "Calculate the number of standard deviations away from the mean your blood pressure is.", "1")
 
-        +shortanswer("answer08", "Now calculate a z-score by taking the difference between your blood pressure and the mean and then dividing by the standard deviation.", "1")
+        +numericanswer("answer08", "Now calculate a z-score by taking the difference between your blood pressure and the mean and then dividing by the standard deviation. Use 2 decimals", "0.01")
 
         p.
 
@@ -70,10 +72,6 @@ block content
         +shortanswer("answer09", "Interpret the z-score for your blood pressure. Write a sentence in context of the problem.", "1")        
 
         h4 Part 2 Flashlight batteries
-
-        p.
-
-            Consider the variable birthweight of a baby. We will be looking at a data set that has information about births recorded in North Carolina. This data has been of interest to medical researchers who are studying the relation between habits and practices of expected mothers and the birth of children. The data consists of a random sample of 1000 cases.
 
         p. 
 
@@ -87,11 +85,11 @@ block content
 
             Now make a histogram of the simulated data. For convenience, check the box that says #[i values above the bar]. Use the histogram to answer the following questions.
             
-        +shortanswer("answer10", "What is the probability that a battery will last longer than 8 hours?", "1") 
+        +numericanswer("answer10", "What is the probability that a battery will last longer than 8 hours? Use 3 decimals", ".001") 
 
-        +shortanswer("answer11", "What is the probability that a battery will last less than 4.5 hours?", "1") 
+        +numericanswer("answer11", "What is the probability that a battery will last less than 4.5 hours? Use 3 decimals", ".001") 
         
-        +shortanswer("answer12", "What is the probability that a battery will last between 5 and 7.5 hours?", "1") 
+        +shortanswer("answer12", "What is the probability that a battery will last between 5 and 7.5 hours? Use 3 decimals.", ".001") 
             
         p.
 
@@ -101,11 +99,11 @@ block content
 
             #[+url("https://media.csuchico.edu/media/simulate+battery+lifetimes/0_v46wf9j4")]
 
-        +shortanswer("answer13", "What is the probability that a battery will last longer than 8 hours?", "1") 
+        +numericanswer("answer13", "What is the probability that a battery will last longer than 8 hours? Use 3 decimals", ".001") 
 
-        +shortanswer("answer14", "What is the probability that a battery will last less than 4.5 hours?", "1") 
+        +numericanswer("answer14", "What is the probability that a battery will last less than 4.5 hours? Use 3 decimals", ".001") 
         
-        +shortanswer("answer15", "What is the probability that a battery will last between 5 and 7.5 hours?", "1") 
+        +shortanswer("answer15", "What is the probability that a battery will last between 5 and 7.5 hours? Use 3 decimals.", ".001") 
 
         +shortanswer("answer16", "Compare your answers with the answers you got simulating data from the normal distribution.", "2") 
 
