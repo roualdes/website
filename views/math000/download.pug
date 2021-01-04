@@ -1,0 +1,7 @@
+extends ../layout
+
+block content
+    form(action="/math450/download" method="post")
+        div
+            input(type="password" name="password" id="password" required)
+        button(class="btn btn-sm btn-primary" type="submit") download

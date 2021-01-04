@@ -1,0 +1,86 @@
+extends ../../lab
+include ../../mixins/url.pug
+include ../../mixins/title.pug
+include ../../mixins/userinfo.pug
+include ../../mixins/warning.pug
+include ../../mixins/highlighting.pug
+include ../../mixins/code.pug
+include ../../mixins/katex.pug
+include ../../mixins/numericanswer.pug
+
+block head
+    +katex()
+    +highlighting()
+
+block content
+    +title("MATH 000 / Lab 00: Showcase")
+    +warning("Due date 2020-06-24 @ 23:59")
+    +warning("Leaving or refreshing this page might lose your work.")
+
+    form(action="/math105/labs/submit" method="post" class="needs-validation" novalidate)
+        input(type="hidden" name="_csrf" value= csrfToken)
+        input(type="hidden" name="lab" value= labId)
+        // Due date is in UTC
+        input(type="hidden" name="duedate" value="2020-06-25T07:00:00")
+        +userinfo()
+
+        +numericanswer("answer01", "State the first 3 digits of pi.", "0.01")
+
+        +numericanswer("answer01", "What is your favorit integer?", "1")
+
+        p.
+            Include an image.
+
+        img(src="/labshowcase/ess.png" alt="ESS for Multivariate Gaussian in Stan")
+
+
+        p.
+            Write some math.  Most LaTeX syntax should work.  Consult
+            #[a(href="https://katex.org/") KaTeX] for details.
+
+        p.
+            $$ \mathbb{E}[X] = \int_{-\infty}^{\infty} (2 \pi \sigma^2)^{-1/2} \exp{\left\{ \frac{-1}{2\sigma^2} (x - \mu)^2 \right\}}$$
+
+        p.
+            Show off some R code and fake some output.
+
+        +code("R").
+            foo <- function(x) {
+                y <- "a random string"
+                return(sum(x * x)) # element-wise multiplication
+            }
+            x <- rnorm(1001)
+            foo(x)
+
+        +code("plaintext").
+            [1] 998.5973
+
+        p.
+            Stan too? &#161;Fantástico!  MATH 450, here we come.
+        +code("Stan").
+            data {
+              int<lower=0> d;   // dimension
+              real<lower=0> nu; // degrees of freedom
+              matrix[d, d] S;   // not quite covariance matrix
+            }
+
+            transformed data {
+              vector[d] mu = rep_vector(0.0, d);
+              real<lower=0.> nnu = 0.5 * nu;
+            }
+
+            parameters {
+              vector[d] mvnormal;
+              real<lower=0> invgamma;
+            }
+
+            transformed parameters {
+              vector[d] x = mvnormal * sqrt(invgamma);
+            }
+
+            model {
+              mvnormal ~ multi_normal(mu, S);
+              invgamma ~ inv_gamma(nnu, nnu);
+            }
+
+        button(class="btn btn-md btn-primary" type="submit") submit

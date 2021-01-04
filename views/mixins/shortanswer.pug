@@ -1,5 +1,5 @@
-mixin shortanswer(id, question, row)
+mixin shortanswer(id, question, row, placeholder="", max="500")
     div(class="form-group")
         label(for= id)
             p= question
-        textarea(class="form-control" id= id name= id rows= row maxlength="500")
+        textarea(class="form-control" id= id name= id rows= row maxlength= max placeholder= placeholder)

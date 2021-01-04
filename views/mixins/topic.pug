@@ -1,0 +1,6 @@
+mixin topic(name)
+    li
+        a(data-toggle="collapse", href="#"+ name, aria-expanded="false", aria-controls= name)= name
+        div(class="collapse", id= name)
+            ul(class="list-unstyled")
+                block

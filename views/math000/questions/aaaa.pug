@@ -1,0 +1,9 @@
+include ../../mixins/storedata.pug
+include ../../mixins/shortanswer.pug
+
+mixin aaaa(uuid)
+    - qd = {"A::an": [dU(1, 5), dU(1, 5), dU(1, 5)], "B::an": [dU(2, 6), dU(2, 7), dU(2, 9)]};
+    - q = `If \\( A = \\{ ${qd["A::an"]} \\} \\) and \\( B = \\{ ${qd["B::an"]} \\} \\), what is in \\( A \\cap B \\)?`;
+    +storedata(uuid, qd)
+    - uuid_t = uuid + "::an";
+    +shortanswer(uuid_t, q, 1, "comma separated list of numbers: 1, 2, 3")
