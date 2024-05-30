@@ -105,10 +105,6 @@ dist
 
 # other stuff to not push
 .DS_Store
-Dockerfile
-grades
-public/teaching
-session-store.db
-testbank
-routes/db.json
-.Rhistory
+build/
+package-lock.json
+.svelte-kit/
