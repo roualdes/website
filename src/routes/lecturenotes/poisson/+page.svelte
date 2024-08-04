@@ -8,6 +8,7 @@
   import Definition from '$lib/Definition.svelte';
   import Katex from '$lib/Katex.svelte';
   import RefWikipedia from '$lib/RefWikipedia.svelte';
+  import Modal from '$lib/Modal.svelte';
 
   import Scrubbable from '$lib/Scrubbable.svelte';
 
@@ -46,6 +47,10 @@
     digits: 0,
     speed: "fast"
   };
+
+  let showModal1 = false;
+  let showModal2 = false;
+  let showModal3 = false;
 
 
   function calculateProbability(o, d, lambda) {
@@ -115,6 +120,23 @@
   }
 </script>
 
+<style>
+  .text-button {
+    background: none;
+    border: none;
+    color: #2596be;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+    display: inline-block;
+    width: auto;
+  }
+</style>
+
+<Modal bind:isOpen={showModal1} title="Density Function" body="A density function is..." />
+<Modal bind:isOpen={showModal2} title="Distribution" body="A distribution is..." />
+<Modal bind:isOpen={showModal3} title="Rate Parameter" body="The rate parameter is ..." />
+
 <Lab bind:contents {licensed}>
   <h1>Poisson Distribution</h1>
 
@@ -126,7 +148,7 @@
   <Section title = {contents[1]}/>
 
   <p>
-    The density function for the Poisson distribution is
+    The <button class="text-button" on:click={() => showModal1 = true}>density function</button> for the Poisson <button class="text-button" on:click={() => showModal2 = true}>distribution</button> is
 
     <Katex displayMode = {true}
            math={"f(x | \\lambda ) = \\frac{e^{-\\lambda}\\lambda^x}{x!}"}/>
@@ -134,7 +156,7 @@
 
 
   <p>
-    The density function for the Poisson distribution depends on the rate parameter
+    The density function for the Poisson distribution depends on the <button class="text-button" on:click={() => showModal3 = true}>rate parameter</button>
     <Katex math="\lambda = "/> <Scrubbable bind:x = {lambda} {...lambda_opts}/>.
   </p>
 
