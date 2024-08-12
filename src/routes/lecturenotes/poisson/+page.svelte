@@ -133,9 +133,9 @@
   }
 </style>
 
-<Modal bind:isOpen={showModal1} title="Density Function" body="A density function is..." />
-<Modal bind:isOpen={showModal2} title="Distribution" body="A distribution is..." />
-<Modal bind:isOpen={showModal3} title="Rate Parameter" body="The rate parameter is ..." />
+<Modal bind:isOpen={showModal1}> <p slot="title">Density Function</p> <p slot="body">A density function is...</p></Modal>
+<Modal bind:isOpen={showModal2}> <p slot="title">Distribution</p> <p slot="body">A distribution is...</p></Modal>
+<Modal bind:isOpen={showModal3}> <p slot="title">Rate Parameter</p> <p slot="body">A rate parameter is...</p></Modal>
 
 <Lab bind:contents {licensed}>
   <h1>Poisson Distribution</h1>

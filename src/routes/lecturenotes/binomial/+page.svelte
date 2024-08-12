@@ -158,11 +158,11 @@
   }
 </style>
 
-<Modal bind:isOpen={showModal1} title="Density Function" body="A density function is..." />
-<Modal bind:isOpen={showModal2} title="Distribution" body="A distribution is..." />
-<Modal bind:isOpen={showModal3} title="Independence" body="Independence is ..." />
-<Modal bind:isOpen={showModal4} title="Random Variable" body="A random variable is..." />
-<Modal bind:isOpen={showModal5} title="Probability" body="Probability is..." />
+<Modal bind:isOpen={showModal1}> <p slot="title"> Density Function </p> <p slot="body">A density function is... </p> </Modal>
+<Modal bind:isOpen={showModal2}> <p slot="title"> Distribution </p> <p slot="body"> A distribution is... </p> </Modal>
+<Modal bind:isOpen={showModal3}> <p slot="title"> Independence </p> <p slot="body"> Independence is... </p> </Modal>
+<Modal bind:isOpen={showModal4}> <p slot="title"> Random Variable </p> <p slot="body"> A random variable is... </p> </Modal>
+<Modal bind:isOpen={showModal5}> <p slot="title"> Probability </p> <p slot="body"> Probability is... </p> </Modal>
 
 <Lab bind:contents {licensed}>
   <h1>Binomial Distribution</h1>

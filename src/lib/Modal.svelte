@@ -1,10 +1,8 @@
 <script>
     export let isOpen = false;
-    export let title = "Default Title";
-    export let body = "Default body text goes here.";
 
-    function closeModal() {
-        isOpen = false;
+    function toggle() {
+        isOpen = !isOpen;
     }
 </script>
 
@@ -59,13 +57,15 @@
 <dialog open>
     <article>
         <header>
-            <button aria-label="Close" class="close" on:click={closeModal}>&times;</button>
+            <button aria-label="Close" class="close" on:click={toggle}>&times;</button>
             <div class="header-content">
-                {title}
+                <slot name="title">
+                </slot>
             </div>
         </header>
         <p>
-            {body}
+            <slot name="body">
+            </slot>
         </p>
     </article>
 </dialog>
