@@ -6,6 +6,24 @@
     }
 </script>
 
+{#if isOpen}
+<dialog open>
+    <article>
+        <header>
+            <button aria-label="Close" class="close" on:click={toggle}>&times;</button>
+            <div class="header-content">
+                <slot name="title">
+                </slot>
+            </div>
+        </header>
+        <p>
+            <slot name="body">
+            </slot>
+        </p>
+    </article>
+</dialog>
+{/if}
+
 <style>
     dialog {
         border: none;
@@ -52,24 +70,4 @@
         color: red;
     }
 </style>
-
-{#if isOpen}
-<dialog open>
-    <article>
-        <header>
-            <button aria-label="Close" class="close" on:click={toggle}>&times;</button>
-            <div class="header-content">
-                <slot name="title">
-                </slot>
-            </div>
-        </header>
-        <p>
-            <slot name="body">
-            </slot>
-        </p>
-    </article>
-</dialog>
-{/if}
-
-
 

@@ -55,11 +55,11 @@
     speed: "fast"
   };
 
-  let showModal1 = false;
-  let showModal2 = false;
-  let showModal3 = false;
-  let showModal4 = false;
-  let showModal5 = false;
+  let showModalDensity = false;
+  let showModalDistribution = false;
+  let showModalIndependence = false;
+  let showModalRandom = false;
+  let showModalProbability = false;
 
   function outcomesPredicate(o, d, x) {
     if (d === "eq") {
@@ -158,11 +158,11 @@
   }
 </style>
 
-<Modal bind:isOpen={showModal1}> <p slot="title"> Density Function </p> <p slot="body">A density function is... </p> </Modal>
-<Modal bind:isOpen={showModal2}> <p slot="title"> Distribution </p> <p slot="body"> A distribution is... </p> </Modal>
-<Modal bind:isOpen={showModal3}> <p slot="title"> Independence </p> <p slot="body"> Independence is... </p> </Modal>
-<Modal bind:isOpen={showModal4}> <p slot="title"> Random Variable </p> <p slot="body"> A random variable is... </p> </Modal>
-<Modal bind:isOpen={showModal5}> <p slot="title"> Probability </p> <p slot="body"> Probability is... </p> </Modal>
+<Modal bind:isOpen={showModalDensity}> <p slot="title"> Density Function </p> <p slot="body">A density function is... </p> </Modal>
+<Modal bind:isOpen={showModalDistribution}> <p slot="title"> Distribution </p> <p slot="body"> A distribution is... </p> </Modal>
+<Modal bind:isOpen={showModalIndependence}> <p slot="title"> Independence </p> <p slot="body"> Independence is... </p> </Modal>
+<Modal bind:isOpen={showModalRandom}> <p slot="title"> Random Variable </p> <p slot="body"> A random variable is... </p> </Modal>
+<Modal bind:isOpen={showModalProbability}> <p slot="title"> Probability </p> <p slot="body"> Probability is... </p> </Modal>
 
 <Lab bind:contents {licensed}>
   <h1>Binomial Distribution</h1>
@@ -175,7 +175,7 @@
   <Section title = {contents[1]}/>
 
   <p>
-    The <button class="text-button" on:click={() => showModal1 = true}>density function</button> for the Binomial <button class="text-button" on:click={() => showModal2 = true}>distribution</button> is
+    The <button class="text-button" on:click={() => showModalDensity = true}>density function</button> for the Binomial <button class="text-button" on:click={() => showModalDistribution = true}>distribution</button> is
 
     <Katex displayMode = {true}
            math="f(x | K, p) = {'{'} K \choose x {'}'} p^x (1 - p) ^ {'{'} (K - x) {'}'}"/>
@@ -187,7 +187,7 @@
 
     <Katex math="K = "/> <Scrubbable bind:x = {K} {...K_opts}/>
 
-    <button class="text-button" on:click={() => showModal3 = true}>independent</button> Bernoulli <button class="text-button" on:click={() => showModal4 = true}>random variables</button>, each with <button class="text-button" on:click={() => showModal5 = true}>probability</button>
+    <button class="text-button" on:click={() => showModalIndependence = true}>independent</button> Bernoulli <button class="text-button" on:click={() => showModalRandom = true}>random variables</button>, each with <button class="text-button" on:click={() => showModalProbability = true}>probability</button>
 
     <Katex math="p = "/> <Scrubbable bind:x = {p} {...p_opts}/>
 
