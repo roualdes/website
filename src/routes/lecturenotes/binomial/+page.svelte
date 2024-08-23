@@ -150,19 +150,6 @@
   }
 </script>
 
-<style>
-  .text-button {
-    background: none;
-    border: none;
-    color: #2596be;
-    cursor: pointer;
-    padding: 0;
-    font: inherit;
-    display: inline-block;
-    width: auto;
-  }
-</style>
-
 <Modal bind:isOpen={showModalDensity}> <p slot="title"> Density Function </p> <div slot="body"> <DensityFunction/> </div> </Modal>
 <Modal bind:isOpen={showModalDistribution}> <p slot="title"> Distribution </p> <p slot="body"> <Distribution/> </p> </Modal>
 <Modal bind:isOpen={showModalIndependence}> <p slot="title"> Independence </p> <p slot="body"> <Independence/> </p> </Modal>
