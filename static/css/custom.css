@@ -1,3 +1,14 @@
 ul li {
   list-style: circle;
 }
+
+  .text-button {
+    background: none;
+    border: none;
+    color: #2596be;
+    cursor: pointer;
+    padding: 0;
+    font: inherit;
+    display: inline-block;
+    width: auto;
+  }

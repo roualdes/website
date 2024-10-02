@@ -8,6 +8,11 @@
   import Katex from '$lib/Katex.svelte';
   import RefWikipedia from '$lib/RefWikipedia.svelte';
   import Modal from '$lib/Modal.svelte';
+  import DensityFunction from '$lib/definitions/DensityFunction.svelte';
+  import Distribution from '$lib/definitions/Distribution.svelte';
+  import Independence from '$lib/definitions/Independence.svelte';
+  import RandomVariable from '$lib/definitions/RandomVariable.svelte';
+  import Probability from '$lib/definitions/Probability.svelte';
 
   import Scrubbable from '$lib/Scrubbable.svelte';
 
@@ -145,24 +150,11 @@
   }
 </script>
 
-<style>
-  .text-button {
-    background: none;
-    border: none;
-    color: #2596be;
-    cursor: pointer;
-    padding: 0;
-    font: inherit;
-    display: inline-block;
-    width: auto;
-  }
-</style>
-
-<Modal bind:isOpen={showModalDensity}> <p slot="title"> Density Function </p> <p slot="body">A density function is... </p> </Modal>
-<Modal bind:isOpen={showModalDistribution}> <p slot="title"> Distribution </p> <p slot="body"> A distribution is... </p> </Modal>
-<Modal bind:isOpen={showModalIndependence}> <p slot="title"> Independence </p> <p slot="body"> Independence is... </p> </Modal>
-<Modal bind:isOpen={showModalRandom}> <p slot="title"> Random Variable </p> <p slot="body"> A random variable is... </p> </Modal>
-<Modal bind:isOpen={showModalProbability}> <p slot="title"> Probability </p> <p slot="body"> Probability is... </p> </Modal>
+<Modal bind:isOpen={showModalDensity}> <p slot="title"> Density Function </p> <div slot="body"> <DensityFunction/> </div> </Modal>
+<Modal bind:isOpen={showModalDistribution}> <p slot="title"> Distribution </p> <p slot="body"> <Distribution/> </p> </Modal>
+<Modal bind:isOpen={showModalIndependence}> <p slot="title"> Independence </p> <p slot="body"> <Independence/> </p> </Modal>
+<Modal bind:isOpen={showModalRandom}> <p slot="title"> Random Variable </p> <p slot="body"> <RandomVariable/> </p> </Modal>
+<Modal bind:isOpen={showModalProbability}> <p slot="title"> Probability </p> <p slot="body"> <Probability/> </p> </Modal>
 
 <Lab bind:contents {licensed}>
   <h1>Binomial Distribution</h1>

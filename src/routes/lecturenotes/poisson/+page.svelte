@@ -9,6 +9,9 @@
   import Katex from '$lib/Katex.svelte';
   import RefWikipedia from '$lib/RefWikipedia.svelte';
   import Modal from '$lib/Modal.svelte';
+  import DensityFunction from '$lib/definitions/DensityFunction.svelte';
+  import Distribution from '$lib/definitions/Distribution.svelte';
+  import RateParameter from '$lib/definitions/RateParameter.svelte';
 
   import Scrubbable from '$lib/Scrubbable.svelte';
 
@@ -120,22 +123,9 @@
   }
 </script>
 
-<style>
-  .text-button {
-    background: none;
-    border: none;
-    color: #2596be;
-    cursor: pointer;
-    padding: 0;
-    font: inherit;
-    display: inline-block;
-    width: auto;
-  }
-</style>
-
-<Modal bind:isOpen={showModalDensity}> <p slot="title">Density Function</p> <p slot="body">A density function is...</p></Modal>
-<Modal bind:isOpen={showModalDistribution}> <p slot="title">Distribution</p> <p slot="body">A distribution is...</p></Modal>
-<Modal bind:isOpen={showModalRate}> <p slot="title">Rate Parameter</p> <p slot="body">A rate parameter is...</p></Modal>
+<Modal bind:isOpen={showModalDensity}> <p slot="title">Density Function</p> <div slot="body"> <DensityFunction/></div></Modal>
+<Modal bind:isOpen={showModalDistribution}> <p slot="title">Distribution</p> <p slot="body"><Distribution/></p></Modal>
+<Modal bind:isOpen={showModalRate}> <p slot="title">Rate Parameter</p> <p slot="body"><RateParameter/></p></Modal>
 
 <Lab bind:contents {licensed}>
   <h1>Poisson Distribution</h1>
